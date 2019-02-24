@@ -1,0 +1,7 @@
+/test
+.nyc_output
+.env
+.jshintrc
+.prettierignore
+.editorconfig
+.travis.yml

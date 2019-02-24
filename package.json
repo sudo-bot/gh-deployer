@@ -1,0 +1,67 @@
+{
+    "name": "gh-deployer",
+    "version": "1.0.0",
+    "description": "A GitHub deployer robot",
+    "main": "index.js",
+    "private": false,
+    "homepage": "https://github.com/sudo-bot/gh-deployer",
+    "bugs": {
+        "email": "williamdes@wdes.fr",
+        "url": "https://github.com/sudo-bot/gh-deployer/issues"
+    },
+    "readme": "https://github.com/sudo-bot/gh-deployer#readme",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sudo-bot/gh-deployer.git"
+    },
+    "engines": {
+        "node": ">=8.0.0"
+    },
+    "scripts": {
+        "start": "node index.js",
+        "test": "nyc mocha --ui tdd --reporter spec",
+        "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov",
+        "prettier": "prettier --ignore-path ./.prettierignore --write \"*/**/*.js\" \"*.js\""
+    },
+    "keywords": [
+        "github"
+    ],
+    "author": {
+        "email": "williamdes@wdes.fr",
+        "name": "William Desportes",
+        "url": "https://william.wdes.fr"
+    },
+    "directories": {
+        "lib": "src",
+        "test": "test",
+        "bin": "bin"
+    },
+    "license": "MPL-2.0",
+    "dependencies": {
+        "dotenv": "^6.2.0",
+        "mailparser": "^2.4.3",
+        "module-alias": "^2.2.0",
+        "node-docker-api": "^1.1.22",
+        "octonode": "^0.9.5",
+        "smtp-server": "^3.5.0"
+    },
+    "devDependencies": {
+        "chai": "^4.2.0",
+        "codecov": "^3.1.0",
+        "mocha": "^5.2.0",
+        "nyc": "^13.1.0",
+        "prettier": "^1.15.3"
+    },
+    "prettier": {
+        "singleQuote": true,
+        "proseWrap": "never",
+        "trailingComma": "es5",
+        "bracketSpacing": true,
+        "printWidth": 95
+    },
+    "bin": {},
+    "_moduleAliases": {
+        "@src": "src",
+        "@test": "test"
+    }
+}
