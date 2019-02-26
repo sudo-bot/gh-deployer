@@ -12,7 +12,6 @@ const simpleMailParser = require('mailparser').simpleParser;
 
 const regexInboxMarkup = /<script type="application\/json" data-scope="inboxmarkup">(?<jsonld>[\S\s]+?)?<\/script>/im;
 
-
 const destinationEmails = ['hooks@mail.hooks.wdes.eu'];
 
 const allowedHostnames = [/^out-[1-9]{1,2}\.smtp\.github\.com$/];
@@ -37,9 +36,9 @@ $cfg['Servers'][$i]['AllowNoPassword'] = true;
 ).toString('base64');
 
 const getDataFromMessage = function(snippetsMsg) {
-    const regexMessage = /^@(?<user>[a-z0-9_-]+) in #(?<prId>[0-9]+): (?<message>.*?)$/is;// jshint ignore:line
+    const regexMessage = /^@(?<user>[a-z0-9_-]+) in #(?<prId>[0-9]+): (?<message>.*?)$/is; // jshint ignore:line
     let message = regexMessage.exec(snippetsMsg);
-    if(message != null) {
+    if (message != null) {
         return {
             message: message.groups.message,
             prId: parseInt(message.groups.prId),
@@ -48,7 +47,6 @@ const getDataFromMessage = function(snippetsMsg) {
     } else {
         return null;
     }
-
 };
 
 module.exports = {
@@ -91,10 +89,7 @@ module.exports = {
 
                         let snippetsMsg = metadata.updates.snippets[0].message;
                         let message = getDataFromMessage(snippetsMsg);
-                        if (
-                            message !== null &&
-                            allowedUsernames.includes(message.user)
-                        ) {
+                        if (message !== null && allowedUsernames.includes(message.user)) {
                             //var ghissue = GHclient.issue(metadata.entity.title, 37);
                             // message : { user: 'williamdes', prID: '30', message: '@sudo-bot :)' }
                             if (message.user != 'sudo-bot') {
@@ -115,7 +110,8 @@ module.exports = {
                             }
                         } else {
                             console.log(
-                                'Not allowed:', (message !== null) ? message.user : 'Anonymous ?'
+                                'Not allowed:',
+                                message !== null ? message.user : 'Anonymous ?'
                             );
                         }
                     } else {

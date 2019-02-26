@@ -31,6 +31,7 @@ module.exports = {
                         }
                     })
                     .then(function() {
+                        console.log('Deploying: ', containerName);
                         docker.container
                             .create({
                                 Image: process.env.DOCKER_IMAGE,
@@ -74,7 +75,10 @@ module.exports = {
                                 container
                                     .status()
                                     .then(status => {
-                                        resolve(status);
+                                        resolve({
+                                            status: status,
+                                            containerName: containerName,
+                                        });
                                     })
                                     .catch(error => reject(error));
                             })

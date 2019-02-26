@@ -8,6 +8,7 @@ const docker = require('@src/docker');
 const github = require('@src/github');
 const data = require('@src/data');
 const smtp = require('@src/smtp');
+const dns = require('@src/dns');
 
 smtp.smtpServer((stream, callback) => {
     data.parseEmail(stream)
@@ -36,6 +37,15 @@ smtp.smtpServer((stream, callback) => {
                             prInfos.head.sha,
                             data.compiledPhpMyAdminConfig
                         )
+                        .then(docker => {
+                            dns.publishDnsRecord(
+                                docker.containerName,
+                                prInfos.head.ref,
+                                prInfos.head.sha
+                            )
+                                .then(domain => console.log('Published', domain))
+                                .catch(error => console.log(error, emailInfos));
+                        })
                         .catch(error => console.log(error, prInfos, emailInfos))
                 )
                 .catch(error => console.log(error, emailInfos));

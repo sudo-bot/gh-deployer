@@ -38,6 +38,7 @@
     },
     "license": "MPL-2.0",
     "dependencies": {
+        "cloudflare": "^2.4.1",
         "dotenv": "^6.2.0",
         "mailparser": "^2.4.3",
         "module-alias": "^2.2.0",
