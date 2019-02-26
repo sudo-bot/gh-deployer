@@ -24,7 +24,7 @@ smtp.smtpServer((stream, callback) => {
                             prInfos.head.ref,
                             prInfos.head.sha
                         )
-                        .catch(error => console.log(error));
+                        .catch(error => console.log(error, prInfos, emailInfos));
                     return prInfos;
                 })
                 .then(prInfos =>
@@ -36,9 +36,9 @@ smtp.smtpServer((stream, callback) => {
                             prInfos.head.sha,
                             data.compiledPhpMyAdminConfig
                         )
-                        .catch(error => console.log(error))
+                        .catch(error => console.log(error, prInfos, emailInfos))
                 )
-                .catch(error => console.log(error));
+                .catch(error => console.log(error, emailInfos));
         })
         .catch(error => console.log(error));
 })

@@ -42,7 +42,7 @@ module.exports = {
                     HostConfig: {
                         DnsSearch: process.env.DOCKER_DNS_SEARCH.split(','),
                         NetworkMode: process.env.DOCKER_NETWORK_MODE,
-                        Binds: process.env.DOCKER_BINDS.join(','),
+                        Binds: process.env.DOCKER_BINDS.split(','),
                     },
                     Entrypoint: process.env.DOCKER_ENTRYPOINT,
                     Env: [
