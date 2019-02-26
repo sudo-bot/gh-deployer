@@ -12,7 +12,6 @@ const simpleMailParser = require('mailparser').simpleParser;
 
 const regexInboxMarkup = /<script type="application\/json" data-scope="inboxmarkup">(?<jsonld>[\S\s]+?)?<\/script>/im;
 
-const regexMessage = /^@(?<user>[a-z0-9_-]+) in #(?<prID>[0-9]+): (?<message>.*?)$/i;
 
 const destinationEmails = ['hooks@mail.hooks.wdes.eu'];
 
@@ -37,9 +36,25 @@ $cfg['Servers'][$i]['AllowNoPassword'] = true;
 `
 ).toString('base64');
 
+const getDataFromMessage = function(snippetsMsg) {
+    const regexMessage = /^@(?<user>[a-z0-9_-]+) in #(?<prId>[0-9]+): (?<message>.*?)$/is;// jshint ignore:line
+    let message = regexMessage.exec(snippetsMsg);
+    if(message != null) {
+        return {
+            message: message.groups.message,
+            prId: parseInt(message.groups.prId),
+            user: message.groups.user,
+        };
+    } else {
+        return null;
+    }
+
+};
+
 module.exports = {
     compiledPhpMyAdminConfig: compiledPhpMyAdminConfig,
     destinationEmails: destinationEmails,
+    getDataFromMessage: getDataFromMessage,
     parseEmail: stream => {
         return new Promise((resolve, reject) => {
             simpleMailParser(stream)
@@ -75,15 +90,14 @@ module.exports = {
                         let metadata = JSON.parse(matchs.groups.jsonld);
 
                         let snippetsMsg = metadata.updates.snippets[0].message;
-                        let message = regexMessage.exec(snippetsMsg);
+                        let message = getDataFromMessage(snippetsMsg);
                         if (
-                            message &&
-                            message.groups &&
-                            allowedUsernames.includes(message.groups.user)
+                            message !== null &&
+                            allowedUsernames.includes(message.user)
                         ) {
                             //var ghissue = GHclient.issue(metadata.entity.title, 37);
                             // message : { user: 'williamdes', prID: '30', message: '@sudo-bot :)' }
-                            if (message.groups.user != 'sudo-bot') {
+                            if (message.user != 'sudo-bot') {
                                 let commentLastIndex = metadata.updates.action.url.lastIndexOf(
                                     '-'
                                 );
@@ -92,19 +106,16 @@ module.exports = {
                                 );
                                 resolve({
                                     commentId: commentId,
-                                    requestedByUser: message.groups.user,
-                                    prId: message.groups.prID,
+                                    requestedByUser: message.user,
+                                    prId: message.prId,
                                     repoName: metadata.entity.title,
                                 });
                             } else {
-                                console.log('From-me:', message.groups);
+                                console.log('From-me:', message.message);
                             }
                         } else {
                             console.log(
-                                'Not allowed:' +
-                                    (message !== null && message.groups && message.groups.user)
-                                    ? message.groups.user
-                                    : message
+                                'Not allowed:', (message !== null) ? message.user : 'Anonymous ?'
                             );
                         }
                     } else {
