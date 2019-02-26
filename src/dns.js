@@ -8,10 +8,11 @@ const cf = require('cloudflare')({
 const data = require('@src/data');
 
 module.exports = {
-    publishDnsRecord: (prId, ref, sha) => {
+    publishDnsRecord: (containerName, prId, ref, sha) => {
         return new Promise((resolve, reject) => {
             let domainName = data.replaceTokens(
                 {
+                    containerName: containerName,
                     prId: prId,
                     ref: ref,
                     sha: sha,
@@ -23,6 +24,7 @@ module.exports = {
                     type: 'A',
                     name: domainName,
                     content: process.env.CLOUDFLARE_RECORD_CONTENT,
+                    proxied: true,
                 })
                 .then(function(resp) {
                     resolve(domainName, resp);

@@ -9,6 +9,7 @@ const github = require('@src/github');
 const data = require('@src/data');
 const smtp = require('@src/smtp');
 const dns = require('@src/dns');
+const comments = require('@src/comments');
 
 smtp.smtpServer((stream, callback) => {
     data.parseEmail(stream)
@@ -21,33 +22,49 @@ smtp.smtpServer((stream, callback) => {
                         .createComment(
                             emailInfos.prId,
                             prInfos.head.repo.full_name,
-                            emailInfos.commentId,
-                            prInfos.head.ref,
-                            prInfos.head.sha
-                        )
-                        .catch(error => console.log(error, prInfos, emailInfos));
-                    return prInfos;
-                })
-                .then(prInfos =>
-                    docker
-                        .createDocker(
-                            emailInfos.prId,
-                            prInfos.head.repo.clone_url,
-                            prInfos.head.ref,
-                            prInfos.head.sha,
-                            data.compiledPhpMyAdminConfig
-                        )
-                        .then(docker => {
-                            dns.publishDnsRecord(
-                                docker.containerName,
+                            comments.getPendingComment(
+                                emailInfos.commentId,
                                 prInfos.head.ref,
                                 prInfos.head.sha
                             )
-                                .then(domain => console.log('Published', domain))
-                                .catch(error => console.log(error, emailInfos));
+                        )
+                        .then(deployComment => {
+                            docker
+                                .createDocker(
+                                    emailInfos.prId,
+                                    prInfos.head.repo.clone_url,
+                                    prInfos.head.ref,
+                                    prInfos.head.sha,
+                                    data.compiledPhpMyAdminConfig
+                                )
+                                .then(docker => {
+                                    dns.publishDnsRecord(
+                                        docker.containerName,
+                                        emailInfos.prId,
+                                        prInfos.head.ref,
+                                        prInfos.head.sha
+                                    )
+                                        .then(domain => {
+                                            github.updateComment(
+                                                emailInfos.prId,
+                                                prInfos.head.repo.full_name,
+                                                deployComment.id,
+                                                comments.getDeployedComment(
+                                                    emailInfos.commentId,
+                                                    prInfos.head.ref,
+                                                    prInfos.head.sha,
+                                                    docker.containerName,
+                                                    domain
+                                                )
+                                            );
+                                            console.log('Published-domain:', domain);
+                                        })
+                                        .catch(error => console.log(error, emailInfos));
+                                })
+                                .catch(error => console.log(error, prInfos, emailInfos));
                         })
-                        .catch(error => console.log(error, prInfos, emailInfos))
-                )
+                        .catch(error => console.log(error, prInfos, emailInfos));
+                })
                 .catch(error => console.log(error, emailInfos));
         })
         .catch(error => console.log(error));
