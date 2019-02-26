@@ -3,6 +3,7 @@
 module.exports = {
     getPendingComment: (commentId, ref, sha) => {
         return (
+            //TODO: custom templates
             '<!--\nsudobot:' +
             JSON.stringify({
                 commentId: commentId,
@@ -20,6 +21,7 @@ module.exports = {
     },
     getDeployedComment: (commentId, ref, sha, containerName, domain) => {
         return (
+            //TODO: custom templates
             '<!--\nsudobot:' +
             JSON.stringify({
                 commentId: commentId,
@@ -32,10 +34,10 @@ module.exports = {
             ref +
             '` commit: `' +
             sha +
-            '`\n' +
-            '` url: https://' +
+            '`\n\n' +
+            'url: https://' +
             domain +
-            '\n' +
+            '\nuser: public\nuser: public\n' +
             '\n---\n' +
             '_Deploy finished_\n'
         );
