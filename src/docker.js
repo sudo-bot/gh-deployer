@@ -21,14 +21,14 @@ module.exports = {
                     .get(containerName)
                     .stop()
                     .then(function(container) {
-                        if (container !== null && container !== undefined) {
-                            container.remove();
-                        } else {
-                            console.log('container removed', data);
-                        }
+                        return container.delete({ force: true });
                     })
                     .catch(function(err) {
-                        console.log(err);
+                        if (err.statusCode === 404) {
+                            console.log('Container ' + containerName + ' not found.');
+                        } else {
+                            console.log(err);
+                        }
                     })
                     .then(function() {
                         docker.container
