@@ -18,7 +18,7 @@ smtp.smtpServer((stream, callback) => {
                 .then(prInfos => {
                     github
                         .createComment(
-                            prInfos.id,
+                            emailInfos.prId,
                             prInfos.head.repo.full_name,
                             emailInfos.commentId,
                             prInfos.head.ref,
@@ -30,7 +30,7 @@ smtp.smtpServer((stream, callback) => {
                 .then(prInfos =>
                     docker
                         .createDocker(
-                            prInfos.id,
+                            emailInfos.prId,
                             prInfos.head.repo.clone_url,
                             prInfos.head.ref,
                             prInfos.head.sha,
