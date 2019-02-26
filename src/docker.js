@@ -18,14 +18,13 @@ module.exports = {
             );
             docker.container
                 .get(containerName)
+                .stop()
                 .then(function(container) {
-                    return container.stop();
-                })
-                .then(function(container) {
-                    return container.remove();
-                })
-                .then(function(data) {
-                    console.log('container removed', data);
+                    if (container) {
+                        container.remove();
+                    } else {
+                        console.log('container removed', data);
+                    }
                 })
                 .catch(function(err) {
                     console.log(err);

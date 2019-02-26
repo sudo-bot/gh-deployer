@@ -76,7 +76,11 @@ module.exports = {
 
                         let snippetsMsg = metadata.updates.snippets[0].message;
                         let message = regexMessage.exec(snippetsMsg);
-                        if (message && message.groups && allowedUsernames.includes(message.groups.user)) {
+                        if (
+                            message &&
+                            message.groups &&
+                            allowedUsernames.includes(message.groups.user)
+                        ) {
                             //var ghissue = GHclient.issue(metadata.entity.title, 37);
                             // message : { user: 'williamdes', prID: '30', message: '@sudo-bot :)' }
                             if (message.groups.user != 'sudo-bot') {
@@ -96,7 +100,12 @@ module.exports = {
                                 console.log('From-me:', message.groups);
                             }
                         } else {
-                            console.log('Not allowed:' + (message && message.groups && message.groups.user) ? message.groups.user : message);
+                            console.log(
+                                'Not allowed:' +
+                                    (message !== null && message.groups && message.groups.user)
+                                    ? message.groups.user
+                                    : message
+                            );
                         }
                     } else {
                         console.log(
