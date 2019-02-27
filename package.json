@@ -4,6 +4,17 @@
     "description": "A GitHub deployer robot",
     "main": "index.js",
     "private": false,
+    "nyc": {
+        "exclude": [
+            "test",
+            "coverage",
+            ".nyc_output"
+        ],
+        "reporter": [
+            "text",
+            "text-summary"
+        ]
+    },
     "homepage": "https://github.com/sudo-bot/gh-deployer",
     "bugs": {
         "email": "williamdes@wdes.fr",
@@ -19,7 +30,7 @@
     },
     "scripts": {
         "start": "node index.js",
-        "test": "nyc mocha --ui tdd --reporter spec",
+        "test": "nyc --all mocha --ui tdd",
         "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov",
         "prettier": "prettier --ignore-path ./.prettierignore --write \"*/**/*.js\" \"*.js\""
     },
