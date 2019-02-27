@@ -75,6 +75,7 @@ module.exports = {
     compiledPhpMyAdminConfig: compiledPhpMyAdminConfig,
     destinationEmails: destinationEmails,
     getDataFromMessage: getDataFromMessage,
+    randomString: randomString,
     parseEmail: stream => {
         return new Promise((resolve, reject) => {
             simpleMailParser(stream)

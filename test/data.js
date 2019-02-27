@@ -14,6 +14,23 @@ module.exports = function() {
             expect(data.randomString(30)).to.be.a('string');
             done();
         });
+        test('test compiledPhpMyAdminConfig string', function(done) {
+            expect(data.compiledPhpMyAdminConfig).to.be.a('string');
+            done();
+        });
+        test('test replace tokens in a string', function(done) {
+            expect(
+                data.replaceTokens(
+                    {
+                        key: 'Avalue',
+                        customKey: 123654,
+                        a_key: '*-+36',
+                    },
+                    'Test {{key}} {{customKey}} {{a_key}} !'
+                )
+            ).to.equal('Test Avalue 123654 *-+36 !');
+            done();
+        });
         test('test get data from message dataset-1', function(done) {
             expect(
                 data.getDataFromMessage('@williamdes in #30: Hey hello @sudo-bot !')
