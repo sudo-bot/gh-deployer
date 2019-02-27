@@ -20,7 +20,7 @@ module.exports = {
                 '' + process.env.CLOUDFLARE_RECORD_NAME
             );
             cf.dnsRecords
-                .delete(process.env.CLOUDFLARE_ZONEID, domainName)
+                .del(process.env.CLOUDFLARE_ZONEID, domainName)
                 .then(function() {
                     console.log('Deleted:', domainName);
                 })
