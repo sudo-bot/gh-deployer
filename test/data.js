@@ -10,6 +10,10 @@ module.exports = function() {
             expect(data.destinationEmails).to.be.an('array');
             done();
         });
+        test('test random string', function(done) {
+            expect(data.randomString(30)).to.be.a('string');
+            done();
+        });
         test('test get data from message dataset-1', function(done) {
             expect(
                 data.getDataFromMessage('@williamdes in #30: Hey hello @sudo-bot !')

@@ -18,6 +18,25 @@ const allowedHostnames = [/^out-[1-9]{1,2}\.smtp\.github\.com$/];
 
 const allowedUsernames = ['williamdes', 'sudo-bot'];
 
+/**
+ * @see https://gist.github.com/6174/6062387
+ * @param {Number} length Number of chars
+ */
+const randomString = function(length) {
+    let radom13chars = function() {
+        return Math.random()
+            .toString(16)
+            .substring(2, 15);
+    };
+    let loops = Math.ceil(length / 13);
+    return new Array(loops)
+        .fill(radom13chars)
+        .reduce((string, func) => {
+            return string + func();
+        }, '')
+        .substring(0, length);
+};
+
 const compiledPhpMyAdminConfig = Buffer.from(
     `<?php
 declare(strict_types=1);
@@ -32,7 +51,10 @@ $cfg['Servers'][$i]['auth_type'] = 'cookie';
 $cfg['Servers'][$i]['host'] = 'mysql1.phpmyadmin.local';
 $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['AllowNoPassword'] = true;
-`
+$cfg['TempDir'] = '/tmp';
+$cfg['blowfish_secret'] = '` +
+        randomString(80) +
+        "';"
 ).toString('base64');
 
 const getDataFromMessage = function(snippetsMsg) {
