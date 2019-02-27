@@ -20,27 +20,20 @@ module.exports = {
                 '' + process.env.CLOUDFLARE_RECORD_NAME
             );
             cf.dnsRecords
-                .del(process.env.CLOUDFLARE_ZONEID, domainName)
+                .add(process.env.CLOUDFLARE_ZONEID, {
+                    type: 'A',
+                    name: domainName,
+                    content: process.env.CLOUDFLARE_RECORD_CONTENT,
+                    proxied: true,
+                })
                 .then(function() {
-                    console.log('Deleted:', domainName);
+                    console.log('Added:', domainName);
+                    resolve(domainName);
                 })
                 .catch(function() {
-                    console.log('Not deleted:', domainName);
-                })
-                .then(function() {
-                    cf.dnsRecords
-                        .add(process.env.CLOUDFLARE_ZONEID, {
-                            type: 'A',
-                            name: domainName,
-                            content: process.env.CLOUDFLARE_RECORD_CONTENT,
-                            proxied: true,
-                        })
-                        .then(function(resp) {
-                            console.log('Added:', domainName);
-                            resolve(domainName, resp);
-                        })
-                        .catch(reject);
-                }).catch(reject);
+                    console.log('Not added:', domainName);
+                    resolve(domainName);
+                });
         });
     },
 };
