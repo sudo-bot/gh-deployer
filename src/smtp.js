@@ -1,5 +1,6 @@
 'use strict';
 
+const logger = require('@src/logger');
 const SMTPServer = require('smtp-server').SMTPServer;
 const data = require('@src/data');
 
@@ -16,24 +17,24 @@ module.exports = {
                         disableReverseLookup: false,
                         maxClients: process.env.SMTP_MAX_CLIENTS,
                         /*onAuth: (auth, session, callback) => {
-                            console.log(auth, session);
+                            logger.info(auth, session);
                             return callback(); // Accept the auth
                         },
                         onConnect: (session, callback) => {
-                            console.log('onConnect', session);
+                            logger.info('onConnect', session);
                             if (session.remoteAddress === '127.0.0.1') {
                                 return callback(new Error('No connections from localhost allowed'));
                             }
                             return callback(); // Accept the connection
                         },
                         onMailFrom: (address, session, callback) => {
-                            console.log('onMailFrom', session, address.address);
+                            logger.info('onMailFrom', session, address.address);
                             return callback(); // Accept the address
                         },*/
                         onRcptTo: (address, session, callback) => {
-                            //console.log(address, session);
+                            //logger.info(address, session);
                             if (data.destinationEmails.includes(address.address) === false) {
-                                console.log(address.address + ' does not exist !');
+                                logger.info(address.address + ' does not exist !');
                                 return callback(new Error('This email does not exist !'));
                             }
                             return callback(); // Accept the address

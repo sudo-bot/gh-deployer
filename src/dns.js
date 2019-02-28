@@ -1,5 +1,6 @@
 'use strict';
 
+const logger = require('@src/logger');
 const cf = require('cloudflare')({
     email: process.env.CLOUDFLARE_EMAIL,
     key: process.env.CLOUDFLARE_KEY,
@@ -27,11 +28,11 @@ module.exports = {
                     proxied: true,
                 })
                 .then(function() {
-                    console.log('Added:', domainName);
+                    logger.info('Added:', domainName);
                     resolve(domainName);
                 })
                 .catch(function() {
-                    console.log('Not added:', domainName);
+                    logger.info('Not added:', domainName);
                     resolve(domainName);
                 });
         });

@@ -4,6 +4,7 @@ process.env.TZ = 'UTC';
 require('dotenv').config({ path: __dirname + '/.env' });
 require('module-alias/register');
 
+const logger = require('@src/logger');
 const docker = require('@src/docker');
 const github = require('@src/github');
 const data = require('@src/data');
@@ -57,21 +58,21 @@ smtp.smtpServer((stream, callback) => {
                                                     domain
                                                 )
                                             );
-                                            console.log('Published-domain:', domain);
+                                            logger.info('Published-domain:', domain);
                                         })
-                                        .catch(error => console.log(error, emailInfos));
+                                        .catch(error => logger.error(error, emailInfos));
                                 })
-                                .catch(error => console.log(error, prInfos, emailInfos));
+                                .catch(error => logger.error(error, prInfos, emailInfos));
                         })
-                        .catch(error => console.log(error, prInfos, emailInfos));
+                        .catch(error => logger.error(error, prInfos, emailInfos));
                 })
-                .catch(error => console.log(error, emailInfos));
+                .catch(error => logger.error(error, emailInfos));
         })
-        .catch(error => console.log(error));
+        .catch(error => logger.error(error));
 })
     .then(smtpServer => {
-        smtpServer.listen(25, '0.0.0.0', () => {
-            console.log('Listening...');
+        smtpServer.listen(process.env.SMTP_PORT || 25, '0.0.0.0', () => {
+            logger.info('Listening...');
         });
     })
-    .catch(error => console.log(error));
+    .catch(error => logger.error(error));

@@ -1,5 +1,6 @@
 'use strict';
 
+const logger = require('@src/logger');
 const { Docker } = require('node-docker-api');
 
 const docker = new Docker({ socketPath: '/var/run/docker.sock' });
@@ -25,13 +26,14 @@ module.exports = {
                     })
                     .catch(function(err) {
                         if (err.statusCode === 404) {
-                            console.log('Container ' + containerName + ' not found.');
+                            logger.info('Container ' + containerName + ' not found.');
                         } else {
-                            console.log(err);
+                            logger.error(err);
+                            reject(err);
                         }
                     })
                     .then(function() {
-                        console.log('Deploying: ', containerName);
+                        logger.info('Deploying: ', containerName);
                         docker.container
                             .create({
                                 Image: process.env.DOCKER_IMAGE,

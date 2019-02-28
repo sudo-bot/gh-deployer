@@ -1,5 +1,6 @@
 'use strict';
 
+const logger = require('@src/logger');
 const simpleMailParser = require('mailparser').simpleParser;
 
 //const regexBoundary = /Content-Type: [\/a-z;\s]+boundary="(?<boundary>[=\-_a-z0-9]+)"/gm;
@@ -129,22 +130,23 @@ module.exports = {
                                     repoName: metadata.entity.title,
                                 });
                             } else {
-                                console.log('From-me:', message.message);
+                                logger.info('From-me:', message.message);
                             }
                         } else {
-                            console.log(
+                            logger.info(
                                 'Not allowed:',
                                 message !== null ? message.user : 'Anonymous ?'
                             );
                         }
                     } else {
-                        console.log(
+                        logger.error(
                             'Error: ',
                             parsed.text,
                             parsed.textAsHtml,
                             parsed.html,
                             matchs
                         );
+                        reject(parsed.text);
                     }
                 })
                 .catch(reject);

@@ -16,7 +16,6 @@ module.exports = {
                         reject(err);
                     } else {
                         resolve(data);
-                        //console.log(data.html_url, data.author_association);
                     }
                 }
             );

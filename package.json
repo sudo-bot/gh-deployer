@@ -49,8 +49,10 @@
     },
     "license": "MPL-2.0",
     "dependencies": {
+        "@sentry/node": "^4.6.4",
         "cloudflare": "^2.4.1",
         "dotenv": "^6.2.0",
+        "log4js": "^4.0.2",
         "mailparser": "^2.4.3",
         "module-alias": "^2.2.0",
         "node-docker-api": "^1.1.22",
