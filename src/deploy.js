@@ -43,7 +43,7 @@ module.exports = {
                                         github
                                             .updateComment(
                                                 emailInfos.prId,
-                                                prInfos.head.repo.full_name,
+                                                prInfos.base.repo.full_name,
                                                 deployComment.id,
                                                 comments.getDeployedComment(
                                                     emailInfos.commentId,
