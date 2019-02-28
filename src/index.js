@@ -23,7 +23,7 @@ smtp.smtpServer((stream, callback) => {
                         // No nothing
                         break;
                     default:
-                        logger.warn('Unhandled action', action, commands.COMMANDS);
+                        logger.warn('Unhandled action', action, commands.COMMANDS, emailInfos);
                         break;
                 }
             }
