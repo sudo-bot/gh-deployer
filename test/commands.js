@@ -6,8 +6,12 @@ const expect = require('chai').expect;
 
 module.exports = function() {
     suite('commands', function() {
-        test('test deploy PR command', function(done) {
+        test('test deploy PR command dataset-1', function(done) {
             expect(commands.getCommand('/deploy PR')).to.equal(commands.COMMANDS.DEPOY_PR);
+            done();
+        });
+        test('test deploy PR command dataset-2', function(done) {
+            expect(commands.getCommand('@sudo-bot Deploy this PR')).to.equal(commands.COMMANDS.DEPOY_PR);
             done();
         });
         test('test random string', function(done) {

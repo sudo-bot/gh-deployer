@@ -16,13 +16,14 @@ smtp.smtpServer((stream, callback) => {
                 let action = data.getDataFromMessage(emailInfos.message);
                 switch (action) {
                     case commands.COMMANDS.DEPOY_PR:
+                    case commands.COMMANDS.DEPLOY_AND_MERGE_MASTER:
                         deploy.deploy(emailInfos);
                         break;
                     case commands.COMMANDS.DO_NOTHING:
                         // No nothing
                         break;
                     default:
-                        logger.warning('Unhandled action', action);
+                        logger.warn('Unhandled action', action, commands.COMMANDS);
                         break;
                 }
             }
