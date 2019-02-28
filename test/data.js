@@ -18,6 +18,10 @@ module.exports = function() {
             expect(data.compiledPhpMyAdminConfig).to.be.a('string');
             done();
         });
+        test('test replace emoji', function(done) {
+            expect(data.replaceEmoji('❤️')).to.equal(':heart:');
+            done();
+        });
         test('test replace tokens in a string', function(done) {
             expect(
                 data.replaceTokens(

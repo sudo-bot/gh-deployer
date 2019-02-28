@@ -1,6 +1,7 @@
 'use strict';
 
 const logger = require('@src/logger');
+const emoji = require('node-emoji');
 const simpleMailParser = require('mailparser').simpleParser;
 
 //const regexBoundary = /Content-Type: [\/a-z;\s]+boundary="(?<boundary>[=\-_a-z0-9]+)"/gm;
@@ -58,6 +59,11 @@ $cfg['blowfish_secret'] = '` +
         "';"
 ).toString('base64');
 
+/**
+ * Get data from message
+ * @param {String} snippetsMsg
+ * @return {Object}
+ */
 const getDataFromMessage = function(snippetsMsg) {
     const regexMessage = /^@(?<user>[a-z0-9_-]+) in #(?<prId>[0-9]+): (?<message>.*?)$/is; // jshint ignore:line
     let message = regexMessage.exec(snippetsMsg);
@@ -77,6 +83,9 @@ module.exports = {
     destinationEmails: destinationEmails,
     getDataFromMessage: getDataFromMessage,
     randomString: randomString,
+    replaceEmoji: text => {
+        return emoji.replace(text, emoji => `:${emoji.key}:`);
+    },
     parseEmail: stream => {
         return new Promise((resolve, reject) => {
             simpleMailParser(stream)
@@ -114,24 +123,20 @@ module.exports = {
                         let snippetsMsg = metadata.updates.snippets[0].message;
                         let message = getDataFromMessage(snippetsMsg);
                         if (message !== null && allowedUsernames.includes(message.user)) {
-                            //var ghissue = GHclient.issue(metadata.entity.title, 37);
                             // message : { user: 'williamdes', prID: '30', message: '@sudo-bot :)' }
-                            if (message.user != 'sudo-bot') {
-                                let commentLastIndex = metadata.updates.action.url.lastIndexOf(
-                                    '-'
-                                );
-                                const commentId = metadata.updates.action.url.slice(
-                                    commentLastIndex + 1
-                                );
-                                resolve({
-                                    commentId: commentId,
-                                    requestedByUser: message.user,
-                                    prId: message.prId,
-                                    repoName: metadata.entity.title,
-                                });
-                            } else {
-                                logger.info('From-me:', message.message);
-                            }
+                            let commentLastIndex = metadata.updates.action.url.lastIndexOf(
+                                '-'
+                            );
+                            const commentId = metadata.updates.action.url.slice(
+                                commentLastIndex + 1
+                            );
+                            resolve({
+                                commentId: commentId,
+                                requestedByUser: message.user,
+                                message: message.message,
+                                prId: message.prId,
+                                repoName: metadata.entity.title,
+                            });
                         } else {
                             logger.info(
                                 'Not allowed:',
