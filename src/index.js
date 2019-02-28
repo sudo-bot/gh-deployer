@@ -13,8 +13,7 @@ smtp.smtpServer((stream, callback) => {
             if (emailInfos.requestedByUser === process.env.ROBOT_USER) {
                 logger.info('From-me:', emailInfos.message);
             } else {
-                const action = data.getDataFromMessage(emailInfos.message);
-                const command = (action && action.message) ? commands.getCommand(action.message) : -1;
+                const command = commands.getCommand(emailInfos.message);
                 switch (command) {
                     case commands.COMMANDS.DEPOY_PR:
                     case commands.COMMANDS.DEPLOY_AND_MERGE_MASTER:
@@ -26,7 +25,6 @@ smtp.smtpServer((stream, callback) => {
                     default:
                         logger.warn(
                             'Unhandled action',
-                            action,
                             command,
                             commands.COMMANDS,
                             emailInfos
