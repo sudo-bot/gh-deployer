@@ -83,6 +83,7 @@ const getDataFromMessage = function(snippetsMsg) {
 module.exports = {
     compiledPhpMyAdminConfig: compiledPhpMyAdminConfig,
     destinationEmails: destinationEmails,
+    allowedUsernames: allowedUsernames,
     getDataFromMessage: getDataFromMessage,
     randomString: randomString,
     replaceEmoji: text => {
