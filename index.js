@@ -22,7 +22,7 @@ smtp.smtpServer((stream, callback) => {
                     github
                         .createComment(
                             emailInfos.prId,
-                            prInfos.head.repo.full_name,
+                            prInfos.head.base.full_name,
                             comments.getPendingComment(
                                 emailInfos.commentId,
                                 prInfos.head.ref,
