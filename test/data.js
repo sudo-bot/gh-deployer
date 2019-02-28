@@ -116,5 +116,15 @@ module.exports = function() {
             });
             done();
         });
+        test('test get data from message dataset-11', function(done) {
+            expect(
+                data.getDataFromMessage('@ano-nymous in #25566: @sudo-bot Deploy this PR')
+            ).to.deep.equal({
+                message: '@sudo-bot Deploy this PR',
+                prId: 25566,
+                user: 'ano-nymous',
+            });
+            done();
+        });
     });
 };
