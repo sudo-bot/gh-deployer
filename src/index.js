@@ -14,7 +14,7 @@ smtp.smtpServer((stream, callback) => {
                 logger.info('From-me:', emailInfos.message);
             } else {
                 const action = data.getDataFromMessage(emailInfos.message);
-                const command = commands.getCommand(action.message);
+                const command = (action && action.message) ? commands.getCommand(action.message) : -1;
                 switch (command) {
                     case commands.COMMANDS.DEPOY_PR:
                     case commands.COMMANDS.DEPLOY_AND_MERGE_MASTER:
