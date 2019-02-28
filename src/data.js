@@ -18,7 +18,9 @@ const destinationEmails = ['hooks@mail.hooks.wdes.eu'];
 
 const allowedHostnames = [/^out-[1-9]{1,2}\.smtp\.github\.com$/];
 
-const allowedUsernames = ['williamdes', 'sudo-bot'];
+const allowedUsernames = process.env.ALLOWED_USERNAMES.split(',');
+
+logger.info('Allowed users:', allowedUsernames);
 
 /**
  * @see https://gist.github.com/6174/6062387
