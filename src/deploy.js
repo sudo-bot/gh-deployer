@@ -29,7 +29,8 @@ module.exports = {
                                 prInfos.head.repo.clone_url,
                                 prInfos.head.ref,
                                 prInfos.head.sha,
-                                data.compiledPhpMyAdminConfig
+                                data.compiledPhpMyAdminConfig,
+                                data.randomString(80)
                             )
                             .then(docker => {
                                 dns.publishDnsRecord(

@@ -3,6 +3,7 @@
 require('module-alias/register');
 
 process.env.ALLOWED_USERNAMES = 'test1,test2';
+process.env.PMA_CONFIG_FILE = __dirname + '/../.gitignore';
 const data = require('@src/data');
 const expect = require('chai').expect;
 

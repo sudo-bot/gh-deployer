@@ -3,6 +3,7 @@
 const logger = require('@src/logger');
 const emoji = require('node-emoji');
 const simpleMailParser = require('mailparser').simpleParser;
+const fs = require('fs');
 
 //const regexBoundary = /Content-Type: [\/a-z;\s]+boundary="(?<boundary>[=\-_a-z0-9]+)"/gm;
 //Content-Type: [\/a-z;\s]+boundary="(?<boundary>[=\-_a-z0-9]+)"(([.\S\s]*?)--\k<boundary>)*
@@ -41,25 +42,9 @@ const randomString = function(length) {
         .substring(0, length);
 };
 
-const compiledPhpMyAdminConfig = Buffer.from(
-    `<?php
-declare(strict_types=1);
-$i = 0;
-$i++;
-$cfg['Servers'][$i]['auth_type'] = 'cookie';
-$cfg['Servers'][$i]['host'] = 'mariadb1.phpmyadmin.local';
-$cfg['Servers'][$i]['compress'] = false;
-$cfg['Servers'][$i]['AllowNoPassword'] = true;
-$i++;
-$cfg['Servers'][$i]['auth_type'] = 'cookie';
-$cfg['Servers'][$i]['host'] = 'mysql1.phpmyadmin.local';
-$cfg['Servers'][$i]['compress'] = false;
-$cfg['Servers'][$i]['AllowNoPassword'] = true;
-$cfg['TempDir'] = '/tmp';
-$cfg['blowfish_secret'] = '` +
-        randomString(80) +
-        "';"
-).toString('base64');
+const compiledPhpMyAdminConfig = fs.readFileSync(
+    process.env.PMA_CONFIG_FILE, { encoding: 'base64' }
+);
 
 /**
  * Get data from message

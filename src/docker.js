@@ -7,7 +7,7 @@ const docker = new Docker({ socketPath: '/var/run/docker.sock' });
 const data = require('@src/data');
 
 module.exports = {
-    createDocker: (prId, cloneUrl, ref, sha, compiledPhpMyAdminConfig) => {
+    createDocker: (prId, cloneUrl, ref, sha, compiledPhpMyAdminConfig, randomString) => {
         return new Promise((resolve, reject) => {
             try {
                 const containerName = data.replaceTokens(
@@ -69,6 +69,7 @@ module.exports = {
                                     'GIT_URL=' + cloneUrl,
                                     'GIT_BRANCH=origin/' + ref,
                                     'GIT_SHA=' + sha,
+                                    'RANDOM_STRING=' + randomString,
                                     'PMA_CONFIG=' + compiledPhpMyAdminConfig,
                                 ],
                             })
