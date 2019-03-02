@@ -65,7 +65,7 @@ module.exports = {
                                 },
                                 Entrypoint: process.env.DOCKER_ENTRYPOINT,
                                 Env: [
-                                    'REF_DIR=/refs',
+                                    'REF_DIRECTORY=/refs',
                                     'GIT_URL=' + cloneUrl,
                                     'GIT_BRANCH=origin/' + ref,
                                     'GIT_SHA=' + sha,
