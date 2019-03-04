@@ -42,9 +42,9 @@ const randomString = function(length) {
         .substring(0, length);
 };
 
-const compiledPhpMyAdminConfig = fs.readFileSync(
-    process.env.PMA_CONFIG_FILE, { encoding: 'base64' }
-);
+const compiledPhpMyAdminConfig = fs.readFileSync(process.env.PMA_CONFIG_FILE, {
+    encoding: 'base64',
+});
 
 /**
  * Get data from message
@@ -74,6 +74,7 @@ module.exports = {
     replaceEmoji: text => {
         return emoji.replace(text, emoji => `:${emoji.key}:`);
     },
+    protectConfig: config => Buffer.from(config).toString('base64'),
     parseEmail: stream => {
         return new Promise((resolve, reject) => {
             simpleMailParser(stream)

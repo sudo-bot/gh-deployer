@@ -30,6 +30,10 @@ module.exports = function() {
             expect(data.replaceEmoji('❤️')).to.equal(':heart:');
             done();
         });
+        test('test protect config', function(done) {
+            expect(data.protectConfig('❤️')).to.equal('4p2k77iP');
+            done();
+        });
         test('test replace tokens in a string', function(done) {
             expect(
                 data.replaceTokens(

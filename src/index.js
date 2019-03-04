@@ -13,24 +13,35 @@ smtp.smtpServer((stream, callback) => {
             if (emailInfos.requestedByUser === process.env.ROBOT_USER) {
                 logger.info('From-me:', emailInfos.message);
             } else {
-                const command = commands.getCommand(emailInfos.message);
-                switch (command) {
-                    case commands.COMMANDS.DEPOY_PR:
-                    case commands.COMMANDS.DEPLOY_AND_MERGE_MASTER:
-                        deploy.deploy(emailInfos);
-                        break;
-                    case commands.COMMANDS.DO_NOTHING:
-                        // No nothing
-                        break;
-                    default:
-                        logger.warn(
-                            'Unhandled action',
-                            command,
-                            commands.COMMANDS,
-                            emailInfos
-                        );
-                        break;
-                }
+                commands
+                    .getCommand(emailInfos.message)
+                    .then(commandData => {
+                        switch (commandData.command) {
+                            case commands.COMMANDS.DEPOY_PR:
+                            case commands.COMMANDS.DEPLOY_AND_MERGE:
+                            case commands.DEPLOY_AND_MERGE_WITH_CONFIG:
+                                deploy.deploy(emailInfos, data.compiledPhpMyAdminConfig);
+                                break;
+                            case commands.DEPLOY_WITH_CONFIG:
+                                deploy.deploy(
+                                    emailInfos,
+                                    data.protectConfig(commandData.options.configBlock)
+                                );
+                                break;
+                            case commands.COMMANDS.DO_NOTHING:
+                                // No nothing
+                                break;
+                            default:
+                                logger.warn(
+                                    'Unhandled action',
+                                    commandData,
+                                    commands.COMMANDS,
+                                    emailInfos
+                                );
+                                break;
+                        }
+                    })
+                    .catch(error => logger.error(error));
             }
         })
         .catch(error => logger.error(error));

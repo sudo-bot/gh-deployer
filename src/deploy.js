@@ -8,7 +8,7 @@ const comments = require('@src/comments');
 const data = require('@src/data');
 
 module.exports = {
-    deploy: emailInfos => {
+    deploy: (emailInfos, configBlock) => {
         github
             .getPrInfos(emailInfos.prId, emailInfos.repoName)
             .then(prInfos => {
@@ -29,7 +29,7 @@ module.exports = {
                                 prInfos.head.repo.clone_url,
                                 prInfos.head.ref,
                                 prInfos.head.sha,
-                                data.compiledPhpMyAdminConfig,
+                                configBlock,
                                 data.randomString(80)
                             )
                             .then(docker => {

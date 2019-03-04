@@ -51,7 +51,6 @@
     "license": "MPL-2.0",
     "dependencies": {
         "@sentry/node": "^4.6.4",
-        "bayes": "0.0.7",
         "cloudflare": "^2.4.1",
         "dotenv": "^6.2.0",
         "log4js": "^4.0.2",
@@ -59,6 +58,7 @@
         "module-alias": "^2.2.0",
         "node-docker-api": "^1.1.22",
         "node-emoji": "^1.10.0",
+        "node-nlp": "^2.4.2",
         "octonode": "^0.9.5",
         "sentencer": "^0.1.5",
         "smtp-server": "^3.5.0"
