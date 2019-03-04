@@ -54,9 +54,13 @@ module.exports = {
                                     },
                                     '' + process.env.DOCKER_DOMAIN_NAME
                                 ),
-                                Volumes: {
-                                    '/refs': {},
-                                },
+                                Volumes: process.env.DOCKER_VOLUMES.split(',').reduce(
+                                    (accumulator, target) => ({
+                                        ...accumulator,
+                                        [target]: {},
+                                    }),
+                                    {}
+                                ),
                                 WorkingDir: process.env.DOCKER_WORKDIR,
                                 HostConfig: {
                                     DnsSearch: process.env.DOCKER_DNS_SEARCH.split(','),
