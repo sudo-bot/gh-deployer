@@ -2,8 +2,10 @@
 
 const Sentencer = require('sentencer');
 const comments = require('@src/comments');
+const data = require('@src/data');
 const logger = require('@src/logger');
 const nodenpl = require('node-nlp');
+
 const manager = new nodenpl.NlpManager({
     languages: ['en'],
     ner: {
@@ -11,7 +13,6 @@ const manager = new nodenpl.NlpManager({
         builtinWhitelist: [],
     },
 });
-const regexConfigBlock = /(?:```)(?:php{0,1})(?<config>.*?)(?=```)```/gis;
 
 const branch = manager.addTrimEntity('branch');
 branch.addAfterFirstCondition('en', 'branch');
@@ -24,7 +25,7 @@ branchDst.addAfterFirstCondition('en', 'into');
 branchDst.addBetweenCondition('en', 'into', 'and');
 //manager.addRegexEntity('branchDst', 'en', /(?: )\S+(?= )/ig);
 
-manager.addRegexEntity('configBlock', 'en', regexConfigBlock);
+manager.addRegexEntity('configBlock', 'en', data.regexConfigBlock);
 
 manager.slotManager.addSlot('merge', 'branch', false, {});
 

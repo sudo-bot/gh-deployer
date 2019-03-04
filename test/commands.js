@@ -1,6 +1,9 @@
 'use strict';
 
 require('module-alias/register');
+
+process.env.ALLOWED_USERNAMES = 'test1,test2';
+process.env.PMA_CONFIG_FILE = __filename;
 const commands = require('@src/commands');
 const expect = require('chai').expect;
 

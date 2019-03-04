@@ -26,6 +26,18 @@ module.exports = function() {
             expect(data.compiledPhpMyAdminConfig).to.be.a('string');
             done();
         });
+        test('test get data config dataset-1', function(done) {
+            expect(data.getDataFromConfig("```php<?php echo 'ok';```")).to.equal("<?php echo 'ok';");
+            done();
+        });
+        test('test get data config dataset-2', function(done) {
+            expect(data.getDataFromConfig("```<?php echo 'ok';```")).to.equal("<?php echo 'ok';");
+            done();
+        });
+        test('test get data config dataset-3', function(done) {
+            expect(data.getDataFromConfig("```\nphp<?php echo 'ok';```")).to.equal("\nphp<?php echo 'ok';");
+            done();
+        });
         test('test replace emoji', function(done) {
             expect(data.replaceEmoji('❤️')).to.equal(':heart:');
             done();

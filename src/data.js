@@ -15,6 +15,8 @@ const fs = require('fs');
 
 const regexInboxMarkup = /<script type="application\/json" data-scope="inboxmarkup">(?<jsonld>[\S\s]+?)?<\/script>/im;
 
+const regexConfigBlock = /(?:```)(?:php){0,1}(?<config>.*?)(?=```)```/gis; // jshint ignore:line
+
 const destinationEmails = ['hooks@mail.hooks.wdes.eu'];
 
 const allowedHostnames = [/^out-[1-9]{1,2}\.smtp\.github\.com$/];
@@ -65,12 +67,29 @@ const getDataFromMessage = function(snippetsMsg) {
     }
 };
 
+/**
+ * Get data from config
+ * @param {String} snippetsMsg
+ * @return {Object}
+ */
+const getDataFromConfig = function(snippetsMsg) {
+    const regexConfig = /(?:```)(?:php){0,1}(?<config>.*?)(?=```)```/gis; // jshint ignore:line
+    let message = regexConfig.exec(snippetsMsg);
+    if (message != null) {
+        return message.groups.config;
+    } else {
+        return null;
+    }
+};
+
 module.exports = {
     compiledPhpMyAdminConfig: compiledPhpMyAdminConfig,
     destinationEmails: destinationEmails,
     allowedUsernames: allowedUsernames,
     getDataFromMessage: getDataFromMessage,
     randomString: randomString,
+    regexConfigBlock: regexConfigBlock,
+    getDataFromConfig: getDataFromConfig,
     replaceEmoji: text => {
         return emoji.replace(text, emoji => `:${emoji.key}:`);
     },
