@@ -19,10 +19,10 @@ smtp.smtpServer((stream, callback) => {
                         switch (commandData.command) {
                             case commands.COMMANDS.DEPOY_PR:
                             case commands.COMMANDS.DEPLOY_AND_MERGE:
-                            case commands.DEPLOY_AND_MERGE_WITH_CONFIG:
+                            case commands.COMMANDS.DEPLOY_AND_MERGE_WITH_CONFIG:
                                 deploy.deploy(emailInfos, data.compiledPhpMyAdminConfig);
                                 break;
-                            case commands.DEPLOY_WITH_CONFIG:
+                            case commands.COMMANDS.DEPLOY_WITH_CONFIG:
                                 deploy.deploy(
                                     emailInfos,
                                     data.protectConfig(commandData.options.configBlock)
