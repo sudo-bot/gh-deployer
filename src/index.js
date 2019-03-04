@@ -25,7 +25,7 @@ smtp.smtpServer((stream, callback) => {
                             case commands.COMMANDS.DEPLOY_WITH_CONFIG:
                                 deploy.deploy(
                                     emailInfos,
-                                    data.protectConfig(data.getDataFromConfig(commandData.options.configBlock))
+                                    data.protectConfig(data.getDataFromConfig(commandData.options.configBlock).trim())
                                 );
                                 break;
                             case commands.COMMANDS.DO_NOTHING:
