@@ -23,21 +23,13 @@ smtp.smtpServer((stream, callback) => {
                                 deploy.deploy(emailInfos, data.compiledPhpMyAdminConfig);
                                 break;
                             case commands.COMMANDS.DEPLOY_WITH_CONFIG:
-                                deploy.deploy(
-                                    emailInfos,
-                                    data.protectConfig(commandData.options.configBlock)
-                                );
+                                deploy.deploy(emailInfos, data.protectConfig(commandData.options.configBlock));
                                 break;
                             case commands.COMMANDS.DO_NOTHING:
                                 // No nothing
                                 break;
                             default:
-                                logger.warn(
-                                    'Unhandled action',
-                                    commandData,
-                                    commands.COMMANDS,
-                                    emailInfos
-                                );
+                                logger.warn('Unhandled action', commandData, commands.COMMANDS, emailInfos);
                                 break;
                         }
                     })

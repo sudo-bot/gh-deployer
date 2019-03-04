@@ -113,12 +113,8 @@ module.exports = {
                         let message = getDataFromMessage(snippetsMsg);
                         if (message !== null && allowedUsernames.includes(message.user)) {
                             // message : { user: 'williamdes', prID: '30', message: '@sudo-bot :)' }
-                            let commentLastIndex = metadata.updates.action.url.lastIndexOf(
-                                '-'
-                            );
-                            const commentId = metadata.updates.action.url.slice(
-                                commentLastIndex + 1
-                            );
+                            let commentLastIndex = metadata.updates.action.url.lastIndexOf('-');
+                            const commentId = metadata.updates.action.url.slice(commentLastIndex + 1);
                             resolve({
                                 commentId: commentId,
                                 requestedByUser: message.user,
@@ -127,19 +123,10 @@ module.exports = {
                                 repoName: metadata.entity.title,
                             });
                         } else {
-                            logger.info(
-                                'Not allowed:',
-                                message !== null ? message.user : 'Anonymous ?'
-                            );
+                            logger.info('Not allowed:', message !== null ? message.user : 'Anonymous ?');
                         }
                     } else {
-                        logger.error(
-                            'Error: ',
-                            parsed.text,
-                            parsed.textAsHtml,
-                            parsed.html,
-                            matchs
-                        );
+                        logger.error('Error: ', parsed.text, parsed.textAsHtml, parsed.html, matchs);
                         reject(parsed.text);
                     }
                 })
@@ -149,10 +136,7 @@ module.exports = {
     replaceTokens: (tokens, stringToReplace) => {
         Object.keys(tokens).forEach(function(key) {
             var val = tokens[key];
-            stringToReplace = stringToReplace.replace(
-                new RegExp('\\{\\{' + key + '\\}\\}', 'g'),
-                val
-            );
+            stringToReplace = stringToReplace.replace(new RegExp('\\{\\{' + key + '\\}\\}', 'g'), val);
         });
         return stringToReplace;
     },

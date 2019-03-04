@@ -36,10 +36,7 @@ module.exports = function() {
                             expect(result.command, 'Tested-command: "' + text + '"').to.equal(
                                 commands.COMMANDS.DEPLOY_AND_MERGE
                             );
-                            expect(
-                                result.options,
-                                'Tested-command: "' + text + '"'
-                            ).to.deep.equal({
+                            expect(result.options, 'Tested-command: "' + text + '"').to.deep.equal({
                                 branchDst: 'master',
                                 branchSrc: 'QA',
                             });
@@ -83,9 +80,7 @@ module.exports = function() {
             Hello world
             `;
             commands.DEPLOY_WITH_CONFIG_COMMANDS.forEach(command => {
-                DEPLOY_WITH_CONFIG_COMMANDS_EXAMPLES.push(
-                    command.replace('%configBlock%', configBlock1)
-                );
+                DEPLOY_WITH_CONFIG_COMMANDS_EXAMPLES.push(command.replace('%configBlock%', configBlock1));
             });
             forEachPromise(DEPLOY_WITH_CONFIG_COMMANDS_EXAMPLES, text => {
                 return new Promise(resolve => {
@@ -96,10 +91,7 @@ module.exports = function() {
                             expect(result.command, 'Tested-command: "' + text + '"').to.equal(
                                 commands.COMMANDS.DEPLOY_WITH_CONFIG
                             );
-                            expect(
-                                result.options,
-                                'Tested-command: "' + text + '"'
-                            ).to.deep.equal({
+                            expect(result.options, 'Tested-command: "' + text + '"').to.deep.equal({
                                 configBlock: configBlockBase1,
                             });
                             resolve();
@@ -167,10 +159,7 @@ module.exports = function() {
                             expect(result.command, 'Tested-command: "' + text + '"').to.equal(
                                 commands.COMMANDS.DEPLOY_AND_MERGE_WITH_CONFIG
                             );
-                            expect(
-                                result.options,
-                                'Tested-command: "' + text + '"'
-                            ).to.deep.equal({
+                            expect(result.options, 'Tested-command: "' + text + '"').to.deep.equal({
                                 branchDst: 'master',
                                 branchSrc: 'QA',
                                 configBlock: configBlockBase1,
@@ -193,10 +182,7 @@ module.exports = function() {
                             expect(result.command, 'Tested-command: "' + text + '"').to.equal(
                                 commands.COMMANDS.DEPOY_PR
                             );
-                            expect(
-                                result.options,
-                                'Tested-command: "' + text + '"'
-                            ).to.deep.equal({});
+                            expect(result.options, 'Tested-command: "' + text + '"').to.deep.equal({});
                             resolve();
                         })
                         .catch(err => done(err));

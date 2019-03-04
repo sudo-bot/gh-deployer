@@ -83,11 +83,7 @@ const DO_NOTHING_COMMANDS = [
     'deployed instance',
     'Deployed on the server',
     'I love you',
-    comments.getPendingComment(
-        123654987,
-        'head/refs/pr-123456',
-        '40bd001563085fc35165329ea1ff5c5ecbdbbeef'
-    ),
+    comments.getPendingComment(123654987, 'head/refs/pr-123456', '40bd001563085fc35165329ea1ff5c5ecbdbbeef'),
     comments.getDeployedComment(
         123654987,
         'head/refs/pr-123456',
@@ -132,11 +128,7 @@ const CREDS_COMMANDS = [
 logger.info('Start to learn');
 manager.addDocument('en', 'Deploy branch and merge into %branch%', COMMANDS.DEPLOY_AND_MERGE);
 manager.addDocument('en', 'Deploy PR and merge into %branch%', COMMANDS.DEPLOY_AND_MERGE);
-manager.addDocument(
-    'en',
-    'Deploy pull-request and merge into %branch%',
-    COMMANDS.DEPLOY_AND_MERGE
-);
+manager.addDocument('en', 'Deploy pull-request and merge into %branch%', COMMANDS.DEPLOY_AND_MERGE);
 DEPLOY_COMMANDS.forEach(command => {
     manager.addDocument('en', command, COMMANDS.DEPOY_PR);
 });
@@ -166,25 +158,17 @@ for (let i = 0; i < 100; i++) {
 DEPLOY_AND_MERGE_COMMANDS.forEach(command => {
     manager.addDocument('en', command, COMMANDS.DEPLOY_AND_MERGE);
 });
-logger.debug(
-    'Learned ' + DEPLOY_AND_MERGE_COMMANDS.length + ' deploy and merge with config commands'
-);
+logger.debug('Learned ' + DEPLOY_AND_MERGE_COMMANDS.length + ' deploy and merge with config commands');
 
 DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS.forEach(command => {
     manager.addDocument('en', command, COMMANDS.DEPLOY_AND_MERGE_WITH_CONFIG);
 });
-logger.debug(
-    'Learned ' +
-        DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS.length +
-        ' deploy and merge with config commands'
-);
+logger.debug('Learned ' + DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS.length + ' deploy and merge with config commands');
 
 DEPLOY_WITH_CONFIG_COMMANDS.forEach(command => {
     manager.addDocument('en', command, COMMANDS.DEPLOY_WITH_CONFIG);
 });
-logger.debug(
-    'Learned ' + DEPLOY_WITH_CONFIG_COMMANDS.length + ' deploy and merge with config commands'
-);
+logger.debug('Learned ' + DEPLOY_WITH_CONFIG_COMMANDS.length + ' deploy and merge with config commands');
 
 logger.info('End of the lesson');
 
@@ -212,10 +196,7 @@ module.exports = {
                 .process('en', text, {})
                 .then(responseManager => {
                     resolve({
-                        command:
-                            responseManager.intent === 'None'
-                                ? COMMANDS.DO_NOTHING
-                                : responseManager.intent,
+                        command: responseManager.intent === 'None' ? COMMANDS.DO_NOTHING : responseManager.intent,
                         options: responseManager.entities.reduce(
                             (accumulator, target) => ({
                                 ...accumulator,

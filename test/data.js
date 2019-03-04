@@ -48,9 +48,7 @@ module.exports = function() {
             done();
         });
         test('test get data from message dataset-1', function(done) {
-            expect(
-                data.getDataFromMessage('@williamdes in #30: Hey hello @sudo-bot !')
-            ).to.deep.equal({
+            expect(data.getDataFromMessage('@williamdes in #30: Hey hello @sudo-bot !')).to.deep.equal({
                 message: 'Hey hello @sudo-bot !',
                 prId: 30,
                 user: 'williamdes',
@@ -106,9 +104,7 @@ module.exports = function() {
             done();
         });
         test('test get data from message dataset-9 (multiline)', function(done) {
-            expect(
-                data.getDataFromMessage('@sudo-bot in #132654987: Hey\nHello!\nBye.')
-            ).to.deep.equal({
+            expect(data.getDataFromMessage('@sudo-bot in #132654987: Hey\nHello!\nBye.')).to.deep.equal({
                 message: 'Hey\nHello!\nBye.',
                 prId: 132654987,
                 user: 'sudo-bot',
@@ -129,9 +125,7 @@ module.exports = function() {
             done();
         });
         test('test get data from message dataset-11', function(done) {
-            expect(
-                data.getDataFromMessage('@ano-nymous in #25566: @sudo-bot Deploy this PR')
-            ).to.deep.equal({
+            expect(data.getDataFromMessage('@ano-nymous in #25566: @sudo-bot Deploy this PR')).to.deep.equal({
                 message: '@sudo-bot Deploy this PR',
                 prId: 25566,
                 user: 'ano-nymous',

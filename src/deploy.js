@@ -16,11 +16,7 @@ module.exports = {
                     .createComment(
                         emailInfos.prId,
                         prInfos.base.repo.full_name,
-                        comments.getPendingComment(
-                            emailInfos.commentId,
-                            prInfos.head.ref,
-                            prInfos.head.sha
-                        )
+                        comments.getPendingComment(emailInfos.commentId, prInfos.head.ref, prInfos.head.sha)
                     )
                     .then(deployComment => {
                         docker
@@ -55,9 +51,7 @@ module.exports = {
                                                 )
                                             )
                                             .then(() => {
-                                                logger.info(
-                                                    'Updated comment:#' + deployComment.id
-                                                );
+                                                logger.info('Updated comment:#' + deployComment.id);
                                             })
                                             .catch(error => logger.error(error));
                                     })
