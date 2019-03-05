@@ -81,6 +81,7 @@
     "bin": {},
     "_moduleAliases": {
         "@src": "src",
+        "@root": "./",
         "@test": "test"
     }
 }

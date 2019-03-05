@@ -1,7 +1,14 @@
 'use strict';
 
 const Sentry = require('@sentry/node');
-Sentry.init({ dsn: process.env.SENTRY_DSN });
+const packageJson = require('@root/package.json');
+
+Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    release: packageJson.name + '@' + packageJson.version,
+    environment: process.env.NODE_ENV,
+    serverName: require('os').hostname() || null,
+});
 
 /**
  * The appender function.
