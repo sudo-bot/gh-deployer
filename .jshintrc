@@ -1,0 +1,11 @@
+{
+    "strict": true,
+    "curly": true,
+    "quotmark": "simple",
+    "esversion": 9,
+    "browser": false,
+    "mocha": true,
+    "node": true,
+    "noempty": true,
+    "debug": false
+}

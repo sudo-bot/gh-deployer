@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+    - node_modules
+
+addons:
+  apt:
+    packages:
+      - git
+
+install:
+  - npm install -g codecov
+  - npm install
+  - echo -e "" > .env
+
+script:
+  - npm run test
+  - npm run report-coverage
+  - codecov
+  - npm run jshint
