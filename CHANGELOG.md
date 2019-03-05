@@ -6,7 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+
+
+## [v1.0.0]
+
 ### Added
+- [1561b46](https://github.com/sudo/gh-deployer/commit/1561b4609632728f39be21e5d6026c36085e8b51) add: CHANGELOG.md
 - [a18f7d1](https://github.com/sudo/gh-deployer/commit/a18f7d1b1ddb24d1dd503fdf759d6f596eee7c48) add: CHANGELOG generator
 - [4ee0283](https://github.com/sudo/gh-deployer/commit/4ee02830f1d02a205f24306aef433adc78607d25) add: NODE_ENV and NODE_ENV to Sentry
 - [965d0e3](https://github.com/sudo/gh-deployer/commit/965d0e3b04f93dcf958b895478d75df122ca23ab) add: data.getDataFromConfig
@@ -65,6 +70,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 
 
-[Unreleased]: https://github.com/sudo/gh-deployer/compare/5f5552755301e92a762698db33127c44e924fac6...HEAD
+[Unreleased]: https://github.com/sudo/gh-deployer/compare/v1.0.0...HEAD
+[v1.0.0]: https://github.com/sudo/gh-deployer/compare/5f5552755301e92a762698db33127c44e924fac6...v1.0.0
 
 
