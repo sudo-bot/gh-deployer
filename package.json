@@ -29,7 +29,8 @@
         "node": ">=8.6.0"
     },
     "scripts": {
-        "changelog": "changelog-generator-twig --owner wdes --repo changelog --repoDir ./ --baseCommit 5f5552755301e92a762698db33127c44e924fac6",
+        "changelog": "changelog-generator-twig --owner sudo --repo gh-deployer --repoDir ./ --baseCommit 5f5552755301e92a762698db33127c44e924fac6",
+        "changelog-file": "npm run --silent changelog > CHANGELOG.md",
         "jshint": "jshint ./",
         "start": "node index.js",
         "test": "nyc --all mocha --ui tdd",
