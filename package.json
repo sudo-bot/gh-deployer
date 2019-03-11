@@ -62,7 +62,7 @@
         "node-emoji": "^1.10.0",
         "node-nlp": "^2.4.2",
         "octonode": "^0.9.5",
-        "sentencer": "^0.1.5",
+        "sentencer": "^0.2.0",
         "smtp-server": "^3.5.0"
     },
     "devDependencies": {
