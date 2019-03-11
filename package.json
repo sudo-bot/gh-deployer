@@ -60,19 +60,19 @@
         "module-alias": "^2.2.0",
         "node-docker-api": "^1.1.22",
         "node-emoji": "^1.10.0",
-        "node-nlp": "^2.4.2",
+        "node-nlp": "^2.5.1",
         "octonode": "^0.9.5",
-        "sentencer": "^0.1.5",
+        "sentencer": "^0.2.0",
         "smtp-server": "^3.5.0"
     },
     "devDependencies": {
         "chai": "^4.2.0",
         "changelog-generator-twig": "^1.0.0",
-        "codecov": "^3.1.0",
+        "codecov": "^3.2.0",
         "jshint": "^2.10.1",
         "mocha": "^6.0.2",
-        "nyc": "^13.1.0",
-        "prettier": "^1.15.3"
+        "nyc": "^13.3.0",
+        "prettier": "^1.16.4"
     },
     "prettier": {
         "singleQuote": true,
