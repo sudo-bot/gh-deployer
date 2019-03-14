@@ -6,11 +6,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
 
+- [c6d3b5a](https://github.com/sudo/gh-deployer/commit/c6d3b5ae50cc302aaa9af21baf3c64ec366251e6) added: command to ignore
+- [14e83bf](https://github.com/sudo/gh-deployer/commit/14e83bf8b3d4489bbb0a5bd0b45ef89499a6a1ab) added: dependabot config
+- [28a46bd](https://github.com/sudo/gh-deployer/commit/28a46bdbe14ba8c512b1982ce4c19f912d8a9c6a) added: synk and dependabot badges
+
+### Changed
+
+- [e66181d](https://github.com/sudo/gh-deployer/commit/e66181d65b91e69bcf8e01e6a5f40c77a83fd875) updated: package.json && package-lock.json
+- [6f0ee0e](https://github.com/sudo/gh-deployer/commit/6f0ee0e9cbdf06876e94cff00e557d7b6c21f991) updated: package.json && package-lock.json
+- [a946722](https://github.com/sudo/gh-deployer/commit/a946722e65e7fbda30b3859edbfb6e76c9b4be59) update: CHANGELOG.md
+
+### Fixed
+
+- [7a64f37](https://github.com/sudo/gh-deployer/commit/7a64f376f42c9670be6b7b00f1c158c97fc02fcf) fixed: .npmignore
 
 ## [v1.0.0]
 
 ### Added
+
 - [1561b46](https://github.com/sudo/gh-deployer/commit/1561b4609632728f39be21e5d6026c36085e8b51) add: CHANGELOG.md
 - [a18f7d1](https://github.com/sudo/gh-deployer/commit/a18f7d1b1ddb24d1dd503fdf759d6f596eee7c48) add: CHANGELOG generator
 - [4ee0283](https://github.com/sudo/gh-deployer/commit/4ee02830f1d02a205f24306aef433adc78607d25) add: NODE_ENV and NODE_ENV to Sentry
@@ -30,13 +45,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [d1ea4ea](https://github.com/sudo/gh-deployer/commit/d1ea4eafa5c23fe6b17a32e7940fbaccac7837b5) add: base files
 
 ### Changed
+
 - [9f4ab9c](https://github.com/sudo/gh-deployer/commit/9f4ab9c4b626a9cb23d22b0e5965ad2f7d0b27d8) update: Use node-npl and add commands
 - [1877bbb](https://github.com/sudo/gh-deployer/commit/1877bbbd488dff4c4c0edefef5209e21e9461618) update: Update mocha to ^6.0.2
 
 ### Removed
+
 - [13ff6ab](https://github.com/sudo/gh-deployer/commit/13ff6abe4e8727d68b7ce4c0a5e6ddedac51b225) remove: CF del DNS record
 
 ### Fixed
+
 - [edd85bb](https://github.com/sudo/gh-deployer/commit/edd85bb13aae8228de51d8708166773cbb19e0b0) fix: trim spaces in config
 - [9bd2e6f](https://github.com/sudo/gh-deployer/commit/9bd2e6fee4439b5e9bd8659c98e719938525a3d8) fix: COMMANDS
 - [cd5dda4](https://github.com/sudo/gh-deployer/commit/cd5dda4f4055b2a5816916a3e55447fb5e4fee2c) fix: REF_DIRECTORY ENV
@@ -63,14 +81,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [f07df76](https://github.com/sudo/gh-deployer/commit/f07df76eaccfdc37e613dea2f51e1d18932b22d3) fix: load env
 
 ### Improvements
+
 - [9ab3652](https://github.com/sudo/gh-deployer/commit/9ab3652a0a1f640b2856c50283ff6a991c8e6b3e) style: prettier.printWidth=120
-
-
-
-
 
 
 [Unreleased]: https://github.com/sudo/gh-deployer/compare/v1.0.0...HEAD
 [v1.0.0]: https://github.com/sudo/gh-deployer/compare/5f5552755301e92a762698db33127c44e924fac6...v1.0.0
-
 
