@@ -52,7 +52,7 @@
     },
     "license": "MPL-2.0",
     "dependencies": {
-        "@sentry/node": "^4.6.4",
+        "@sentry/node": "^5.0.0",
         "cloudflare": "^2.4.1",
         "dotenv": "^7.0.0",
         "log4js": "^4.0.2",
