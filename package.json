@@ -55,7 +55,7 @@
         "@sentry/node": "^4.6.4",
         "cloudflare": "^2.4.1",
         "dotenv": "^7.0.0",
-        "log4js": "^4.0.2",
+        "log4js": "^4.1.0",
         "mailparser": "^2.4.3",
         "module-alias": "^2.2.0",
         "node-docker-api": "^1.1.22",
