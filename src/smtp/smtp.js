@@ -8,7 +8,7 @@ module.exports = {
     smtpServer: cbData => {
         logger.debug('Using fake smtp server smtp mode');
         try {
-            new SMTPServer({
+            const smtpServer = new SMTPServer({
                 secure: false,
                 name: process.env.SMTP_SERVER_NAME,
                 authOptional: true,
@@ -51,6 +51,7 @@ module.exports = {
             }).listen(process.env.SMTP_PORT || 25, '0.0.0.0', () => {
                 logger.info('Listening...');
             });
+            return smtpServer;
         } catch (error) {
             logger.error(error);
         }

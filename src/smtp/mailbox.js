@@ -8,7 +8,8 @@ module.exports = {
     smtpServer: cbData => {
         logger.debug('Using mailbox smtp mode');
         try {
-            var mailListener = new MailListener({
+            const debugImap = process.env.MAILBOX_DEBUG && process.env.MAILBOX_DEBUG.toUpperCase() === 'TRUE';
+            const mailListener = new MailListener({
                 username: process.env.MAILBOX_USERNAME,
                 password: process.env.MAILBOX_PASSWORD,
                 host: process.env.MAILBOX_HOST,
@@ -16,7 +17,11 @@ module.exports = {
                 tls: process.env.MAILBOX_TLS.toUpperCase() === 'TRUE',
                 connTimeout: 10000, // Default by node-imap
                 authTimeout: 5000, // Default by node-imap,
-                debug: (...params) => logger.debug(...params), // Or your custom function with only one incoming argument. Default: null
+                debug: (...params) => {
+                    if (debugImap) {
+                        logger.debug(...params);
+                    }
+                }, // Or your custom function with only one incoming argument. Default: null
                 tlsOptions: { rejectUnauthorized: false },
                 mailbox: 'INBOX', // mailbox to monitor
                 searchFilter: ['UNSEEN'], // the search filter being used after an IDLE notification has been retrieved
@@ -45,6 +50,7 @@ module.exports = {
                     logger.error(err);
                 });
             });
+            return mailListener;
         } catch (error) {
             logger.error(error);
         }
