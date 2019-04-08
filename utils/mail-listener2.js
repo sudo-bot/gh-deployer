@@ -27,7 +27,6 @@
 var Imap = require('imap');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
-var async = require('async');
 
 module.exports = MailListener;
 
@@ -54,9 +53,36 @@ function MailListener(options) {
         debug: options.debug || null,
     });
 
-    this.imap.once('ready', imapReady.bind(this));
-    this.imap.once('close', imapClose.bind(this));
-    this.imap.on('error', imapError.bind(this));
+    const onEmailProcessed = (...params) => {
+        this.emit('mail', ...params);
+    };
+    const onError = err => {
+        this.emit('error', err);
+    };
+    const onReady = () => {
+        imapReady(
+            this.imap,
+            this.mailbox,
+            this.fetchUnreadOnStart,
+            this.searchFilter,
+            this.markSeen,
+            onEmailProcessed,
+            onError,
+            () => {
+                this.emit('server:connected');
+            }
+        );
+    };
+    this.imap.once('ready', onReady);
+    this.imap.once('close', () => {
+        this.emit('server:disconnected');
+    });
+    this.imap.on('error', onError);
+    const reProcess = () => {
+        parseUnread(this.imap, this.searchFilter, this.markSeen, onEmailProcessed, onError);
+    };
+    this.imap.on('mail', reProcess);
+    this.imap.on('update', reProcess);
 }
 
 util.inherits(MailListener, EventEmitter);
@@ -69,63 +95,53 @@ MailListener.prototype.stop = function() {
     this.imap.end();
 };
 
-function imapReady() {
-    var self = this;
-    this.imap.openBox(this.mailbox, false, function(err, mailbox) {
+function imapReady(imap, mailbox, fetchUnreadOnStart, searchFilter, markSeen, onEmailProcessed, onError, onConnected) {
+    imap.openBox(mailbox, false, function(err, mailbox) {
         if (err) {
-            self.emit('error', err);
+            onError(err);
         } else {
-            self.emit('server:connected');
-            if (self.fetchUnreadOnStart) {
-                parseUnread.call(self);
+            onConnected();
+            if (fetchUnreadOnStart) {
+                parseUnread(imap, searchFilter, markSeen, onEmailProcessed, onError);
             }
-            var listener = imapMail.bind(self);
-            self.imap.on('mail', listener);
-            self.imap.on('update', listener);
         }
     });
 }
 
-function imapClose() {
-    this.emit('server:disconnected');
+function processEmail(imap, email, markSeen) {
+    return new Promise((resolve, reject) => {
+        var f = imap.fetch(email, {
+            bodies: '',
+            markSeen: markSeen,
+        });
+        f.on('message', function(msg, seqno) {
+            msg.on('body', function(stream, info) {
+                resolve({
+                    stream: stream,
+                    seqno: seqno,
+                    info: info,
+                });
+            });
+        });
+        f.once('error', function(err) {
+            reject(err);
+        });
+    });
 }
 
-function imapError(err) {
-    this.emit('error', err);
-}
-
-function imapMail() {
-    parseUnread.call(this);
-}
-
-function parseUnread() {
-    var self = this;
-    this.imap.search(self.searchFilter, function(err, results) {
+function parseUnread(imap, searchFilter, markSeen, onEmailProcessed, onError) {
+    imap.search(searchFilter, function(err, results) {
         if (err) {
-            self.emit('error', err);
+            onError(err);
         } else if (results.length > 0) {
-            async.each(
-                results,
-                function(result, callback) {
-                    var f = self.imap.fetch(result, {
-                        bodies: '',
-                        markSeen: self.markSeen,
-                    });
-                    f.on('message', function(msg, seqno) {
-                        msg.on('body', function(stream, info) {
-                            self.emit('mail', stream, seqno, info);
-                        });
-                    });
-                    f.once('error', function(err) {
-                        self.emit('error', err);
-                    });
-                },
-                function(err) {
-                    if (err) {
-                        self.emit('error', err);
-                    }
-                }
-            );
+            results = results.map(email => {
+                return processEmail(imap, email, markSeen).then(processedEmail => {
+                    onEmailProcessed(processedEmail.stream, processedEmail.seqno, processedEmail.info);
+                });
+            });
+            Promise.all(results).catch(err => {
+                onError(err);
+            });
         }
     });
 }
