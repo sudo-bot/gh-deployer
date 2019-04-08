@@ -5,7 +5,7 @@ const data = require('@src/data');
 const MailListener = require('@utils/mail-listener2');
 
 module.exports = cbData => {
-    logger.debug('Using mailbox smtp mode');
+    logger.debug('Using mailbox imap mode');
     try {
         const debugImap = process.env.MAILBOX_DEBUG && process.env.MAILBOX_DEBUG.toUpperCase() === 'TRUE';
         const mailListener = new MailListener({
