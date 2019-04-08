@@ -27,7 +27,6 @@
 var Imap = require('imap');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
-var MailParser = require('mailparser').MailParser;
 var async = require('async');
 
 module.exports = MailListener;
@@ -113,25 +112,8 @@ function parseUnread() {
                         markSeen: self.markSeen,
                     });
                     f.on('message', function(msg, seqno) {
-                        var parser = new MailParser(self.mailParserOptions);
-                        var attributes = null;
-                        var emlbuffer = new Buffer('');
-
-                        parser.on('end', function(mail) {
-                            mail.eml = emlbuffer.toString('utf-8');
-                            self.emit('mail', mail, seqno, attributes);
-                        });
                         msg.on('body', function(stream, info) {
-                            stream.on('data', function(chunk) {
-                                emlbuffer = Buffer.concat([emlbuffer, chunk]);
-                            });
-                            stream.once('end', function() {
-                                parser.write(emlbuffer);
-                                parser.end();
-                            });
-                        });
-                        msg.on('attributes', function(attrs) {
-                            attributes = attrs;
+                            self.emit('mail', stream, seqno, info);
                         });
                     });
                     f.once('error', function(err) {

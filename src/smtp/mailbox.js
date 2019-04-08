@@ -40,13 +40,15 @@ module.exports = {
             mailListener.on('error', function(err) {
                 logger.error(err);
             });
-            mailListener.on('mail', function(parsed, seqno, attributes) {
-                // do something with mail object including attachments
-                logger.info('emailParsed', parsed);
-                // mail processing code goes here
-                data.getDataFromParsedEmail(parsed, cbData, err => {
-                    logger.error(err);
-                });
+            mailListener.on('mail', function(stream) {
+                data.parseEmail(stream)
+                    .then(emailInfos => {
+                        logger.info('emailParsed', emailInfos);
+                        cbData(emailInfos);
+                    })
+                    .catch(err => {
+                        logger.error(err);
+                    });
             });
             return mailListener;
         } catch (error) {
