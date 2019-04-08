@@ -174,17 +174,10 @@ logger.debug('Learned ' + DEPLOY_WITH_CONFIG_COMMANDS.length + ' deploy and merg
 
 logger.info('End of the lesson');
 
-async function trainClassifier() {
-    logger.debug('Training...');
-    await manager.train();
-    logger.debug('End of training');
-}
-
-(async () => {
-    trainClassifier();
-})();
-
 module.exports = {
+    train: () => {
+        return manager.train();
+    },
     COMMANDS: COMMANDS,
     DEPLOY_COMMANDS: DEPLOY_COMMANDS,
     DO_NOTHING_COMMANDS: DO_NOTHING_COMMANDS,
