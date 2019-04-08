@@ -3,10 +3,10 @@
 const logger = require('@src/logger');
 const deploy = require('@src/deploy');
 const commands = require('@src/commands');
-const smtp = require('@src/smtp/index');
+const mail = require('@src/mail/index');
 const data = require('@src/data');
 
-smtp.smtpServer(emailInfos => {
+mail(emailInfos => {
     logger.debug('New email', emailInfos);
     if (emailInfos.requestedByUser === process.env.ROBOT_USER) {
         logger.info('From-me:', emailInfos.message);
@@ -39,5 +39,5 @@ smtp.smtpServer(emailInfos => {
 });
 
 module.exports = {
-    smtp: smtp,
+    mail: mail,
 };
