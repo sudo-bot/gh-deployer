@@ -86,6 +86,7 @@
     "_moduleAliases": {
         "@src": "src",
         "@root": "./",
-        "@test": "test"
+        "@test": "test",
+        "@utils": "utils"
     }
 }

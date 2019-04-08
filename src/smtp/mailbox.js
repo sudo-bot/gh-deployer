@@ -2,7 +2,7 @@
 
 const logger = require('@src/logger');
 const data = require('@src/data');
-const MailListener = require('mail-listener2');
+const MailListener = require('@utils/mail-listener2');
 
 module.exports = {
     smtpServer: cbData => {
@@ -27,8 +27,6 @@ module.exports = {
                 searchFilter: ['UNSEEN'], // the search filter being used after an IDLE notification has been retrieved
                 markSeen: true, // all fetched email willbe marked as seen and not fetched next time
                 fetchUnreadOnStart: true, // use it only if you want to get all unread email on lib start. Default is `false`,
-                mailParserOptions: { streamAttachments: false }, // options to be passed to mailParser lib.
-                attachments: false, // download attachments as they are encountered to the project directory
             });
             mailListener.start(); // start listening
             // stop listening
