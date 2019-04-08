@@ -28,8 +28,6 @@ var Imap = require('imap');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 var MailParser = require('mailparser').MailParser;
-var fs = require('fs');
-var path = require('path');
 var async = require('async');
 
 module.exports = MailListener;
@@ -44,12 +42,6 @@ function MailListener(options) {
     }
     this.fetchUnreadOnStart = !!options.fetchUnreadOnStart;
     this.mailParserOptions = options.mailParserOptions || {};
-    if (options.attachments && options.attachmentOptions && options.attachmentOptions.stream) {
-        this.mailParserOptions.streamAttachments = true;
-    }
-    this.attachmentOptions = options.attachmentOptions || {};
-    this.attachments = options.attachments || false;
-    this.attachmentOptions.directory = this.attachmentOptions.directory ? this.attachmentOptions.directory : '';
     this.imap = new Imap({
         xoauth2: options.xoauth2,
         user: options.username,
@@ -127,38 +119,7 @@ function parseUnread() {
 
                         parser.on('end', function(mail) {
                             mail.eml = emlbuffer.toString('utf-8');
-                            if (!self.mailParserOptions.streamAttachments && mail.attachments && self.attachments) {
-                                async.each(
-                                    mail.attachments,
-                                    function(attachment, callback) {
-                                        fs.writeFile(
-                                            self.attachmentOptions.directory + attachment.generatedFileName,
-                                            attachment.content,
-                                            function(err) {
-                                                if (err) {
-                                                    self.emit('error', err);
-                                                    callback();
-                                                } else {
-                                                    attachment.path = path.resolve(
-                                                        self.attachmentOptions.directory + attachment.generatedFileName
-                                                    );
-                                                    self.emit('attachment', attachment);
-                                                    callback();
-                                                }
-                                            }
-                                        );
-                                    },
-                                    function(err) {
-                                        self.emit('mail', mail, seqno, attributes);
-                                        callback();
-                                    }
-                                );
-                            } else {
-                                self.emit('mail', mail, seqno, attributes);
-                            }
-                        });
-                        parser.on('attachment', function(attachment) {
-                            self.emit('attachment', attachment);
+                            self.emit('mail', mail, seqno, attributes);
                         });
                         msg.on('body', function(stream, info) {
                             stream.on('data', function(chunk) {
