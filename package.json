@@ -55,6 +55,7 @@
         "@sentry/node": "^5.0.5",
         "cloudflare": "^2.4.1",
         "dotenv": "^7.0.0",
+        "imap": "^0.8.19",
         "log4js": "^4.1.0",
         "mailparser": "^2.6.0",
         "module-alias": "^2.2.0",
