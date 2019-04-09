@@ -6,16 +6,16 @@ const { Docker } = require('node-docker-api');
 const docker = new Docker({ socketPath: '/var/run/docker.sock' });
 const data = require('@src/data');
 
-const createAliasesFromString = (aliasString) => {
+const createAliasesFromString = aliasString => {
     aliasString = aliasString || '';
-    var networksAndAliases = aliasString.split(',');// Cut each part
+    var networksAndAliases = aliasString.split(','); // Cut each part
 
-    networksAndAliases = networksAndAliases.map(value => value.split('!') );// Cut networkName and aliases
+    networksAndAliases = networksAndAliases.map(value => value.split('!')); // Cut networkName and aliases
     var netAlias = {};
     networksAndAliases.map(value => {
         if (value[0] !== '' && value[1] !== '') {
             netAlias[value[0].trim()] = {
-                Aliases: value[1].split(';').map(alias => alias.trim())
+                Aliases: value[1].split(';').map(alias => alias.trim()),
             };
         }
     });
