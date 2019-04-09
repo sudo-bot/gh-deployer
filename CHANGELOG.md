@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
+- [5cc6e32](https://github.com/sudo/gh-deployer/commit/5cc6e32cb01536472fe238de7207a7be439e77cc) updated: Split Travis CI to jobs
+- [9a41b1f](https://github.com/sudo/gh-deployer/commit/9a41b1f8d8b0ec37d75e250be2babf9f90fca14c) updated: Split Travis CI to jobs
+- [00f5f80](https://github.com/sudo/gh-deployer/commit/00f5f80ba2828b181c1478b551dd6a64497f14e7) updated: changelog
 - [8fa5e09](https://github.com/sudo/gh-deployer/commit/8fa5e0943878e3ca4cd8a7a85e5ee8e9012fd39a) updated: Moved training to index
 - [8773478](https://github.com/sudo/gh-deployer/commit/87734785da479254b34db6434ab23e8e5de34a8b) updated: Moved files and renamed one
 - [95a07f0](https://github.com/sudo/gh-deployer/commit/95a07f0ff0908219951b099cc918ba15671d22d5) updated: jshintrc to esnext
@@ -43,6 +46,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
+- [8310101](https://github.com/sudo/gh-deployer/commit/831010171897bf5f7435fae30e94efc1f5239053) fix: .jshintrc errors introduced by 95a07f0ff090821
 - [cd9de1f](https://github.com/sudo/gh-deployer/commit/cd9de1f3eed20026edea34657c4ca7e1a42bc740) fix: naming issue
 - [f9f0eee](https://github.com/sudo/gh-deployer/commit/f9f0eeec807efc39b4af4d82517951d0e08f1286) fix: commands tests
 - [7a64f37](https://github.com/sudo/gh-deployer/commit/7a64f376f42c9670be6b7b00f1c158c97fc02fcf) fixed: .npmignore
