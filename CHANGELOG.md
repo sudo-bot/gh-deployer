@@ -8,19 +8,49 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- [c9aabd3](https://github.com/sudo/gh-deployer/commit/c9aabd32d4f13941d06383e72b4006c5b69b513b) added: replace tokens in DOCKER_NETWORK_ALIASES ENV
+- [9bd42f2](https://github.com/sudo/gh-deployer/commit/9bd42f2264bec9ec77db5db510dc9ad6ab434e56) added: support for network aliases
+- [fef9b3f](https://github.com/sudo/gh-deployer/commit/fef9b3fd192accf37fe40e2b8b52ce00809f9d7a) added: memory limit
+- [88ad95c](https://github.com/sudo/gh-deployer/commit/88ad95c75d7f0a8823478700bf6f93f56715b5d0) added: imap to package.json and package-lock.json
+- [8433391](https://github.com/sudo/gh-deployer/commit/8433391fd9aae68918ecdcad1d2ef331cb05e597) added: mail-listener2 code into utils
+- [806ff26](https://github.com/sudo/gh-deployer/commit/806ff267132ec1bf45107a28da125cfc920cbff8) added: MAILBOX_DEBUG option
+- [b9bf99f](https://github.com/sudo/gh-deployer/commit/b9bf99f73d9a519107e2fc4a7407e2972db10cd5) added: support for real imap server
+- [e51acaa](https://github.com/sudo/gh-deployer/commit/e51acaa552e4b1e02ed35f7ee83df87893266e37) added: example ENVs
+- [e08145f](https://github.com/sudo/gh-deployer/commit/e08145f407039fb2a4d85dd6c42dd88e35e1f549) added: mail-listener2
 - [c6d3b5a](https://github.com/sudo/gh-deployer/commit/c6d3b5ae50cc302aaa9af21baf3c64ec366251e6) added: command to ignore
 - [14e83bf](https://github.com/sudo/gh-deployer/commit/14e83bf8b3d4489bbb0a5bd0b45ef89499a6a1ab) added: dependabot config
 - [28a46bd](https://github.com/sudo/gh-deployer/commit/28a46bdbe14ba8c512b1982ce4c19f912d8a9c6a) added: synk and dependabot badges
 
 ### Changed
 
+- [8fa5e09](https://github.com/sudo/gh-deployer/commit/8fa5e0943878e3ca4cd8a7a85e5ee8e9012fd39a) updated: Moved training to index
+- [8773478](https://github.com/sudo/gh-deployer/commit/87734785da479254b34db6434ab23e8e5de34a8b) updated: Moved files and renamed one
+- [95a07f0](https://github.com/sudo/gh-deployer/commit/95a07f0ff0908219951b099cc918ba15671d22d5) updated: jshintrc to esnext
+- [e3aa0a6](https://github.com/sudo/gh-deployer/commit/e3aa0a6fed2db11e0e2fb5221bddde9ba3bd7d15) updated: package.json and package-lock.json
+- [1a3325c](https://github.com/sudo/gh-deployer/commit/1a3325c5348b374b087a77991b1d3352f32b16c7) updated: dependencies
+- [4dce64b](https://github.com/sudo/gh-deployer/commit/4dce64bdc24ccd5539ebb4900ae4ac32fd41dd52) updated: changelog
 - [e66181d](https://github.com/sudo/gh-deployer/commit/e66181d65b91e69bcf8e01e6a5f40c77a83fd875) updated: package.json && package-lock.json
 - [6f0ee0e](https://github.com/sudo/gh-deployer/commit/6f0ee0e9cbdf06876e94cff00e557d7b6c21f991) updated: package.json && package-lock.json
 - [a946722](https://github.com/sudo/gh-deployer/commit/a946722e65e7fbda30b3859edbfb6e76c9b4be59) update: CHANGELOG.md
 
+### Removed
+
+- [ae94d3b](https://github.com/sudo/gh-deployer/commit/ae94d3b05748b440b1cdd31e73d44c42d7253bf1) removed: async and 'self' variables from mail-listener2
+- [fd360fb](https://github.com/sudo/gh-deployer/commit/fd360fb7af0efa71c5bdbe8fd173d643913f38ca) removed: email parsing from mail-listener2
+- [61ef1d1](https://github.com/sudo/gh-deployer/commit/61ef1d13378b75558eb70611e823ec6c7bd5633a) removed: attachment config and fixed import
+- [cd1d65c](https://github.com/sudo/gh-deployer/commit/cd1d65c52d6468ec1cae479f6eac0d4a47c3f537) removed: attachement handling from mail-listener2
+- [908bafd](https://github.com/sudo/gh-deployer/commit/908bafdd039507970631feee9695f4950b35b5e8) removed: mail-listener2
+
 ### Fixed
 
+- [cd9de1f](https://github.com/sudo/gh-deployer/commit/cd9de1f3eed20026edea34657c4ca7e1a42bc740) fix: naming issue
+- [f9f0eee](https://github.com/sudo/gh-deployer/commit/f9f0eeec807efc39b4af4d82517951d0e08f1286) fix: commands tests
 - [7a64f37](https://github.com/sudo/gh-deployer/commit/7a64f376f42c9670be6b7b00f1c158c97fc02fcf) fixed: .npmignore
+
+### Improvements
+
+- [6565709](https://github.com/sudo/gh-deployer/commit/65657091940d708df3e4c36359ecd381110db5f7) style: prettier
+- [709f0c2](https://github.com/sudo/gh-deployer/commit/709f0c21502c4e9929717636f3897d42ea657260) style: prettier mail-listener2
 
 ## [v1.0.0]
 
