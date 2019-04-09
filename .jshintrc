@@ -2,7 +2,7 @@
     "strict": true,
     "curly": true,
     "quotmark": "simple",
-    "esnext": true,
+    "esversion": 9,
     "browser": false,
     "mocha": true,
     "node": true,
