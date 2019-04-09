@@ -13,10 +13,17 @@ addons:
 install:
   - npm install -g codecov
   - npm install
-  - echo -e "" > .env
+  - touch .env
 
-script:
-  - npm run test
-  - npm run report-coverage
-  - codecov
-  - npm run jshint
+stages:
+    - name: tests
+      script:
+        - npm run test
+      after_success:
+        - npm run report-coverage
+        - codecov
+    - name: lint
+      script:
+        - npm run jshint
+
+
