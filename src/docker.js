@@ -34,6 +34,7 @@ module.exports = {
                     })
                     .then(function() {
                         logger.info('Deploying: ', containerName);
+                        const memoryLimit = (process.env.DOCKER_CPU_SHARES || 0) * 1000;
                         docker.container
                             .create({
                                 Image: process.env.DOCKER_IMAGE,
@@ -66,6 +67,7 @@ module.exports = {
                                     DnsSearch: process.env.DOCKER_DNS_SEARCH.split(','),
                                     NetworkMode: process.env.DOCKER_NETWORK_MODE,
                                     Binds: process.env.DOCKER_BINDS.split(','),
+                                    Memory: memoryLimit,
                                 },
                                 Entrypoint: process.env.DOCKER_ENTRYPOINT,
                                 Env: [
