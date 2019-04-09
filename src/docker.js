@@ -52,6 +52,14 @@ module.exports = {
                     .then(function() {
                         logger.info('Deploying: ', containerName);
                         const memoryLimit = (process.env.DOCKER_CPU_SHARES || 0) * 1000;
+                        const networkAliases = data.replaceTokens(
+                            {
+                                prId: prId,
+                                ref: ref,
+                                sha: sha,
+                            },
+                            '' + process.env.DOCKER_NETWORK_ALIASES
+                        );
                         docker.container
                             .create({
                                 Image: process.env.DOCKER_IMAGE,
@@ -96,8 +104,8 @@ module.exports = {
                                     'PMA_CONFIG=' + compiledPhpMyAdminConfig,
                                 ],
                                 NetworkingConfig: {
-                                    EndpointsConfig: createAliasesFromString(process.env.DOCKER_NETWORK_ALIASES)
-                                }
+                                    EndpointsConfig: createAliasesFromString(networkAliases),
+                                },
                             })
                             .then(container => container.start())
                             .then(container => {
