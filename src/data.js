@@ -82,6 +82,59 @@ const getDataFromConfig = function(snippetsMsg) {
     }
 };
 
+const getDataFromParsedEmail = function(parsed, success, error) {
+    let matchs = regexInboxMarkup.exec(parsed.html);
+    /*
+        {
+            "api_version":"1.0",
+            "publisher":{
+                "api_key": "05dde50f1d1a384dd78767c55493e4bb",
+                "name": "GitHub"
+            },
+            "entity":{
+                "external_key":"github/williamdes/mariadb-mysql-kbs",
+                "title":"williamdes/mariadb-mysql-kbs",
+                "subtitle":"GitHub repository",
+                "main_image_url":"https://github.githubassets.com/images/email/message_cards/header.png",
+                "avatar_image_url":"https://github.githubassets.com/images/email/message_cards/avatar.png",
+                "action":{
+                    "name":"Open in GitHub",
+                    "url":"https://github.com/williamdes/mariadb-mysql-kbs"
+                }
+            },
+            "updates":{
+                "snippets":[{"icon":"PERSON","message":"@williamdes in #30: @sudo-bot /deploy"}],"action":{
+                    "name":"View Pull Request",
+                    "url":"https://github.com/williamdes/mariadb-mysql-kbs/pull/30#issuecomment-466782813"
+                }
+            }
+        }
+        */
+    if (matchs && matchs.groups && matchs.groups.jsonld) {
+        let metadata = JSON.parse(matchs.groups.jsonld);
+
+        let snippetsMsg = metadata.updates.snippets[0].message;
+        let message = getDataFromMessage(snippetsMsg);
+        if (message !== null && allowedUsernames.includes(message.user)) {
+            // message : { user: 'williamdes', prID: '30', message: '@sudo-bot :)' }
+            let commentLastIndex = metadata.updates.action.url.lastIndexOf('-');
+            const commentId = metadata.updates.action.url.slice(commentLastIndex + 1);
+            success({
+                commentId: commentId,
+                requestedByUser: message.user,
+                message: message.message,
+                prId: message.prId,
+                repoName: metadata.entity.title,
+            });
+        } else {
+            logger.info('Not allowed:', message !== null ? message.user : 'Anonymous ?');
+        }
+    } else {
+        logger.error('Error: ', parsed.text, parsed.textAsHtml, parsed.html, matchs);
+        error(parsed.text);
+    }
+};
+
 module.exports = {
     compiledPhpMyAdminConfig: compiledPhpMyAdminConfig,
     destinationEmails: destinationEmails,
@@ -98,60 +151,12 @@ module.exports = {
         return new Promise((resolve, reject) => {
             simpleMailParser(stream)
                 .then(parsed => {
-                    let matchs = regexInboxMarkup.exec(parsed.html);
-                    /*
-                        {
-                            "api_version":"1.0",
-                            "publisher":{
-                                "api_key": "05dde50f1d1a384dd78767c55493e4bb",
-                                "name": "GitHub"
-                            },
-                            "entity":{
-                                "external_key":"github/williamdes/mariadb-mysql-kbs",
-                                "title":"williamdes/mariadb-mysql-kbs",
-                                "subtitle":"GitHub repository",
-                                "main_image_url":"https://github.githubassets.com/images/email/message_cards/header.png",
-                                "avatar_image_url":"https://github.githubassets.com/images/email/message_cards/avatar.png",
-                                "action":{
-                                    "name":"Open in GitHub",
-                                    "url":"https://github.com/williamdes/mariadb-mysql-kbs"
-                                }
-                            },
-                            "updates":{
-                                "snippets":[{"icon":"PERSON","message":"@williamdes in #30: @sudo-bot /deploy"}],"action":{
-                                    "name":"View Pull Request",
-                                    "url":"https://github.com/williamdes/mariadb-mysql-kbs/pull/30#issuecomment-466782813"
-                                }
-                            }
-                        }
-                        */
-                    if (matchs && matchs.groups && matchs.groups.jsonld) {
-                        let metadata = JSON.parse(matchs.groups.jsonld);
-
-                        let snippetsMsg = metadata.updates.snippets[0].message;
-                        let message = getDataFromMessage(snippetsMsg);
-                        if (message !== null && allowedUsernames.includes(message.user)) {
-                            // message : { user: 'williamdes', prID: '30', message: '@sudo-bot :)' }
-                            let commentLastIndex = metadata.updates.action.url.lastIndexOf('-');
-                            const commentId = metadata.updates.action.url.slice(commentLastIndex + 1);
-                            resolve({
-                                commentId: commentId,
-                                requestedByUser: message.user,
-                                message: message.message,
-                                prId: message.prId,
-                                repoName: metadata.entity.title,
-                            });
-                        } else {
-                            logger.info('Not allowed:', message !== null ? message.user : 'Anonymous ?');
-                        }
-                    } else {
-                        logger.error('Error: ', parsed.text, parsed.textAsHtml, parsed.html, matchs);
-                        reject(parsed.text);
-                    }
+                    getDataFromParsedEmail(parsed, resolve, reject);
                 })
                 .catch(reject);
         });
     },
+    getDataFromParsedEmail: getDataFromParsedEmail,
     replaceTokens: (tokens, stringToReplace) => {
         Object.keys(tokens).forEach(function(key) {
             var val = tokens[key];

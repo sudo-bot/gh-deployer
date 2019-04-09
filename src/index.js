@@ -3,13 +3,16 @@
 const logger = require('@src/logger');
 const deploy = require('@src/deploy');
 const commands = require('@src/commands');
+const mail = require('@src/mail/index');
 const data = require('@src/data');
-const smtp = require('@src/smtp');
 
-smtp.smtpServer((stream, callback) => {
-    data.parseEmail(stream)
-        .then(emailInfos => {
-            callback();
+logger.debug('Training...');
+commands
+    .train()
+    .then(() => {
+        logger.debug('End of training');
+        mail(emailInfos => {
+            logger.debug('New email', emailInfos);
             if (emailInfos.requestedByUser === process.env.ROBOT_USER) {
                 logger.info('From-me:', emailInfos.message);
             } else {
@@ -38,16 +41,10 @@ smtp.smtpServer((stream, callback) => {
                     })
                     .catch(error => logger.error(error));
             }
-        })
-        .catch(error => logger.error(error));
-})
-    .then(smtpServer => {
-        smtpServer.listen(process.env.SMTP_PORT || 25, '0.0.0.0', () => {
-            logger.info('Listening...');
         });
     })
     .catch(error => logger.error(error));
 
 module.exports = {
-    smtp: smtp,
+    mail: mail,
 };

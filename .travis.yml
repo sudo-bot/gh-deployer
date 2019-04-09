@@ -10,13 +10,19 @@ addons:
     packages:
       - git
 
-install:
-  - npm install -g codecov
-  - npm install
-  - echo -e "" > .env
+stages:
+  - name: tests
+  - name: lint
 
-script:
-  - npm run test
-  - npm run report-coverage
-  - codecov
-  - npm run jshint
+jobs:
+    include:
+      - stage: tests
+        script:
+          - npm run test
+        after_success:
+          - npm run report-coverage
+          - codecov
+      - stage: lint
+        script:
+          - npm run jshint
+

@@ -21,7 +21,8 @@ function forEachPromise(items, fn) {
     }, Promise.resolve());
 }
 
-module.exports = function() {
+module.exports = async function() {
+    await commands.train();
     suite('commands', function() {
         test('test DEPLOY_AND_MERGE_COMMANDS commands', function(done) {
             const DEPLOY_AND_MERGE_COMMANDS_EXAMPLES = [];
