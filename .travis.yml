@@ -10,20 +10,19 @@ addons:
     packages:
       - git
 
-install:
-  - npm install -g codecov
-  - npm install
-  - touch .env
-
 stages:
-    - name: tests
-      script:
-        - npm run test
-      after_success:
-        - npm run report-coverage
-        - codecov
-    - name: lint
-      script:
-        - npm run jshint
+  - name: tests
+  - name: lint
 
+jobs:
+    include:
+      - stage: tests
+        script:
+          - npm run test
+        after_success:
+          - npm run report-coverage
+          - codecov
+      - stage: lint
+        script:
+          - npm run jshint
 
