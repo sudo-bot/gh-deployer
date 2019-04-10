@@ -63,7 +63,7 @@ function MailListener(options) {
         imapReady(
             this.imap,
             this.mailbox,
-            this.fetchUnreadOnStart,
+            false,//this.fetchUnreadOnStart
             this.searchFilter,
             this.markSeen,
             onEmailProcessed,
