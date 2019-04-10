@@ -53,7 +53,7 @@ module.exports = {
                         logger.info('Deploying: ', containerName);
                         var optionalHostConfig = {};
                         if (process.env.DOCKER_MEMORY && process.env.DOCKER_MEMORY != 0) {
-                            optionalHostConfig.Memory = process.env.DOCKER_MEMORY * 1000;
+                            optionalHostConfig.Memory = process.env.DOCKER_MEMORY * 1000000;
                         }
                         const networkAliases = data.replaceTokens(
                             {
