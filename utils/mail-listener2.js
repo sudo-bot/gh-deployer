@@ -70,6 +70,11 @@ function MailListener(options) {
             onError,
             () => {
                 this.emit('server:connected');
+                const reProcess = () => {
+                    parseUnread(this.imap, this.searchFilter, this.markSeen, onEmailProcessed, onError);
+                };
+                this.imap.on('mail', reProcess);
+                this.imap.on('update', reProcess);
             }
         );
     };
@@ -78,11 +83,6 @@ function MailListener(options) {
         this.emit('server:disconnected');
     });
     this.imap.on('error', onError);
-    const reProcess = () => {
-        parseUnread(this.imap, this.searchFilter, this.markSeen, onEmailProcessed, onError);
-    };
-    this.imap.on('mail', reProcess);
-    this.imap.on('update', reProcess);
 }
 
 util.inherits(MailListener, EventEmitter);
