@@ -51,7 +51,10 @@ module.exports = {
                     })
                     .then(function() {
                         logger.info('Deploying: ', containerName);
-                        const memoryLimit = (process.env.DOCKER_CPU_SHARES || 0) * 1000;
+                        var optionalHostConfig = {};
+                        if (process.env.DOCKER_MEMORY && process.env.DOCKER_MEMORY != 0) {
+                            optionalHostConfig.Memory = process.env.DOCKER_MEMORY * 1000;
+                        }
                         const networkAliases = data.replaceTokens(
                             {
                                 prId: prId,
@@ -92,7 +95,7 @@ module.exports = {
                                     DnsSearch: process.env.DOCKER_DNS_SEARCH.split(','),
                                     NetworkMode: process.env.DOCKER_NETWORK_MODE,
                                     Binds: process.env.DOCKER_BINDS.split(','),
-                                    Memory: memoryLimit,
+                                    ...optionalHostConfig,
                                 },
                                 Entrypoint: process.env.DOCKER_ENTRYPOINT,
                                 Env: [
