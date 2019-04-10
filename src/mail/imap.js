@@ -15,7 +15,7 @@ module.exports = cbData => {
             port: process.env.MAILBOX_PORT, // imap port
             tls: process.env.MAILBOX_TLS.toUpperCase() === 'TRUE',
             connTimeout: 10000, // Default by node-imap
-            authTimeout: 5000, // Default by node-imap,
+            authTimeout: 10000, // Default by node-imap,
             debug: (...params) => {
                 if (debugImap) {
                     logger.debug(...params);
