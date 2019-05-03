@@ -10,8 +10,9 @@ const expect = require('chai').expect;
 
 module.exports = function() {
     suite('data', function() {
+        const replyTo = 'phpmyadmin/phpmyadmin <reply+AKKGZQSENRXBEEFDNKLARIV23GUSVEVBNHHBRKIAPY@reply.github.com>';
         const testEmail = `
-        @mauriciofauth Seems like the command has an issue, let me try
+        @user2 Seems like the command has an issue, let me try
 
         @sudo-bot deploy PR
 
@@ -21,11 +22,7 @@ module.exports = function() {
         https://github.com/phpmyadmin/phpmyadmin/pull/14970#issuecomment-489170904
         `;
         test('test parse reply to', function(done) {
-            expect(
-                data.parseReplyToRepoName(
-                    'phpmyadmin/phpmyadmin <reply+AKKGZQSENRXBEEFDNKLARIV23GUSVEVBNHHBRKIAPY@reply.github.com>'
-                )
-            ).to.equal('phpmyadmin/phpmyadmin');
+            expect(data.parseReplyToRepoName(replyTo)).to.equal('phpmyadmin/phpmyadmin');
             done();
         });
         test('test parse comment id from email raw data', function(done) {
@@ -35,6 +32,34 @@ module.exports = function() {
         test('test parse PR id from email raw data', function(done) {
             expect(data.parsePrId(testEmail)).to.equal(14970);
             done();
+        });
+        test('test parse message from email text', function(done) {
+            expect(data.parseMessage(testEmail)).to.equal(
+                '@user2 Seems like the command has an issue, let me try\n\n        @sudo-bot deploy PR'
+            );
+            done();
+        });
+        test('test get data from parsed email', function(done) {
+            data.getDataFromParsedEmail(
+                {
+                    text: testEmail,
+                    replyTo: replyTo,
+                    headers: {
+                        'X-GitHub-Sender': 'test1',
+                    },
+                },
+                data => {
+                    expect(data).to.deep.equal({
+                        commentId: 489170904,
+                        message:
+                            '@user2 Seems like the command has an issue, let me try\n\n        @sudo-bot deploy PR',
+                        prId: 14970,
+                        repoName: 'phpmyadmin/phpmyadmin',
+                        requestedByUser: 'test1',
+                    });
+                    done();
+                }
+            );
         });
         test('test destination emails', function(done) {
             expect(data.destinationEmails).to.be.an('array');

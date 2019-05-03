@@ -104,19 +104,24 @@ const parsePrId = function(emailTextData) {
     }
 };
 
+const parseMessage = function(emailText) {
+    const emailParts = emailText.split('--\n        You are receiving');
+    return emailParts[0].trim();
+};
+
 const getDataFromParsedEmail = function(parsed, success, error) {
-    let message = getDataFromMessage(parsed.text);
-    if (message !== null && allowedUsernames.includes(message.user)) {
+    let username = parsed.headers['X-GitHub-Sender'];
+    if (allowedUsernames.includes(username)) {
         // message : { user: 'williamdes', prID: '30', message: '@sudo-bot :)' }
         success({
             commentId: parseCommentId(parsed.text),
-            requestedByUser: message.user,
-            message: message.message,
+            requestedByUser: username,
+            message: parseMessage(parsed.text),
             prId: parsePrId(parsed.text),
             repoName: parseReplyToRepoName(parsed.replyTo),
         });
     } else {
-        logger.info('Not allowed:', message !== null ? message.user : 'Anonymous ?');
+        logger.info('Not allowed:', username);
     }
 };
 
@@ -138,6 +143,7 @@ module.exports = {
     compiledPhpMyAdminConfig: compiledPhpMyAdminConfig,
     destinationEmails: destinationEmails,
     allowedUsernames: allowedUsernames,
+    parseMessage: parseMessage,
     getDataFromMessage: getDataFromMessage,
     parseReplyToRepoName: parseReplyToRepoName,
     parseCommentId: parseCommentId,
