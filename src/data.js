@@ -118,7 +118,7 @@ const getDataFromParsedEmail = function(parsed, success, error) {
             requestedByUser: username,
             message: parseMessage(parsed.text),
             prId: parsePrId(parsed.text),
-            repoName: parseReplyToRepoName(parsed.replyTo),
+            repoName: parseReplyToRepoName(parsed.replyTo.text || parsed.to.text),
         });
     } else {
         logger.info('Not allowed:', username);

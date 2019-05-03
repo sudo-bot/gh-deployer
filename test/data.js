@@ -43,7 +43,9 @@ module.exports = function() {
             data.getDataFromParsedEmail(
                 {
                     text: testEmail,
-                    replyTo: replyTo,
+                    replyTo: {
+                        text: replyTo, // Partial object
+                    },
                     headers: new Map().set('x-github-sender', 'test1'),
                 },
                 data => {
