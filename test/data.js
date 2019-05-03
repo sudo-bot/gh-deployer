@@ -10,6 +10,32 @@ const expect = require('chai').expect;
 
 module.exports = function() {
     suite('data', function() {
+        const testEmail = `
+        @mauriciofauth Seems like the command has an issue, let me try
+
+        @sudo-bot deploy PR
+
+        --
+        You are receiving this because you were mentioned.
+        Reply to this email directly or view it on GitHub:
+        https://github.com/phpmyadmin/phpmyadmin/pull/14970#issuecomment-489170904
+        `;
+        test('test parse reply to', function(done) {
+            expect(
+                data.parseReplyToRepoName(
+                    'phpmyadmin/phpmyadmin <reply+AKKGZQSENRXBEEFDNKLARIV23GUSVEVBNHHBRKIAPY@reply.github.com>'
+                )
+            ).to.equal('phpmyadmin/phpmyadmin');
+            done();
+        });
+        test('test parse comment id from email raw data', function(done) {
+            expect(data.parseCommentId(testEmail)).to.equal(489170904);
+            done();
+        });
+        test('test parse PR id from email raw data', function(done) {
+            expect(data.parsePrId(testEmail)).to.equal(14970);
+            done();
+        });
         test('test destination emails', function(done) {
             expect(data.destinationEmails).to.be.an('array');
             done();
@@ -28,10 +54,12 @@ module.exports = function() {
             done();
         });
         test('test get meta data from pending comment dataset-1', function(done) {
-            expect(data.getMetaDataFromMessage(comments.getPendingComment(132654987, 'deploy/master', 'af1254cdfa'))).to.deep.equal({
-                "commentId": 132654987,
-                "ref": "deploy/master",
-                "sha": "af1254cdfa",
+            expect(
+                data.getMetaDataFromMessage(comments.getPendingComment(132654987, 'deploy/master', 'af1254cdfa'))
+            ).to.deep.equal({
+                commentId: 132654987,
+                ref: 'deploy/master',
+                sha: 'af1254cdfa',
             });
             done();
         });
@@ -40,11 +68,15 @@ module.exports = function() {
             done();
         });
         test('test get meta data from empty value dataset-3', function(done) {
-            expect(data.getMetaDataFromMessage("")).to.equal(null);
+            expect(data.getMetaDataFromMessage('')).to.equal(null);
             done();
         });
         test('test get meta data from invalid JSON dataset-4', function(done) {
-            expect(data.getMetaDataFromMessage('<!--\nsudobot:{"commentId":132654987 "ref":"deploy/master","sha":"af1254cdfa"}-->')).to.equal(null);
+            expect(
+                data.getMetaDataFromMessage(
+                    '<!--\nsudobot:{"commentId":132654987 "ref":"deploy/master","sha":"af1254cdfa"}-->'
+                )
+            ).to.equal(null);
             done();
         });
         test('test get data config dataset-1', function(done) {
