@@ -63,7 +63,7 @@ function MailListener(options) {
         imapReady(
             this.imap,
             this.mailbox,
-            this.fetchUnreadOnStart,
+            false, //this.fetchUnreadOnStart
             this.searchFilter,
             this.markSeen,
             onEmailProcessed,
@@ -82,7 +82,6 @@ function MailListener(options) {
         parseUnread(this.imap, this.searchFilter, this.markSeen, onEmailProcessed, onError);
     };
     this.imap.on('mail', reProcess);
-    this.imap.on('update', reProcess);
 }
 
 util.inherits(MailListener, EventEmitter);

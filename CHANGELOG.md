@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- [07938d5](https://github.com/sudo/gh-deployer/commit/07938d551404070fdf5e5bd43615a77ac9e3bdd8) added: debug line
+- [a340450](https://github.com/sudo/gh-deployer/commit/a34045050554bb012be8af46ad3933ff9890e68c) added: parseReplyToRepoName and parseCommentId and parsePrId
+- [cb9deed](https://github.com/sudo/gh-deployer/commit/cb9deed7c432b996ce7a1e8a46662503434658ae) added: getMetaDataFromMessage
 - [c9aabd3](https://github.com/sudo/gh-deployer/commit/c9aabd32d4f13941d06383e72b4006c5b69b513b) added: replace tokens in DOCKER_NETWORK_ALIASES ENV
 - [9bd42f2](https://github.com/sudo/gh-deployer/commit/9bd42f2264bec9ec77db5db510dc9ad6ab434e56) added: support for network aliases
 - [fef9b3f](https://github.com/sudo/gh-deployer/commit/fef9b3fd192accf37fe40e2b8b52ce00809f9d7a) added: memory limit
@@ -23,6 +26,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Changed
 
+- [58d96b0](https://github.com/sudo/gh-deployer/commit/58d96b0d94490512deb97d67926db27d15755798) updated: dependencies and package-lock.json
+- [5f795e6](https://github.com/sudo/gh-deployer/commit/5f795e6014ab6cb51de7bf329acc6eae90162d3f) updated: move update listeners to after connected
+- [e4234ee](https://github.com/sudo/gh-deployer/commit/e4234ee8b07b5862dc4de00ee2726caa864f5882) updated: imap auth timeout
+- [7aa4aac](https://github.com/sudo/gh-deployer/commit/7aa4aacd4b618a21606c3f6cb19f7c0e1ea42431) updated: @sentry/node from 5.0.5 to 5.0.6
+- [0844b5e](https://github.com/sudo/gh-deployer/commit/0844b5ec4aee9c616567196ecfbf2bfff72d45bc) updated: changelog
 - [5cc6e32](https://github.com/sudo/gh-deployer/commit/5cc6e32cb01536472fe238de7207a7be439e77cc) updated: Split Travis CI to jobs
 - [9a41b1f](https://github.com/sudo/gh-deployer/commit/9a41b1f8d8b0ec37d75e250be2babf9f90fca14c) updated: Split Travis CI to jobs
 - [00f5f80](https://github.com/sudo/gh-deployer/commit/00f5f80ba2828b181c1478b551dd6a64497f14e7) updated: changelog
@@ -38,6 +46,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 
+- [a6e17c7](https://github.com/sudo/gh-deployer/commit/a6e17c760cc8d93aad5dac2a4d6611e6e111abfa) removed: DEPLOY_AND_MERGE & DEPLOY_AND_MERGE_WITH_CONFIG
+- [3c6eaad](https://github.com/sudo/gh-deployer/commit/3c6eaad05370ccf46e268e9ec351a9ceb3d2a673) removed: PR id parsing from comment
 - [ae94d3b](https://github.com/sudo/gh-deployer/commit/ae94d3b05748b440b1cdd31e73d44c42d7253bf1) removed: async and 'self' variables from mail-listener2
 - [fd360fb](https://github.com/sudo/gh-deployer/commit/fd360fb7af0efa71c5bdbe8fd173d643913f38ca) removed: email parsing from mail-listener2
 - [61ef1d1](https://github.com/sudo/gh-deployer/commit/61ef1d13378b75558eb70611e823ec6c7bd5633a) removed: attachment config and fixed import
@@ -46,6 +56,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
+- [85aa33a](https://github.com/sudo/gh-deployer/commit/85aa33a358b69a5f1dd43217f6e8c9b652bc2be5) fix: 'replyto' is an object and fallback onto 'to'
+- [4b58a40](https://github.com/sudo/gh-deployer/commit/4b58a4062da419ded61b4f91d4a95ae3ed28cd6d) fix: x-github-sender is in lowercase
+- [e294462](https://github.com/sudo/gh-deployer/commit/e294462fec3d7b5ed8c3dba4e672782f0f122a6b) fix: headers of mailparser is a map
+- [2e3fcf7](https://github.com/sudo/gh-deployer/commit/2e3fcf785eb881add8230a11de84d1a7b2c0e283) fix: hack the double read emails on start bug
+- [8f959ed](https://github.com/sudo/gh-deployer/commit/8f959ed5af2eb171db4a95a95ae5c295a614c8f7) fix: new email detection on start
+- [e867fd1](https://github.com/sudo/gh-deployer/commit/e867fd15e260f2c8a07a0d7d880ab7ee02121ae0) fix: parse docker memory as int
+- [7db07e5](https://github.com/sudo/gh-deployer/commit/7db07e5cfcdae8b213801bf586bad84fc86cb8bf) fix: memory bytes to MB
+- [5cc5d97](https://github.com/sudo/gh-deployer/commit/5cc5d97aef114bb340960bfc3945479c899143e2) fix: docker memory config
 - [8310101](https://github.com/sudo/gh-deployer/commit/831010171897bf5f7435fae30e94efc1f5239053) fix: .jshintrc errors introduced by 95a07f0ff090821
 - [cd9de1f](https://github.com/sudo/gh-deployer/commit/cd9de1f3eed20026edea34657c4ca7e1a42bc740) fix: naming issue
 - [f9f0eee](https://github.com/sudo/gh-deployer/commit/f9f0eeec807efc39b4af4d82517951d0e08f1286) fix: commands tests
@@ -53,6 +71,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Improvements
 
+- [259cd89](https://github.com/sudo/gh-deployer/commit/259cd891089c5da5be531a76def0ea8ae12c6f8d) improved: email data handling and sender username parsing
+- [583ac5a](https://github.com/sudo/gh-deployer/commit/583ac5ac7fb525b80b697ed925e109508791dd08) style: prettier
 - [6565709](https://github.com/sudo/gh-deployer/commit/65657091940d708df3e4c36359ecd381110db5f7) style: prettier
 - [709f0c2](https://github.com/sudo/gh-deployer/commit/709f0c21502c4e9929717636f3897d42ea657260) style: prettier mail-listener2
 
