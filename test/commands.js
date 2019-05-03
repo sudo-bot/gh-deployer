@@ -233,7 +233,7 @@ module.exports = async function() {
                 done();
             });
         });
-        test('test deploy and merge a into b', function(done) {
+        /*test('test deploy and merge a into b', function(done) {
             let command = commands.getCommand('Deploy and merge QA into master');
             command
                 .then(result => {
@@ -245,6 +245,6 @@ module.exports = async function() {
                     done();
                 })
                 .catch(done);
-        });
+        });*/
     });
 };

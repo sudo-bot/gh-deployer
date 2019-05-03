@@ -97,8 +97,8 @@ const DO_NOTHING_COMMANDS = [
 ];
 
 const DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS = [
-    'Deploy, merge %branchSrc% into %branchDst% and use config %configBlock%',
-    'Merge %branchSrc% into %branchDst% and use config %configBlock% and deploy',
+    //'Deploy, merge %branchSrc% into %branchDst% and use config %configBlock%',
+    //'Merge %branchSrc% into %branchDst% and use config %configBlock% and deploy',
 ];
 
 const DEPLOY_WITH_CONFIG_COMMANDS = [
@@ -109,11 +109,13 @@ const DEPLOY_WITH_CONFIG_COMMANDS = [
 ];
 
 const DEPLOY_AND_MERGE_COMMANDS = [
-    'Deploy and merge %branchSrc% into %branchDst%',
-    'Merge %branchSrc% into %branchDst% and deploy',
-    'Deploy and merge %branchSrc% into %branchDst%',
-    'Then deploy and merge %branchSrc% into %branchDst%',
-    'Deploy, Merge %branchSrc% into %branchDst%',
+    //'deploy %branchSrc% and merge it into %branchDst%',
+    //'deploy %branchSrc% and merge it into branch %branchDst%',
+    //'Deploy and merge %branchSrc% into %branchDst%',
+    //'Merge %branchSrc% into %branchDst% and deploy',
+    //'Merge and deploy %branchSrc% into %branchDst%',
+    //'Then deploy and merge %branchSrc% into %branchDst%',
+    //'Deploy, Merge %branchSrc% into %branchDst%',
     //'Deploy the PR, Merge %branchSrc% into %branchDst%',
     //'Merge %branchSrc% into %branchDst% and deploy PR',
     //'Merge %branchSrc% into %branchDst% and deploy pull-request',
