@@ -5,6 +5,7 @@ require('module-alias/register');
 process.env.ALLOWED_USERNAMES = 'test1,test2';
 process.env.PMA_CONFIG_FILE = __dirname + '/../.gitignore';
 const data = require('@src/data');
+const comments = require('@src/comments');
 const expect = require('chai').expect;
 
 module.exports = function() {
@@ -24,6 +25,26 @@ module.exports = function() {
         });
         test('test compiledPhpMyAdminConfig string', function(done) {
             expect(data.compiledPhpMyAdminConfig).to.be.a('string');
+            done();
+        });
+        test('test get meta data from pending comment dataset-1', function(done) {
+            expect(data.getMetaDataFromMessage(comments.getPendingComment(132654987, 'deploy/master', 'af1254cdfa'))).to.deep.equal({
+                "commentId": 132654987,
+                "ref": "deploy/master",
+                "sha": "af1254cdfa",
+            });
+            done();
+        });
+        test('test get meta data from empty value dataset-2', function(done) {
+            expect(data.getMetaDataFromMessage(null)).to.equal(null);
+            done();
+        });
+        test('test get meta data from empty value dataset-3', function(done) {
+            expect(data.getMetaDataFromMessage("")).to.equal(null);
+            done();
+        });
+        test('test get meta data from invalid JSON dataset-4', function(done) {
+            expect(data.getMetaDataFromMessage('<!--\nsudobot:{"commentId":132654987 "ref":"deploy/master","sha":"af1254cdfa"}-->')).to.equal(null);
             done();
         });
         test('test get data config dataset-1', function(done) {

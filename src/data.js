@@ -135,11 +135,26 @@ const getDataFromParsedEmail = function(parsed, success, error) {
     }
 };
 
+const getMetaDataFromMessage = function(metaData) {
+    const regexMetaData = /<!--\nsudobot:(?<metadata>.*)?-->/is;
+    let message = regexMetaData.exec(metaData);
+    if (message != null) {
+        try {
+            return JSON.parse(message.groups.metadata.trim());
+        } catch (error) {
+            return null;
+        }
+    } else {
+        return null;
+    }
+}
+
 module.exports = {
     compiledPhpMyAdminConfig: compiledPhpMyAdminConfig,
     destinationEmails: destinationEmails,
     allowedUsernames: allowedUsernames,
     getDataFromMessage: getDataFromMessage,
+    getMetaDataFromMessage: getMetaDataFromMessage,
     randomString: randomString,
     regexConfigBlock: regexConfigBlock,
     getDataFromConfig: getDataFromConfig,
