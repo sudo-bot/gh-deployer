@@ -122,6 +122,7 @@ const getDataFromParsedEmail = function(parsed, success, error) {
         });
     } else {
         logger.info('Not allowed:', username);
+        logger.debug(parsed);
     }
 };
 
