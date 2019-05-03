@@ -44,9 +44,7 @@ module.exports = function() {
                 {
                     text: testEmail,
                     replyTo: replyTo,
-                    headers: {
-                        'X-GitHub-Sender': 'test1',
-                    },
+                    headers: new Map().set('X-GitHub-Sender', 'test1'),
                 },
                 data => {
                     expect(data).to.deep.equal({

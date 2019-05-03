@@ -110,7 +110,7 @@ const parseMessage = function(emailText) {
 };
 
 const getDataFromParsedEmail = function(parsed, success, error) {
-    let username = parsed.headers['X-GitHub-Sender'];
+    let username = parsed.headers.get('X-GitHub-Sender');
     if (allowedUsernames.includes(username)) {
         // message : { user: 'williamdes', prID: '30', message: '@sudo-bot :)' }
         success({
@@ -122,7 +122,6 @@ const getDataFromParsedEmail = function(parsed, success, error) {
         });
     } else {
         logger.info('Not allowed:', username);
-        logger.debug(parsed);
     }
 };
 
