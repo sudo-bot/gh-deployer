@@ -52,12 +52,11 @@ const compiledPhpMyAdminConfig = fs.readFileSync(process.env.PMA_CONFIG_FILE, {
  * @return {Object}
  */
 const getDataFromMessage = function(snippetsMsg) {
-    const regexMessage = /^@(?<user>[a-z0-9_-]+) in #(?<prId>[0-9]+): (?<message>.*?)$/is; // jshint ignore:line
+    const regexMessage = /^@(?<user>[a-z0-9_-]+) in #[0-9]+: (?<message>.*?)$/is; // jshint ignore:line
     let message = regexMessage.exec(snippetsMsg);
     if (message != null) {
         return {
             message: message.groups.message,
-            prId: parseInt(message.groups.prId),
             user: message.groups.user,
         };
     } else {
