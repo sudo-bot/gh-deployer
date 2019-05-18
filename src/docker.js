@@ -118,7 +118,7 @@ module.exports = {
                                     [labelNamespace + '.git-ref']: ref,
                                     [labelNamespace + '.git-sha']: sha,
                                     [labelNamespace + '.github-type']: 'pull-request',
-                                    [labelNamespace + '.github-pr-id']: prId,
+                                    [labelNamespace + '.github-pr-id']: '' + prId,
                                     [labelNamespace + '.public-dns-hostname']: hostName,
                                 },
                             })
