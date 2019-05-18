@@ -52,28 +52,28 @@
     },
     "license": "MPL-2.0",
     "dependencies": {
-        "@sentry/node": "^5.1.2",
+        "@sentry/node": "^5.2.0",
         "cloudflare": "^2.4.1",
         "dotenv": "^8.0.0",
         "imap": "^0.8.19",
-        "log4js": "^4.1.0",
-        "mailparser": "^2.7.0",
+        "log4js": "^4.2.0",
+        "mailparser": "^2.7.1",
         "module-alias": "^2.2.0",
         "node-docker-api": "^1.1.22",
         "node-emoji": "^1.10.0",
-        "node-nlp": "^3.0.3",
+        "node-nlp": "^3.1.1",
         "octonode": "^0.9.5",
         "sentencer": "^0.2.0",
         "smtp-server": "^3.5.0"
     },
     "devDependencies": {
         "chai": "^4.2.0",
-        "changelog-generator-twig": "^1.1.0",
-        "codecov": "^3.3.0",
+        "changelog-generator-twig": "^1.2.0",
+        "codecov": "^3.5.0",
         "jshint": "^2.10.2",
         "mocha": "^6.1.4",
-        "nyc": "^14.1.0",
-        "prettier": "^1.17.0"
+        "nyc": "^14.1.1",
+        "prettier": "^1.17.1"
     },
     "prettier": {
         "singleQuote": true,
