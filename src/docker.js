@@ -113,7 +113,7 @@ module.exports = {
                                     EndpointsConfig: createAliasesFromString(networkAliases),
                                 },
                                 Labels: {
-                                    [labelNamespace]: true,
+                                    [labelNamespace]: 'true',
                                     [labelNamespace + '.git-url']: cloneUrl,
                                     [labelNamespace + '.git-ref']: ref,
                                     [labelNamespace + '.git-sha']: sha,
