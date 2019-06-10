@@ -52,11 +52,11 @@
     },
     "license": "MPL-2.0",
     "dependencies": {
-        "@sentry/node": "^5.2.0",
+        "@sentry/node": "^5.4.0",
         "cloudflare": "^2.4.1",
         "dotenv": "^8.0.0",
         "imap": "^0.8.19",
-        "log4js": "^4.2.0",
+        "log4js": "^4.3.1",
         "mailparser": "^2.7.1",
         "module-alias": "^2.2.0",
         "node-docker-api": "^1.1.22",
@@ -73,7 +73,7 @@
         "jshint": "^2.10.2",
         "mocha": "^6.1.4",
         "nyc": "^14.1.1",
-        "prettier": "^1.17.1"
+        "prettier": "^1.18.2"
     },
     "prettier": {
         "singleQuote": true,
