@@ -22,6 +22,8 @@ const createAliasesFromString = aliasString => {
     return netAlias;
 };
 
+const labelNamespace = 'fr.wdes.sudo.gh-deployer';
+
 module.exports = {
     createAliasesFromString: createAliasesFromString,
     createDocker: (prId, cloneUrl, ref, sha, compiledPhpMyAdminConfig, randomString) => {
@@ -63,18 +65,19 @@ module.exports = {
                             },
                             '' + process.env.DOCKER_NETWORK_ALIASES
                         );
+                        const hostName = data.replaceTokens(
+                            {
+                                prId: prId,
+                                ref: ref,
+                                sha: sha,
+                            },
+                            '' + process.env.DOCKER_CONTAINER_HOSTNAME
+                        );
                         docker.container
                             .create({
                                 Image: process.env.DOCKER_IMAGE,
                                 name: containerName,
-                                Hostname: data.replaceTokens(
-                                    {
-                                        prId: prId,
-                                        ref: ref,
-                                        sha: sha,
-                                    },
-                                    '' + process.env.DOCKER_CONTAINER_HOSTNAME
-                                ),
+                                Hostname: hostName,
                                 Domainname: data.replaceTokens(
                                     {
                                         prId: prId,
@@ -108,6 +111,15 @@ module.exports = {
                                 ],
                                 NetworkingConfig: {
                                     EndpointsConfig: createAliasesFromString(networkAliases),
+                                },
+                                Labels: {
+                                    [labelNamespace]: 'true',
+                                    [labelNamespace + '.git-url']: cloneUrl,
+                                    [labelNamespace + '.git-ref']: ref,
+                                    [labelNamespace + '.git-sha']: sha,
+                                    [labelNamespace + '.github-type']: 'pull-request',
+                                    [labelNamespace + '.github-pr-id']: '' + prId,
+                                    [labelNamespace + '.public-dns-hostname']: hostName,
                                 },
                             })
                             .then(container => container.start())

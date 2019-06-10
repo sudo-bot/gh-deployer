@@ -30,16 +30,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [5f795e6](https://github.com/sudo/gh-deployer/commit/5f795e6014ab6cb51de7bf329acc6eae90162d3f) updated: move update listeners to after connected
 - [e4234ee](https://github.com/sudo/gh-deployer/commit/e4234ee8b07b5862dc4de00ee2726caa864f5882) updated: imap auth timeout
 - [7aa4aac](https://github.com/sudo/gh-deployer/commit/7aa4aacd4b618a21606c3f6cb19f7c0e1ea42431) updated: @sentry/node from 5.0.5 to 5.0.6
-- [0844b5e](https://github.com/sudo/gh-deployer/commit/0844b5ec4aee9c616567196ecfbf2bfff72d45bc) updated: changelog
-- [5cc6e32](https://github.com/sudo/gh-deployer/commit/5cc6e32cb01536472fe238de7207a7be439e77cc) updated: Split Travis CI to jobs
 - [9a41b1f](https://github.com/sudo/gh-deployer/commit/9a41b1f8d8b0ec37d75e250be2babf9f90fca14c) updated: Split Travis CI to jobs
-- [00f5f80](https://github.com/sudo/gh-deployer/commit/00f5f80ba2828b181c1478b551dd6a64497f14e7) updated: changelog
 - [8fa5e09](https://github.com/sudo/gh-deployer/commit/8fa5e0943878e3ca4cd8a7a85e5ee8e9012fd39a) updated: Moved training to index
 - [8773478](https://github.com/sudo/gh-deployer/commit/87734785da479254b34db6434ab23e8e5de34a8b) updated: Moved files and renamed one
 - [95a07f0](https://github.com/sudo/gh-deployer/commit/95a07f0ff0908219951b099cc918ba15671d22d5) updated: jshintrc to esnext
 - [e3aa0a6](https://github.com/sudo/gh-deployer/commit/e3aa0a6fed2db11e0e2fb5221bddde9ba3bd7d15) updated: package.json and package-lock.json
 - [1a3325c](https://github.com/sudo/gh-deployer/commit/1a3325c5348b374b087a77991b1d3352f32b16c7) updated: dependencies
-- [4dce64b](https://github.com/sudo/gh-deployer/commit/4dce64bdc24ccd5539ebb4900ae4ac32fd41dd52) updated: changelog
 - [e66181d](https://github.com/sudo/gh-deployer/commit/e66181d65b91e69bcf8e01e6a5f40c77a83fd875) updated: package.json && package-lock.json
 - [6f0ee0e](https://github.com/sudo/gh-deployer/commit/6f0ee0e9cbdf06876e94cff00e557d7b6c21f991) updated: package.json && package-lock.json
 - [a946722](https://github.com/sudo/gh-deployer/commit/a946722e65e7fbda30b3859edbfb6e76c9b4be59) update: CHANGELOG.md
@@ -72,8 +68,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Improvements
 
 - [259cd89](https://github.com/sudo/gh-deployer/commit/259cd891089c5da5be531a76def0ea8ae12c6f8d) improved: email data handling and sender username parsing
-- [583ac5a](https://github.com/sudo/gh-deployer/commit/583ac5ac7fb525b80b697ed925e109508791dd08) style: prettier
-- [6565709](https://github.com/sudo/gh-deployer/commit/65657091940d708df3e4c36359ecd381110db5f7) style: prettier
 - [709f0c2](https://github.com/sudo/gh-deployer/commit/709f0c21502c4e9929717636f3897d42ea657260) style: prettier mail-listener2
 
 ## [v1.0.0]

@@ -35,9 +35,13 @@ module.exports = cbData => {
         });
         mailListener.on('server:disconnected', function() {
             logger.info('imapDisconnected');
+            mailListener.stop();
+            mailListener.start();
         });
         mailListener.on('error', function(err) {
             logger.error(err);
+            mailListener.stop();
+            mailListener.start();
         });
         mailListener.on('mail', function(stream) {
             data.parseEmail(stream)
