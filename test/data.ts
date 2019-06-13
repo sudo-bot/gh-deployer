@@ -3,12 +3,12 @@
 require('module-alias/register');
 
 process.env.ALLOWED_USERNAMES = 'test1,test2';
-process.env.PMA_CONFIG_FILE = __dirname + '/../.gitignore';
-const data = require('@src/data');
-const comments = require('@src/comments');
-const expect = require('chai').expect;
+process.env.PMA_CONFIG_FILE = __filename;
+import data from '@src/data';
+import comments from '@src/comments';
+import { expect } from 'chai';
 
-module.exports = function() {
+export default function() {
     suite('data', function() {
         const replyTo = 'phpmyadmin/phpmyadmin <reply+AKKGZQSENRXBEEFDNKLARIV23GUSVEVBNHHBRKIAPY@reply.github.com>';
         const testEmail = `
@@ -58,7 +58,8 @@ module.exports = function() {
                         requestedByUser: 'test1',
                     });
                     done();
-                }
+                },
+                (err) => {}
             );
         });
         test('test destination emails', function(done) {

@@ -2,10 +2,10 @@
 
 require('module-alias/register');
 
-const docker = require('@src/docker');
-const expect = require('chai').expect;
+import docker from '@src/docker';
+import { expect } from 'chai';
 
-module.exports = function() {
+export default function() {
     suite('docker', function() {
         test('test docker create aliases from null or undefined', function(done) {
             expect(docker.createAliasesFromString(null)).to.deep.equal({});

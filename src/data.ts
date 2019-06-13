@@ -1,7 +1,7 @@
 'use strict';
 
 import logger from '@src/logger';
-import emoji from 'node-emoji';
+const emoji = require('node-emoji');
 const simpleMailParser = require('mailparser').simpleParser;
 import { readFileSync } from 'fs';
 

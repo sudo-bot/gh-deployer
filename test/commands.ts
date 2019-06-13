@@ -4,8 +4,9 @@ require('module-alias/register');
 
 process.env.ALLOWED_USERNAMES = 'test1,test2';
 process.env.PMA_CONFIG_FILE = __filename;
-const commands = require('@src/commands');
-const expect = require('chai').expect;
+
+import commands from '@src/commands';
+import { expect } from 'chai';
 
 /**
  *
@@ -21,7 +22,7 @@ function forEachPromise(items, fn) {
     }, Promise.resolve());
 }
 
-module.exports = async function() {
+export default async function() {
     await commands.train();
     suite('commands', function() {
         test('test DEPLOY_AND_MERGE_COMMANDS commands', function(done) {
