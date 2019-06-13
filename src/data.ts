@@ -66,10 +66,8 @@ const getDataFromMessage = function(snippetsMsg) {
 
 /**
  * Get data from config
- * @param {String} snippetsMsg
- * @return {Object}
  */
-const getDataFromConfig = function(snippetsMsg) {
+const getDataFromConfig = function(snippetsMsg: string): string|null {
     const regexConfig = /(?:```)(?:php){0,1}(?<config>.*?)(?=```)```/gis; // jshint ignore:line
     let message = regexConfig.exec(snippetsMsg);
     if (message != null) {
@@ -79,12 +77,12 @@ const getDataFromConfig = function(snippetsMsg) {
     }
 };
 
-const parseReplyToRepoName = function(emailTo) {
+const parseReplyToRepoName = function(emailTo: string): string {
     const parts = emailTo.split(' ');
     return parts[0];
 };
 
-const parseCommentId = function(emailTextData) {
+const parseCommentId = function(emailTextData: string): Number {
     const regexCommentId = /#issuecomment-(?<commentId>[0-9]+)/gm;
     let message = regexCommentId.exec(emailTextData);
     if (message != null) {
@@ -94,7 +92,7 @@ const parseCommentId = function(emailTextData) {
     }
 };
 
-const parsePrId = function(emailTextData) {
+const parsePrId = function(emailTextData: string): Number {
     const regexPrId = /\/(?<prID>[0-9]+)#issuecomment-[0-9]+$/gm;
     let message = regexPrId.exec(emailTextData);
     if (message != null) {
@@ -104,12 +102,20 @@ const parsePrId = function(emailTextData) {
     }
 };
 
-const parseMessage = function(emailText) {
+const parseMessage = function(emailText: string): string {
     const emailParts = emailText.split('--\n        You are receiving');
     return emailParts[0].trim();
 };
 
-const getDataFromParsedEmail = function(parsed, success, error) {
+export interface emailData {
+    commentId: Number;
+    requestedByUser: string;
+    message: string,
+    prId: Number,
+    repoName: string,
+}
+
+const getDataFromParsedEmail = function(parsed, success: (data: emailData) => void, error: (err) => void) {
     let username = parsed.headers.get('x-github-sender');
     if (allowedUsernames.includes(username)) {
         // message : { user: 'williamdes', prID: '30', message: '@sudo-bot :)' }
@@ -153,11 +159,11 @@ export default {
     regexConfigBlock: regexConfigBlock,
     getDataFromConfig: getDataFromConfig,
     replaceEmoji: text => {
-        return emoji.replace(text, emoji => `:${emoji.key}:`);
+        return emoji.replace(text, emojiReplacement => `:${emojiReplacement.key}:`);
     },
     protectConfig: config => Buffer.from(config).toString('base64'),
     parseEmail: stream => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve: (data: emailData) => void, reject) => {
             simpleMailParser(stream)
                 .then(parsed => {
                     getDataFromParsedEmail(parsed, resolve, reject);

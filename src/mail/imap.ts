@@ -1,11 +1,11 @@
 'use strict';
 
 import logger from '@src/logger';
-import data from '@src/data';
+import data, { emailData } from '@src/data';
 import MailListener from '@utils/mail-listener2';
 
 export default class {
-    constructor(cbData) {
+    constructor(cbData: (data: emailData) => void) {
         logger.debug('Using mailbox imap mode');
         try {
             const debugImap = process.env.MAILBOX_DEBUG && process.env.MAILBOX_DEBUG.toUpperCase() === 'TRUE';

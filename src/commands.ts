@@ -34,13 +34,13 @@ manager.slotManager.addSlot('merge_from_into', 'branchDst', false, {});
 
 manager.slotManager.addSlot('use_config', 'configBlock', false, {});
 
-const COMMANDS = {
-    DEPLOY_AND_MERGE: 'deploy_and_merge',
-    DEPLOY_AND_MERGE_WITH_CONFIG: 'deploy_and_merge_with_config',
-    DEPLOY_WITH_CONFIG: 'deploy_with_config',
-    DEPOY_PR: 'deploy_pr',
-    SEND_CREDS: 'send_creds',
-    DO_NOTHING: 'do_nothing',
+export enum COMMANDS {
+    DEPLOY_AND_MERGE = 'deploy_and_merge',
+    DEPLOY_AND_MERGE_WITH_CONFIG = 'deploy_and_merge_with_config',
+    DEPLOY_WITH_CONFIG = 'deploy_with_config',
+    DEPOY_PR = 'deploy_pr',
+    SEND_CREDS = 'send_creds',
+    DO_NOTHING = 'do_nothing',
 };
 
 const DEPLOY_COMMANDS = [
@@ -171,6 +171,12 @@ logger.debug('Learned ' + DEPLOY_WITH_CONFIG_COMMANDS.length + ' deploy and merg
 
 logger.info('End of the lesson');
 
+export interface commandData {
+    command: COMMANDS,
+    options: any,
+    debug: object
+}
+
 export default {
     train: () => {
         return manager.train();
@@ -183,7 +189,7 @@ export default {
     DEPLOY_AND_MERGE_COMMANDS: DEPLOY_AND_MERGE_COMMANDS,
     DEPLOY_WITH_CONFIG_COMMANDS: DEPLOY_WITH_CONFIG_COMMANDS,
     getCommand: text => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve: (data: commandData) => void, reject) => {
             manager
                 .process('en', text, {})
                 .then(responseManager => {

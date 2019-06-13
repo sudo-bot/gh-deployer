@@ -2,10 +2,10 @@
 
 import logger from '@src/logger';
 const SMTPServer = require('smtp-server').SMTPServer;
-import data from '@src/data';
+import data, { emailData } from '@src/data';
 
 export default class {
-    constructor(cbData) {
+    constructor(cbData: (data: emailData) => void) {
         logger.debug('Using fake smtp server smtp mode');
         try {
             const smtpServer = new SMTPServer({
