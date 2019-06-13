@@ -1,6 +1,5 @@
 'use strict';
 
-const Sentencer = require('sentencer');
 const comments = require('@src/comments');
 const data = require('@src/data');
 const logger = require('@src/logger');
@@ -146,10 +145,6 @@ DO_NOTHING_COMMANDS.forEach(command => {
 });
 logger.debug('Learned ' + DO_NOTHING_COMMANDS.length + ' do nothing commands');
 logger.info('Learn harder');
-for (let i = 0; i < 100; i++) {
-    let sentence = Sentencer.make('{{ a_noun }} {{ an_adjective }} {{ noun }}');
-    //manager.addDocument('en', sentence, COMMANDS.DO_NOTHING);
-}
 
 //manager.addDocument('en', 'Merge branch %branch%', 'merge');
 // manager.addDocument('en', 'Use config %configBlock%', 'use_config');
