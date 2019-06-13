@@ -1,14 +1,14 @@
 'use strict';
 
-const logger = require('@src/logger');
+import logger from '@src/logger';
 const cf = require('cloudflare')({
     email: process.env.CLOUDFLARE_EMAIL,
     key: process.env.CLOUDFLARE_KEY,
 });
 
-const data = require('@src/data');
+import data from '@src/data';
 
-module.exports = {
+export default {
     publishDnsRecord: (containerName, prId, ref, sha) => {
         return new Promise((resolve, reject) => {
             let domainName = data.replaceTokens(

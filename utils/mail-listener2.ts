@@ -28,7 +28,7 @@ var Imap = require('imap');
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 
-module.exports = MailListener;
+export default MailListener;
 
 function MailListener(options) {
     this.markSeen = !!options.markSeen;
@@ -134,7 +134,7 @@ function parseUnread(imap, searchFilter, markSeen, onEmailProcessed, onError) {
             onError(err);
         } else if (results.length > 0) {
             results = results.map(email => {
-                return processEmail(imap, email, markSeen).then(processedEmail => {
+                return processEmail(imap, email, markSeen).then((processedEmail: any) => {
                     onEmailProcessed(processedEmail.stream, processedEmail.seqno, processedEmail.info);
                 });
             });

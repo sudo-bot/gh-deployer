@@ -1,8 +1,8 @@
 'use strict';
 
-const comments = require('@src/comments');
-const data = require('@src/data');
-const logger = require('@src/logger');
+import comments from '@src/comments';
+import data from '@src/data';
+import logger from '@src/logger';
 const nodenpl = require('node-nlp');
 
 const manager = new nodenpl.NlpManager({
@@ -171,7 +171,7 @@ logger.debug('Learned ' + DEPLOY_WITH_CONFIG_COMMANDS.length + ' deploy and merg
 
 logger.info('End of the lesson');
 
-module.exports = {
+export default {
     train: () => {
         return manager.train();
     },

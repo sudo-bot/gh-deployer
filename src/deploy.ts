@@ -1,24 +1,24 @@
 'use strict';
 
-const github = require('@src/github');
-const logger = require('@src/logger');
-const docker = require('@src/docker');
-const dns = require('@src/dns');
-const comments = require('@src/comments');
-const data = require('@src/data');
+import github from '@src/github';
+import logger from '@src/logger';
+import docker from '@src/docker';
+import dns from '@src/dns';
+import comments from '@src/comments';
+import data from '@src/data';
 
-module.exports = {
+export default {
     deploy: (emailInfos, configBlock) => {
         github
             .getPrInfos(emailInfos.prId, emailInfos.repoName)
-            .then(prInfos => {
+            .then((prInfos: any) => {
                 github
                     .createComment(
                         emailInfos.prId,
                         prInfos.base.repo.full_name,
                         comments.getPendingComment(emailInfos.commentId, prInfos.head.ref, prInfos.head.sha)
                     )
-                    .then(deployComment => {
+                    .then((deployComment: any) => {
                         docker
                             .createDocker(
                                 emailInfos.prId,
@@ -28,7 +28,7 @@ module.exports = {
                                 configBlock,
                                 data.randomString(80)
                             )
-                            .then(docker => {
+                            .then((docker: any) => {
                                 dns.publishDnsRecord(
                                     docker.containerName,
                                     emailInfos.prId,

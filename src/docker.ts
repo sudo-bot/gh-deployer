@@ -1,10 +1,10 @@
 'use strict';
 
-const logger = require('@src/logger');
+import logger from '@src/logger';
 const { Docker } = require('node-docker-api');
 
 const docker = new Docker({ socketPath: '/var/run/docker.sock' });
-const data = require('@src/data');
+import data from '@src/data';
 
 const createAliasesFromString = aliasString => {
     aliasString = aliasString || '';
@@ -24,7 +24,7 @@ const createAliasesFromString = aliasString => {
 
 const labelNamespace = 'fr.wdes.sudo.gh-deployer';
 
-module.exports = {
+export default {
     createAliasesFromString: createAliasesFromString,
     createDocker: (prId, cloneUrl, ref, sha, compiledPhpMyAdminConfig, randomString) => {
         return new Promise((resolve, reject) => {
@@ -53,8 +53,8 @@ module.exports = {
                     })
                     .then(function() {
                         logger.info('Deploying: ', containerName);
-                        var optionalHostConfig = {};
-                        if (process.env.DOCKER_MEMORY && process.env.DOCKER_MEMORY != 0) {
+                        var optionalHostConfig: any = {};
+                        if (process.env.DOCKER_MEMORY && process.env.DOCKER_MEMORY != '0') {
                             optionalHostConfig.Memory = parseInt(process.env.DOCKER_MEMORY) * 1000000;
                         }
                         const networkAliases = data.replaceTokens(

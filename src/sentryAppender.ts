@@ -1,9 +1,9 @@
 'use strict';
 
-const Sentry = require('@sentry/node');
+import { init, withScope, captureEvent, Severity } from '@sentry/node';
 const packageJson = require('@root/package.json');
 
-Sentry.init({
+init({
     dsn: process.env.SENTRY_DSN,
     release: packageJson.name + '@' + packageJson.version,
     environment: process.env.NODE_ENV,
@@ -30,13 +30,13 @@ function sentryAppender(level) {
         });
         // Check if the log level is enabled
         if (!level || logEvent.level.isGreaterThanOrEqualTo(level)) {
-            Sentry.withScope(scope => {
+            withScope(scope => {
                 let level = logEvent.level.toString().toLowerCase();
                 level = level.replace('warn', 'warning');
                 scope.setLevel(level);
-                Sentry.captureEvent({
+                captureEvent({
                     message: msg,
-                    level: Sentry.Severity.fromString(level),
+                    level: Severity.fromString(level),
                     extra: {
                         data: contexts,
                     },
@@ -59,3 +59,8 @@ function configure(config) {
 
 exports.appender = sentryAppender;
 exports.configure = configure;
+
+export default {
+    appender: sentryAppender,
+    configure: configure,
+};

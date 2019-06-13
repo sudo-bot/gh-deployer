@@ -29,13 +29,14 @@
         "node": ">=8.6.0"
     },
     "scripts": {
+        "build": "tsc",
         "changelog": "changelog-generator-twig --owner sudo --repo gh-deployer --repoDir ./ --baseCommit 5f5552755301e92a762698db33127c44e924fac6",
         "changelog-file": "npm run --silent changelog > CHANGELOG.md",
         "jshint": "jshint ./",
-        "start": "node index.js",
+        "start": "npm run build && node index.js",
         "test": "nyc --all mocha --ui tdd",
         "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov",
-        "prettier": "prettier --ignore-path ./.prettierignore --write \"*/**/*.js\" \"*.js\""
+        "prettier": "prettier --ignore-path ./.prettierignore --write \"*/**/*.js\" \"*.js\" \"*/**/*.ts\" \"*.ts\""
     },
     "keywords": [
         "github"
@@ -53,6 +54,8 @@
     "license": "MPL-2.0",
     "dependencies": {
         "@sentry/node": "^5.4.0",
+        "@sentry/types": "^5.4.0",
+        "@types/node": "^12.0.8",
         "cloudflare": "^2.4.1",
         "dotenv": "^8.0.0",
         "imap": "^0.8.19",
@@ -84,9 +87,9 @@
     },
     "bin": {},
     "_moduleAliases": {
-        "@src": "src",
+        "@src": "dist/src",
         "@root": "./",
         "@test": "test",
-        "@utils": "utils"
+        "@utils": "dist/utils"
     }
 }

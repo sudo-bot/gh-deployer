@@ -1,24 +1,24 @@
 'use strict';
 
-const logger = require('@src/logger');
-const deploy = require('@src/deploy');
-const commands = require('@src/commands');
-const mail = require('@src/mail/index');
-const data = require('@src/data');
+import logger from '@src/logger';
+import deploy from '@src/deploy';
+import commands from '@src/commands';
+import mail from '@src/mail/index';
+import data from '@src/data';
 
 logger.debug('Training...');
 commands
     .train()
     .then(() => {
         logger.debug('End of training');
-        mail(emailInfos => {
+        new mail(emailInfos => {
             logger.debug('New email', emailInfos);
             if (emailInfos.requestedByUser === process.env.ROBOT_USER) {
                 logger.info('From-me:', emailInfos.message);
             } else {
                 commands
                     .getCommand(emailInfos.message)
-                    .then(commandData => {
+                    .then((commandData: any) => {
                         switch (commandData.command) {
                             case commands.COMMANDS.DEPOY_PR:
                             case commands.COMMANDS.DEPLOY_AND_MERGE:

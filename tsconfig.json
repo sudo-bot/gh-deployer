@@ -1,10 +1,18 @@
 {
     "compilerOptions": {
-        "outDir": "./built",
-        "allowJs": true,
+        "outDir": "./dist",
+        "allowJs": false,
+        "strict": false,
         "lib": ["es2017"],
         "module": "commonjs",
-        "target": "es2017"
+        "target": "es2017",
+        "baseUrl": "./",
+        "paths": {
+            "@src/*": ["./src/*"],
+            "@root/*": ["./*"],
+            "@test/*": ["./test/*"],
+            "@utils/*": ["./utils/*"]
+        }
     },
     "include": [
         "./src/**/*"

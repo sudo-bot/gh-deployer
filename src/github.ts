@@ -3,7 +3,7 @@
 const octonode = require('octonode');
 const GHclient = octonode.client(process.env.GITHUB_TOKEN);
 
-module.exports = {
+export default {
     createComment: (prId, repoName, commentBody) => {
         return new Promise((resolve, reject) => {
             const ghissue = GHclient.issue(repoName, prId);
@@ -39,10 +39,10 @@ module.exports = {
             );
         });
     },
-    getPrInfos: (prId, repoName) => {
+    getPrInfos(prId, repoName) {
         return new Promise((resolve, reject) => {
             const ghpr = GHclient.pr(repoName, prId);
-            ghpr.info((err, data) => {
+            ghpr.info((err, data: object) => {
                 if (err) {
                     reject(err);
                 } else {

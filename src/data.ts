@@ -1,9 +1,9 @@
 'use strict';
 
-const logger = require('@src/logger');
-const emoji = require('node-emoji');
+import logger from '@src/logger';
+import emoji from 'node-emoji';
 const simpleMailParser = require('mailparser').simpleParser;
-const fs = require('fs');
+import { readFileSync } from 'fs';
 
 //const regexBoundary = /Content-Type: [\/a-z;\s]+boundary="(?<boundary>[=\-_a-z0-9]+)"/gm;
 //Content-Type: [\/a-z;\s]+boundary="(?<boundary>[=\-_a-z0-9]+)"(([.\S\s]*?)--\k<boundary>)*
@@ -42,7 +42,7 @@ const randomString = function(length) {
         .substring(0, length);
 };
 
-const compiledPhpMyAdminConfig = fs.readFileSync(process.env.PMA_CONFIG_FILE, {
+const compiledPhpMyAdminConfig = readFileSync(process.env.PMA_CONFIG_FILE, {
     encoding: 'base64',
 });
 
@@ -139,7 +139,7 @@ const getMetaDataFromMessage = function(metaData) {
     }
 };
 
-module.exports = {
+export default {
     compiledPhpMyAdminConfig: compiledPhpMyAdminConfig,
     destinationEmails: destinationEmails,
     allowedUsernames: allowedUsernames,

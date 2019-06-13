@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports = {
-    getPendingComment: (commentId, ref, sha) => {
+export default {
+    getPendingComment(commentId, ref, sha) {
         return (
             //TODO: custom templates
             '<!--\nsudobot:' +
@@ -19,7 +19,7 @@ module.exports = {
             '_This message will be updated with the progress of the deploy_\n'
         );
     },
-    getDeployedComment: (commentId, ref, sha, containerName, domain) => {
+    getDeployedComment(commentId, ref, sha, containerName, domain) {
         return (
             //TODO: custom templates
             '<!--\nsudobot:' +
