@@ -248,4 +248,4 @@ export default async function() {
                 .catch(done);
         });*/
     });
-};
+}

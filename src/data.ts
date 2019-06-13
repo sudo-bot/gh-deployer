@@ -67,7 +67,7 @@ const getDataFromMessage = function(snippetsMsg) {
 /**
  * Get data from config
  */
-const getDataFromConfig = function(snippetsMsg: string): string|null {
+const getDataFromConfig = function(snippetsMsg: string): string | null {
     const regexConfig = /(?:```)(?:php){0,1}(?<config>.*?)(?=```)```/gis; // jshint ignore:line
     let message = regexConfig.exec(snippetsMsg);
     if (message != null) {
@@ -110,9 +110,9 @@ const parseMessage = function(emailText: string): string {
 export interface emailData {
     commentId: Number;
     requestedByUser: string;
-    message: string,
-    prId: Number,
-    repoName: string,
+    message: string;
+    prId: Number;
+    repoName: string;
 }
 
 const getDataFromParsedEmail = function(parsed, success: (data: emailData) => void, error: (err) => void) {

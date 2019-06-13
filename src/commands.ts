@@ -41,7 +41,7 @@ export enum COMMANDS {
     DEPOY_PR = 'deploy_pr',
     SEND_CREDS = 'send_creds',
     DO_NOTHING = 'do_nothing',
-};
+}
 
 const DEPLOY_COMMANDS = [
     '/deploy PR',
@@ -172,9 +172,9 @@ logger.debug('Learned ' + DEPLOY_WITH_CONFIG_COMMANDS.length + ' deploy and merg
 logger.info('End of the lesson');
 
 export interface commandData {
-    command: COMMANDS,
-    options: any,
-    debug: object
+    command: COMMANDS;
+    options: any;
+    debug: object;
 }
 
 export default {

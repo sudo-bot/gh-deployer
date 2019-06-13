@@ -59,7 +59,7 @@ export default function() {
                     });
                     done();
                 },
-                (err) => {}
+                err => {}
             );
         });
         test('test destination emails', function(done) {
@@ -215,4 +215,4 @@ export default function() {
             done();
         });
     });
-};
+}
