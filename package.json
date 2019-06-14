@@ -99,9 +99,9 @@
     },
     "bin": {},
     "_moduleAliases": {
-        "@src": "dist/src",
+        "@src": "src",
         "@root": "./",
-        "@test": "dist/test",
-        "@utils": "dist/utils"
+        "@test": "test",
+        "@utils": "utils"
     }
 }
