@@ -71,7 +71,7 @@
         "node-docker-api": "^1.1.22",
         "node-emoji": "^1.10.0",
         "node-nlp": "^3.1.1",
-        "octonode": "^0.9.5",
+        "octokit": "^1.0.0-hello-world",
         "smtp-server": "^3.5.0"
     },
     "devDependencies": {
