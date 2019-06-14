@@ -5,6 +5,7 @@ import deploy from '@src/deploy';
 import { default as commands, COMMANDS } from '@src/commands';
 import mail from '@src/mail';
 import data from '@src/data';
+import github, { reactions } from './github';
 
 logger.debug('Training...');
 commands
@@ -15,7 +16,8 @@ commands
             logger.debug('New email', emailInfos);
             if (emailInfos.requestedByUser === process.env.ROBOT_USER) {
                 logger.info('From-me:', emailInfos.message);
-            } else {
+            } else if (data.allowedUsernames.includes(emailInfos.requestedByUser)) {
+                github.addReaction(emailInfos.commentId || 0, emailInfos.repoName, reactions.UPVOTE);
                 commands
                     .getCommand(emailInfos.message)
                     .then(commandData => {
@@ -30,6 +32,7 @@ commands
                                 deploy.deploy(emailInfos, data.protectConfig(configData.trim()));
                                 break;
                             case COMMANDS.DO_NOTHING:
+                                github.addReaction(emailInfos.commentId || 0, emailInfos.repoName, reactions.CONFUSED);
                                 // No nothing
                                 break;
                             default:
@@ -38,6 +41,8 @@ commands
                         }
                     })
                     .catch((error: Error) => logger.error(error));
+            } else {
+                logger.info('Not allowed:', emailInfos.requestedByUser);
             }
         });
     })

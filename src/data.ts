@@ -125,19 +125,14 @@ const getDataFromParsedEmail = function(
 ) {
     const senderHeader = parsed.headers.get('x-github-sender');
     let username: string = senderHeader !== undefined ? senderHeader.toString() : '';
-    if (allowedUsernames.includes(username)) {
-        // message : { user: 'williamdes', prID: '30', message: '@sudo-bot :)' }
-        let replyTo = parsed.replyTo;
-        success({
-            commentId: parseCommentId(parsed.text),
-            requestedByUser: username,
-            message: parseMessage(parsed.text),
-            prId: parsePrId(parsed.text),
-            repoName: parseReplyToRepoName(replyTo !== undefined ? replyTo.text : parsed.to.text),
-        });
-    } else {
-        logger.info('Not allowed:', username);
-    }
+    let replyTo = parsed.replyTo;
+    success({
+        commentId: parseCommentId(parsed.text),
+        requestedByUser: username,
+        message: parseMessage(parsed.text),
+        prId: parsePrId(parsed.text),
+        repoName: parseReplyToRepoName(replyTo !== undefined ? replyTo.text : parsed.to.text),
+    });
 };
 
 const getMetaDataFromMessage = function(metaData: string): object | null {
