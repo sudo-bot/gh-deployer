@@ -1,16 +1,16 @@
 'use strict';
 
-const logger = require('@src/logger');
+import logger from '@src/logger';
 const cf = require('cloudflare')({
     email: process.env.CLOUDFLARE_EMAIL,
     key: process.env.CLOUDFLARE_KEY,
 });
 
-const data = require('@src/data');
+import data from '@src/data';
 
-module.exports = {
-    publishDnsRecord: (containerName, prId, ref, sha) => {
-        return new Promise((resolve, reject) => {
+export default {
+    publishDnsRecord: (containerName: string, prId: number, ref: string, sha: string) => {
+        return new Promise((resolve: (domainName: string) => void, reject: (err: Error | null) => void) => {
             let domainName = data.replaceTokens(
                 {
                     containerName: containerName,
@@ -18,7 +18,7 @@ module.exports = {
                     ref: ref,
                     sha: sha,
                 },
-                '' + process.env.CLOUDFLARE_RECORD_NAME
+                process.env.CLOUDFLARE_RECORD_NAME || ''
             );
             cf.dnsRecords
                 .add(process.env.CLOUDFLARE_ZONEID, {

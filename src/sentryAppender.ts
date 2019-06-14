@@ -1,9 +1,10 @@
 'use strict';
 
-const Sentry = require('@sentry/node');
-const packageJson = require('@root/package.json');
+import { init, withScope, captureEvent, Severity } from '@sentry/node';
+import { LoggingEvent } from 'log4js';
+import * as packageJson from '@root/package.json';
 
-Sentry.init({
+init({
     dsn: process.env.SENTRY_DSN,
     release: packageJson.name + '@' + packageJson.version,
     environment: process.env.NODE_ENV,
@@ -13,14 +14,14 @@ Sentry.init({
 /**
  * The appender function.
  *
- * @param {String} level The log level to use as an override for the main category level.
+ * @param {string} level The log level to use as an override for the main category level.
  *
- * @return {Function} Returns the
+ * @return {Function} The log function
  */
-function sentryAppender(level) {
+function sentryAppender(level: string): (logEvent: LoggingEvent) => void {
     return logEvent => {
         let msg = logEvent.data[0];
-        const contexts = [];
+        const contexts: string[] = [];
         logEvent.data.slice(1).forEach(arg => {
             if (arg instanceof Error) {
                 contexts.push(arg.toString());
@@ -30,13 +31,13 @@ function sentryAppender(level) {
         });
         // Check if the log level is enabled
         if (!level || logEvent.level.isGreaterThanOrEqualTo(level)) {
-            Sentry.withScope(scope => {
+            withScope(scope => {
                 let level = logEvent.level.toString().toLowerCase();
-                level = level.replace('warn', 'warning');
-                scope.setLevel(level);
-                Sentry.captureEvent({
+                level = level.replace('warn', Severity.Warning);
+                scope.setLevel(Severity.fromString(level));
+                captureEvent({
                     message: msg,
-                    level: Sentry.Severity.fromString(level),
+                    level: Severity.fromString(level),
                     extra: {
                         data: contexts,
                     },
@@ -49,13 +50,18 @@ function sentryAppender(level) {
 /**
  * Configures the appender.
  *
- * @param  {Object} config The options to apply.
+ * @param {object} config The options to apply.
  *
  * @return {Function} Returns the response from the sentryAppender() function.
  */
-function configure(config) {
+function configure(config: { level: string }): (logEvent: LoggingEvent) => void {
     return sentryAppender(config.level);
 }
 
 exports.appender = sentryAppender;
 exports.configure = configure;
+
+export default {
+    appender: sentryAppender,
+    configure: configure,
+};

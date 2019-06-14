@@ -5,15 +5,21 @@
     "main": "index.js",
     "private": false,
     "nyc": {
+        "extension": [
+            ".ts",
+            ".tsx"
+        ],
         "exclude": [
             "test",
             "coverage",
-            ".nyc_output"
+            ".nyc_output",
+            "**/*.d.ts"
         ],
         "reporter": [
             "text",
             "text-summary"
-        ]
+        ],
+        "all": true
     },
     "homepage": "https://github.com/sudo-bot/gh-deployer",
     "bugs": {
@@ -29,13 +35,14 @@
         "node": ">=8.6.0"
     },
     "scripts": {
+        "build": "tsc",
         "changelog": "changelog-generator-twig --owner sudo --repo gh-deployer --repoDir ./ --baseCommit 5f5552755301e92a762698db33127c44e924fac6",
         "changelog-file": "npm run --silent changelog > CHANGELOG.md",
         "jshint": "jshint ./",
-        "start": "node index.js",
-        "test": "nyc --all mocha --ui tdd",
+        "start": "ts-node index.ts",
+        "test": "nyc mocha --require ts-node/register --require source-map-support/register --ui tdd test/index.ts",
         "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov",
-        "prettier": "prettier --ignore-path ./.prettierignore --write \"*/**/*.js\" \"*.js\""
+        "prettier": "prettier --ignore-path ./.prettierignore --write \"*/**/*.js\" \"*.js\" \"*/**/*.ts\" \"*.ts\""
     },
     "keywords": [
         "github"
@@ -52,7 +59,10 @@
     },
     "license": "MPL-2.0",
     "dependencies": {
+        "@octokit/rest": "^16.28.1",
         "@sentry/node": "^5.4.0",
+        "@types/imap": "^0.8.29",
+        "@types/mailparser": "^2.4.0",
         "cloudflare": "^2.4.1",
         "dotenv": "^8.0.0",
         "imap": "^0.8.19",
@@ -62,18 +72,23 @@
         "node-docker-api": "^1.1.22",
         "node-emoji": "^1.10.0",
         "node-nlp": "^3.1.1",
-        "octonode": "^0.9.5",
-        "sentencer": "^0.2.0",
         "smtp-server": "^3.5.0"
     },
     "devDependencies": {
+        "@sentry/types": "^5.4.0",
+        "@types/chai": "^4.1.7",
+        "@types/mocha": "^5.2.7",
+        "@types/node": "^12.0.8",
+        "@types/smtp-server": "^3.5.1",
         "chai": "^4.2.0",
         "changelog-generator-twig": "^1.2.0",
         "codecov": "^3.5.0",
         "jshint": "^2.10.2",
         "mocha": "^6.1.4",
         "nyc": "^14.1.1",
-        "prettier": "^1.18.2"
+        "prettier": "^1.18.2",
+        "ts-node": "^8.2.0",
+        "typescript": "^3.5.2"
     },
     "prettier": {
         "singleQuote": true,

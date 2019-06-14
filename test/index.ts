@@ -2,9 +2,9 @@
 
 process.env.TZ = 'UTC';
 require('module-alias/register');
-const data = require('@test/data');
-const docker = require('@test/docker');
-const commands = require('@test/commands');
+import data from '@test/data';
+import docker from '@test/docker';
+import commands from '@test/commands';
 
 suite('Sudo Bot', function() {
     data();

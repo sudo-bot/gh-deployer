@@ -4,8 +4,9 @@ require('module-alias/register');
 
 process.env.ALLOWED_USERNAMES = 'test1,test2';
 process.env.PMA_CONFIG_FILE = __filename;
-const commands = require('@src/commands');
-const expect = require('chai').expect;
+
+import commands from '@src/commands';
+import { expect } from 'chai';
 
 /**
  *
@@ -13,25 +14,25 @@ const expect = require('chai').expect;
  * @param fn A function that accepts an item from the array and returns a promise.
  * @returns {Promise}
  */
-function forEachPromise(items, fn) {
-    return items.reduce(function(promise, item) {
+function forEachPromise(items: any[], fn: Function) {
+    return items.reduce(function(promise: Promise<void>, item) {
         return promise.then(function() {
             return fn(item);
         });
     }, Promise.resolve());
 }
 
-module.exports = async function() {
+export default async function() {
     await commands.train();
     suite('commands', function() {
         test('test DEPLOY_AND_MERGE_COMMANDS commands', function(done) {
-            const DEPLOY_AND_MERGE_COMMANDS_EXAMPLES = [];
+            const DEPLOY_AND_MERGE_COMMANDS_EXAMPLES: string[] = [];
             commands.DEPLOY_AND_MERGE_COMMANDS.forEach(command => {
                 DEPLOY_AND_MERGE_COMMANDS_EXAMPLES.push(
                     command.replace('%branchSrc%', 'QA').replace('%branchDst%', 'master')
                 );
             });
-            forEachPromise(DEPLOY_AND_MERGE_COMMANDS_EXAMPLES, text => {
+            forEachPromise(DEPLOY_AND_MERGE_COMMANDS_EXAMPLES, (text: string) => {
                 return new Promise(resolve => {
                     commands
                         .getCommand(text)
@@ -53,7 +54,7 @@ module.exports = async function() {
             });
         });
         test('test DEPLOY_WITH_CONFIG_COMMANDS commands', function(done) {
-            const DEPLOY_WITH_CONFIG_COMMANDS_EXAMPLES = [];
+            const DEPLOY_WITH_CONFIG_COMMANDS_EXAMPLES: string[] = [];
             const configBlockBase1 = `\`\`\`php
             <?php
             declare(strict_types=1);
@@ -86,7 +87,7 @@ module.exports = async function() {
             commands.DEPLOY_WITH_CONFIG_COMMANDS.forEach(command => {
                 DEPLOY_WITH_CONFIG_COMMANDS_EXAMPLES.push(command.replace('%configBlock%', configBlock1));
             });
-            forEachPromise(DEPLOY_WITH_CONFIG_COMMANDS_EXAMPLES, text => {
+            forEachPromise(DEPLOY_WITH_CONFIG_COMMANDS_EXAMPLES, (text: string) => {
                 return new Promise(resolve => {
                     commands
                         .getCommand(text)
@@ -107,7 +108,7 @@ module.exports = async function() {
             });
         });
         test('test DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS commands', function(done) {
-            const DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS_EXAMPLES = [];
+            const DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS_EXAMPLES: string[] = [];
             const configBlockBase1 = `\`\`\`php
             <?php
             declare(strict_types=1);
@@ -154,7 +155,7 @@ module.exports = async function() {
                         .replace('%configBlock%', configBlock1)
                 );
             });
-            forEachPromise(DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS_EXAMPLES, text => {
+            forEachPromise(DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS_EXAMPLES, (text: string) => {
                 return new Promise(resolve => {
                     commands
                         .getCommand(text)
@@ -177,7 +178,7 @@ module.exports = async function() {
             });
         });
         test('test DEPLOY_COMMANDS commands', function(done) {
-            forEachPromise(commands.DEPLOY_COMMANDS, text => {
+            forEachPromise(commands.DEPLOY_COMMANDS, (text: string) => {
                 return new Promise(resolve => {
                     commands
                         .getCommand(text)
@@ -196,7 +197,7 @@ module.exports = async function() {
             });
         });
         test('test DO_NOTHING_COMMANDS commands', function(done) {
-            forEachPromise(commands.DO_NOTHING_COMMANDS, text => {
+            forEachPromise(commands.DO_NOTHING_COMMANDS, (text: string) => {
                 return new Promise(resolve => {
                     commands
                         .getCommand(text)
@@ -215,7 +216,7 @@ module.exports = async function() {
             });
         });
         test('test CREDS_COMMANDS commands', function(done) {
-            forEachPromise(commands.CREDS_COMMANDS, text => {
+            forEachPromise(commands.CREDS_COMMANDS, (text: string) => {
                 return new Promise(resolve => {
                     commands
                         .getCommand(text)
@@ -247,4 +248,4 @@ module.exports = async function() {
                 .catch(done);
         });*/
     });
-};
+}

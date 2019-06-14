@@ -3,12 +3,13 @@
 require('module-alias/register');
 
 process.env.ALLOWED_USERNAMES = 'test1,test2';
-process.env.PMA_CONFIG_FILE = __dirname + '/../.gitignore';
-const data = require('@src/data');
-const comments = require('@src/comments');
-const expect = require('chai').expect;
+process.env.PMA_CONFIG_FILE = __filename;
+import data, { emailData } from '@src/data';
+import comments from '@src/comments';
+import { expect } from 'chai';
+import { AddressObject } from 'mailparser';
 
-module.exports = function() {
+export default function() {
     suite('data', function() {
         const replyTo = 'phpmyadmin/phpmyadmin <reply+AKKGZQSENRXBEEFDNKLARIV23GUSVEVBNHHBRKIAPY@reply.github.com>';
         const testEmail = `
@@ -40,15 +41,28 @@ module.exports = function() {
             done();
         });
         test('test get data from parsed email', function(done) {
+            const replyAddress: AddressObject = {
+                value: [
+                    {
+                        address: replyTo,
+                        name: '',
+                    },
+                ],
+                html: '',
+                text: replyTo, // Partial object
+            };
             data.getDataFromParsedEmail(
                 {
                     text: testEmail,
-                    replyTo: {
-                        text: replyTo, // Partial object
-                    },
+                    replyTo: replyAddress,
                     headers: new Map().set('x-github-sender', 'test1'),
+                    textAsHtml: '',
+                    html: '',
+                    subject: '',
+                    to: replyAddress,
+                    from: replyAddress,
                 },
-                data => {
+                (data: emailData) => {
                     expect(data).to.deep.equal({
                         commentId: 489170904,
                         message:
@@ -58,7 +72,8 @@ module.exports = function() {
                         requestedByUser: 'test1',
                     });
                     done();
-                }
+                },
+                (err: Error | null) => {}
             );
         });
         test('test destination emails', function(done) {
@@ -86,10 +101,6 @@ module.exports = function() {
                 ref: 'deploy/master',
                 sha: 'af1254cdfa',
             });
-            done();
-        });
-        test('test get meta data from empty value dataset-2', function(done) {
-            expect(data.getMetaDataFromMessage(null)).to.equal(null);
             done();
         });
         test('test get meta data from empty value dataset-3', function(done) {
@@ -214,4 +225,4 @@ module.exports = function() {
             done();
         });
     });
-};
+}

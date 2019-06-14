@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "allowJs": false,
+        "resolveJsonModule": true,
+        "strict": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "lib": ["es2017"],
+        "module": "commonjs",
+        "skipLibCheck": true,
+        "target": "es2017",
+        "baseUrl": "./",
+        "paths": {
+            "@src/*": ["./src/*"],
+            "@root/*": ["./*"],
+            "@test/*": ["./test/*"],
+            "@utils/*": ["./utils/*"]
+        }
+    },
+    "include": [
+        "./src/**/*",
+        "./test/**/*"
+    ]
+}
