@@ -7,14 +7,14 @@ const GHclient = new Octokit({
 });
 
 export enum reactions {
-    UPVOTE  = "+1",
-    DOWNVOTE = "-1",
-    LAUGHT = "laugh",
-    CONFUSED = "confused",
-    HEART = "heart",
-    HORRAY = "hooray",
-    ROCKET = "rocket",
-    EYES = "eyes"
+    UPVOTE = '+1',
+    DOWNVOTE = '-1',
+    LAUGHT = 'laugh',
+    CONFUSED = 'confused',
+    HEART = 'heart',
+    HORRAY = 'hooray',
+    ROCKET = 'rocket',
+    EYES = 'eyes',
 }
 
 export default {
@@ -50,7 +50,7 @@ export default {
             owner: repoParts[0],
             repo: repoParts[1],
             comment_id: commentId,
-            content: content
+            content: content,
         });
     },
 };

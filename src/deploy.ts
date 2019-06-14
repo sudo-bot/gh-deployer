@@ -20,7 +20,11 @@ export default {
                     .createComment(
                         emailInfos.prId || 0,
                         prInfos.data.base.repo.full_name,
-                        comments.getPendingComment(emailInfos.commentId || 0, prInfos.data.head.ref, prInfos.data.head.sha)
+                        comments.getPendingComment(
+                            emailInfos.commentId || 0,
+                            prInfos.data.head.ref,
+                            prInfos.data.head.sha
+                        )
                     )
                     .then(deployComment => {
                         docker
