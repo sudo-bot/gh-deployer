@@ -1,54 +1,56 @@
 'use strict';
 
-const octonode = require('octonode');
-const GHclient = octonode.client(process.env.GITHUB_TOKEN);
+import * as Octokit from '@octokit/rest';
+
+const GHclient = new Octokit({
+    auth: process.env.GITHUB_TOKEN || '',
+});
+
+export enum reactions {
+    UPVOTE  = "+1",
+    DOWNVOTE = "-1",
+    LAUGHT = "laugh",
+    CONFUSED = "confused",
+    HEART = "heart",
+    HORRAY = "hooray",
+    ROCKET = "rocket",
+    EYES = "eyes"
+}
 
 export default {
     createComment: (prId: number, repoName: string, commentBody: string) => {
-        return new Promise((resolve, reject: (err: Error | null) => void) => {
-            const ghissue = GHclient.issue(repoName, prId);
-            ghissue.createComment(
-                {
-                    body: commentBody,
-                },
-                (err, data) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(data);
-                    }
-                }
-            );
+        const repoParts = repoName.split('/');
+        return GHclient.issues.createComment({
+            owner: repoParts[0],
+            repo: repoParts[1],
+            issue_number: prId,
+            body: commentBody,
         });
     },
     updateComment: (prId: number, repoName: string, commentId: number, commentBody: string) => {
-        return new Promise((resolve, reject: (err: Error | null) => void) => {
-            const ghissue = GHclient.issue(repoName, prId);
-            ghissue.updateComment(
-                commentId,
-                {
-                    body: commentBody,
-                },
-                (err, data) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(data);
-                    }
-                }
-            );
+        const repoParts = repoName.split('/');
+        return GHclient.issues.updateComment({
+            owner: repoParts[0],
+            repo: repoParts[1],
+            comment_id: commentId,
+            body: commentBody,
         });
     },
     getPrInfos(prId: number, repoName: string) {
-        return new Promise((resolve, reject: (err: Error | null) => void) => {
-            const ghpr = GHclient.pr(repoName, prId);
-            ghpr.info((err, data: object) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(data);
-                }
-            });
+        const repoParts = repoName.split('/');
+        return GHclient.pulls.get({
+            owner: repoParts[0],
+            repo: repoParts[1],
+            pull_number: prId,
+        });
+    },
+    addReaction(commentId: number, repoName: string, content: reactions) {
+        const repoParts = repoName.split('/');
+        return GHclient.reactions.createForIssueComment({
+            owner: repoParts[0],
+            repo: repoParts[1],
+            comment_id: commentId,
+            content: content
         });
     },
 };
