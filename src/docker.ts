@@ -5,6 +5,7 @@ import { Docker } from 'node-docker-api';
 
 const docker = new Docker({ socketPath: '/var/run/docker.sock' });
 import data from '@src/data';
+import { Container } from 'node-docker-api/lib/container';
 
 const createAliasesFromString = (aliasString: string | null | undefined) => {
     aliasString = aliasString || '';
@@ -38,7 +39,10 @@ export default {
         compiledPhpMyAdminConfig: string,
         randomString: string
     ) => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve: (data: {
+            status: Container,
+            containerName: string,
+        }) => void, reject: (err: Error)=>void) => {
             try {
                 const containerName = data.replaceTokens(
                     {
@@ -64,7 +68,9 @@ export default {
                     })
                     .then(function() {
                         logger.info('Deploying: ', containerName);
-                        var optionalHostConfig: any = {};
+                        var optionalHostConfig: {
+                            Memory?: number
+                        } = {};
                         if (process.env.DOCKER_MEMORY && process.env.DOCKER_MEMORY != '0') {
                             optionalHostConfig.Memory = parseInt(process.env.DOCKER_MEMORY) * 1000000;
                         }

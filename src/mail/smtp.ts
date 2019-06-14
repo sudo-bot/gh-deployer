@@ -31,7 +31,7 @@ export default class {
                         logger.info('onMailFrom', session, address.address);
                         return callback(); // Accept the address
                     },*/
-                onRcptTo: (address, session: any, callback) => {
+                onRcptTo: (address, session, callback) => {
                     //logger.info(address, session);
                     if (data.destinationEmails.includes(address.address) === false) {
                         logger.info(address.address + ' does not exist !');
@@ -39,7 +39,7 @@ export default class {
                     }
                     return callback(); // Accept the address
                 },
-                onData: (stream: Source, session: any, callbackAccepted: () => void) => {
+                onData: (stream: Source, session, callbackAccepted: () => void) => {
                     data.parseEmail(stream)
                         .then(emailInfos => {
                             callbackAccepted();

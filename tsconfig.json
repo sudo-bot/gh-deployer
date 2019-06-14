@@ -4,6 +4,8 @@
         "allowJs": false,
         "resolveJsonModule": true,
         "strict": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
         "noImplicitAny": true,
         "strictNullChecks": true,
         "lib": ["es2017"],

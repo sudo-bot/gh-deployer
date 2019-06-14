@@ -15,47 +15,47 @@ export default {
         }
         github
             .getPrInfos(emailInfos.prId || 0, emailInfos.repoName)
-            .then((prInfos: any) => {
+            .then(prInfos => {
                 github
                     .createComment(
                         emailInfos.prId || 0,
-                        prInfos.base.repo.full_name,
-                        comments.getPendingComment(emailInfos.commentId || 0, prInfos.head.ref, prInfos.head.sha)
+                        prInfos.data.base.repo.full_name,
+                        comments.getPendingComment(emailInfos.commentId || 0, prInfos.data.head.ref, prInfos.data.head.sha)
                     )
-                    .then((deployComment: any) => {
+                    .then(deployComment => {
                         docker
                             .createDocker(
                                 emailInfos.prId || 0,
-                                prInfos.head.repo.clone_url,
-                                prInfos.head.ref,
-                                prInfos.head.sha,
+                                prInfos.data.head.repo.clone_url,
+                                prInfos.data.head.ref,
+                                prInfos.data.head.sha,
                                 configBlock,
                                 data.randomString(80)
                             )
-                            .then((docker: any) => {
+                            .then(docker => {
                                 dns.publishDnsRecord(
                                     docker.containerName,
                                     emailInfos.prId || 0,
-                                    prInfos.head.ref,
-                                    prInfos.head.sha
+                                    prInfos.data.head.ref,
+                                    prInfos.data.head.sha
                                 )
                                     .then(domain => {
                                         logger.info('Published-domain:', domain);
                                         github
                                             .updateComment(
                                                 emailInfos.prId || 0,
-                                                prInfos.base.repo.full_name,
-                                                deployComment.id,
+                                                prInfos.data.base.repo.full_name,
+                                                deployComment.data.id,
                                                 comments.getDeployedComment(
                                                     emailInfos.commentId || 0,
-                                                    prInfos.head.ref,
-                                                    prInfos.head.sha,
+                                                    prInfos.data.head.ref,
+                                                    prInfos.data.head.sha,
                                                     docker.containerName,
                                                     domain
                                                 )
                                             )
                                             .then(() => {
-                                                logger.info('Updated comment:#' + deployComment.id);
+                                                logger.info('Updated comment:#' + deployComment.data.id);
                                             })
                                             .catch((error: Error) => logger.error(error));
                                     })
