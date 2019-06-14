@@ -1,6 +1,6 @@
 'use strict';
 
-import github from '@src/github';
+import github, { reactions } from '@src/github';
 import logger from '@src/logger';
 import docker from '@src/docker';
 import dns from '@src/dns';
@@ -45,6 +45,11 @@ export default {
                                 )
                                     .then(domain => {
                                         logger.info('Published-domain:', domain);
+                                        github.addReaction(
+                                            emailInfos.commentId || 0,
+                                            emailInfos.repoName,
+                                            reactions.ROCKET
+                                        );
                                         github
                                             .updateComment(
                                                 emailInfos.prId || 0,

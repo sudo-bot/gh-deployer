@@ -17,7 +17,6 @@ commands
             if (emailInfos.requestedByUser === process.env.ROBOT_USER) {
                 logger.info('From-me:', emailInfos.message);
             } else if (data.allowedUsernames.includes(emailInfos.requestedByUser)) {
-                github.addReaction(emailInfos.commentId || 0, emailInfos.repoName, reactions.UPVOTE);
                 commands
                     .getCommand(emailInfos.message)
                     .then(commandData => {
@@ -25,17 +24,19 @@ commands
                             case COMMANDS.DEPOY_PR:
                             case COMMANDS.DEPLOY_AND_MERGE:
                             case COMMANDS.DEPLOY_AND_MERGE_WITH_CONFIG:
+                                github.addReaction(emailInfos.commentId || 0, emailInfos.repoName, reactions.UPVOTE);
                                 deploy.deploy(emailInfos, data.compiledPhpMyAdminConfig);
                                 break;
                             case COMMANDS.DEPLOY_WITH_CONFIG:
+                                github.addReaction(emailInfos.commentId || 0, emailInfos.repoName, reactions.UPVOTE);
                                 let configData: string = data.getDataFromConfig(commandData.options.configBlock) || '';
                                 deploy.deploy(emailInfos, data.protectConfig(configData.trim()));
                                 break;
                             case COMMANDS.DO_NOTHING:
-                                github.addReaction(emailInfos.commentId || 0, emailInfos.repoName, reactions.CONFUSED);
                                 // No nothing
                                 break;
                             default:
+                                github.addReaction(emailInfos.commentId || 0, emailInfos.repoName, reactions.CONFUSED);
                                 logger.warn('Unhandled action', commandData, COMMANDS, emailInfos);
                                 break;
                         }
