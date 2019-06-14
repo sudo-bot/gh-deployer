@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- [e9489fa](https://github.com/sudo/gh-deployer/commit/e9489fa20dd6d94247e72371a0dbd748f86519c3) added: ts-node
+- [1d89b8d](https://github.com/sudo/gh-deployer/commit/1d89b8dc9d527a6080776b7a98fb89163aa3869f) added: typescript
+- [c168d6f](https://github.com/sudo/gh-deployer/commit/c168d6f4adc9818c639eb0edddb3d268d52704e2) added: Labels to docker create
 - [07938d5](https://github.com/sudo/gh-deployer/commit/07938d551404070fdf5e5bd43615a77ac9e3bdd8) added: debug line
 - [a340450](https://github.com/sudo/gh-deployer/commit/a34045050554bb012be8af46ad3933ff9890e68c) added: parseReplyToRepoName and parseCommentId and parsePrId
 - [cb9deed](https://github.com/sudo/gh-deployer/commit/cb9deed7c432b996ce7a1e8a46662503434658ae) added: getMetaDataFromMessage
@@ -42,6 +45,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Removed
 
+- [1224618](https://github.com/sudo/gh-deployer/commit/1224618768f74d52d0a5c38928a4435cc5fe77cb) removed: sentencer dependency
 - [a6e17c7](https://github.com/sudo/gh-deployer/commit/a6e17c760cc8d93aad5dac2a4d6611e6e111abfa) removed: DEPLOY_AND_MERGE & DEPLOY_AND_MERGE_WITH_CONFIG
 - [3c6eaad](https://github.com/sudo/gh-deployer/commit/3c6eaad05370ccf46e268e9ec351a9ceb3d2a673) removed: PR id parsing from comment
 - [ae94d3b](https://github.com/sudo/gh-deployer/commit/ae94d3b05748b440b1cdd31e73d44c42d7253bf1) removed: async and 'self' variables from mail-listener2
@@ -52,6 +56,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
+- [e0d7cc7](https://github.com/sudo/gh-deployer/commit/e0d7cc7394c3b0eff6da5c744eecb28f1c1a3f1a) fix: tests (move to typescript)
+- [58bcabb](https://github.com/sudo/gh-deployer/commit/58bcabbd6ecfd49967da6d081abc97c686bbba13) fix: make default tag a string to avoid docker error
+- [90fa92a](https://github.com/sudo/gh-deployer/commit/90fa92abbbbe913c2e44862d16acf2826955fc5e) fix: make prId a string to avoid docker error
 - [85aa33a](https://github.com/sudo/gh-deployer/commit/85aa33a358b69a5f1dd43217f6e8c9b652bc2be5) fix: 'replyto' is an object and fallback onto 'to'
 - [4b58a40](https://github.com/sudo/gh-deployer/commit/4b58a4062da419ded61b4f91d4a95ae3ed28cd6d) fix: x-github-sender is in lowercase
 - [e294462](https://github.com/sudo/gh-deployer/commit/e294462fec3d7b5ed8c3dba4e672782f0f122a6b) fix: headers of mailparser is a map
@@ -67,6 +74,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Improvements
 
+- [e82b699](https://github.com/sudo/gh-deployer/commit/e82b6994d717c402e1b3ee7b702f4ac81b003e9e) improved: types
+- [8903050](https://github.com/sudo/gh-deployer/commit/8903050ad75b2050fc02b657f0d906b1b8e04fa5) improved: Move to typescript
+- [a8e26a1](https://github.com/sudo/gh-deployer/commit/a8e26a165f6b7b923978f4bd9df0850071c4f485) improved: Handle disconnection and error
 - [259cd89](https://github.com/sudo/gh-deployer/commit/259cd891089c5da5be531a76def0ea8ae12c6f8d) improved: email data handling and sender username parsing
 - [709f0c2](https://github.com/sudo/gh-deployer/commit/709f0c21502c4e9929717636f3897d42ea657260) style: prettier mail-listener2
 
