@@ -43,7 +43,7 @@ export enum COMMANDS {
     DO_NOTHING = 'do_nothing',
 }
 
-const DEPLOY_COMMANDS = [
+const DEPLOY_COMMANDS: string[] = [
     '/deploy PR',
     '/deploy pull request',
     '/deploy pull-request',
@@ -57,7 +57,7 @@ const DEPLOY_COMMANDS = [
     'send me my creds',
 ];
 
-const DO_NOTHING_COMMANDS = [
+const DO_NOTHING_COMMANDS: string[] = [
     '',
     ' ',
     'Do nothing',
@@ -95,19 +95,19 @@ const DO_NOTHING_COMMANDS = [
     '@sudo-bot :)',
 ];
 
-const DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS = [
+const DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS: string[] = [
     //'Deploy, merge %branchSrc% into %branchDst% and use config %configBlock%',
     //'Merge %branchSrc% into %branchDst% and use config %configBlock% and deploy',
 ];
 
-const DEPLOY_WITH_CONFIG_COMMANDS = [
+const DEPLOY_WITH_CONFIG_COMMANDS: string[] = [
     'Deploy, and use config %configBlock%',
     'Deploy, and use configuration %configBlock%',
     'Use config %configBlock% and deploy',
     'Use configuration %configBlock% and deploy',
 ];
 
-const DEPLOY_AND_MERGE_COMMANDS = [
+const DEPLOY_AND_MERGE_COMMANDS: string[] = [
     //'deploy %branchSrc% and merge it into %branchDst%',
     //'deploy %branchSrc% and merge it into branch %branchDst%',
     //'Deploy and merge %branchSrc% into %branchDst%',
@@ -121,7 +121,7 @@ const DEPLOY_AND_MERGE_COMMANDS = [
     //'Deploy pull-request and Merge %branchSrc% into %branchDst%',
 ];
 
-const CREDS_COMMANDS = [
+const CREDS_COMMANDS: string[] = [
     'send me my credentials',
     'Can you send me my credentials for the servers',
     'send credentials',
@@ -172,9 +172,19 @@ logger.debug('Learned ' + DEPLOY_WITH_CONFIG_COMMANDS.length + ' deploy and merg
 logger.info('End of the lesson');
 
 export interface commandData {
-    command: COMMANDS;
+    command: string;
     options: any;
     debug: object;
+}
+
+interface responseManager {
+    intent: string;
+    entities: [
+        {
+            entity: string;
+            utteranceText: string;
+        }
+    ];
 }
 
 export default {
@@ -188,11 +198,11 @@ export default {
     DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS: DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS,
     DEPLOY_AND_MERGE_COMMANDS: DEPLOY_AND_MERGE_COMMANDS,
     DEPLOY_WITH_CONFIG_COMMANDS: DEPLOY_WITH_CONFIG_COMMANDS,
-    getCommand: text => {
+    getCommand: (text: string) => {
         return new Promise((resolve: (data: commandData) => void, reject) => {
             manager
                 .process('en', text, {})
-                .then(responseManager => {
+                .then((responseManager: responseManager) => {
                     resolve({
                         command: responseManager.intent === 'None' ? COMMANDS.DO_NOTHING : responseManager.intent,
                         options: responseManager.entities.reduce(

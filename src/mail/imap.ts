@@ -3,6 +3,7 @@
 import logger from '@src/logger';
 import data, { emailData } from '@src/data';
 import MailListener from '@utils/mail-listener2';
+import { Source } from 'mailparser';
 
 export default class {
     constructor(cbData: (data: emailData) => void) {
@@ -10,11 +11,11 @@ export default class {
         try {
             const debugImap = process.env.MAILBOX_DEBUG && process.env.MAILBOX_DEBUG.toUpperCase() === 'TRUE';
             const mailListener = new MailListener({
-                username: process.env.MAILBOX_USERNAME,
-                password: process.env.MAILBOX_PASSWORD,
-                host: process.env.MAILBOX_HOST,
-                port: process.env.MAILBOX_PORT, // imap port
-                tls: process.env.MAILBOX_TLS.toUpperCase() === 'TRUE',
+                username: process.env.MAILBOX_USERNAME || '',
+                password: process.env.MAILBOX_PASSWORD || '',
+                host: process.env.MAILBOX_HOST || 'localhost',
+                port: parseInt(process.env.MAILBOX_PORT || '143'), // imap port
+                tls: (process.env.MAILBOX_TLS || 'FALSE').toUpperCase() === 'TRUE',
                 connTimeout: 10000, // Default by node-imap
                 authTimeout: 10000, // Default by node-imap,
                 debug: (...params) => {
@@ -31,20 +32,20 @@ export default class {
             mailListener.start(); // start listening
             // stop listening
             //mailListener.stop();
-            mailListener.on('server:connected', function() {
+            mailListener.on('server:connected', () => {
                 logger.info('imapConnected');
             });
-            mailListener.on('server:disconnected', function() {
+            mailListener.on('server:disconnected', () => {
                 logger.info('imapDisconnected');
                 mailListener.stop();
                 mailListener.start();
             });
-            mailListener.on('error', function(err) {
+            mailListener.on('error', (err: Error) => {
                 logger.error(err);
                 mailListener.stop();
                 mailListener.start();
             });
-            mailListener.on('mail', function(stream) {
+            mailListener.on('mail', (stream: Source) => {
                 data.parseEmail(stream)
                     .then(emailInfos => {
                         logger.info('emailParsed', emailInfos);

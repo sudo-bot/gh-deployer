@@ -1,24 +1,28 @@
 'use strict';
 
 import logger from '@src/logger';
-const { Docker } = require('node-docker-api');
+import { Docker } from 'node-docker-api';
 
 const docker = new Docker({ socketPath: '/var/run/docker.sock' });
 import data from '@src/data';
 
-const createAliasesFromString = aliasString => {
+const createAliasesFromString = (aliasString: string | null | undefined) => {
     aliasString = aliasString || '';
     var networksAndAliases = aliasString.split(','); // Cut each part
-
-    networksAndAliases = networksAndAliases.map(value => value.split('!')); // Cut networkName and aliases
-    var netAlias = {};
-    networksAndAliases.map(value => {
-        if (value[0] !== '' && value[1] !== '') {
-            netAlias[value[0].trim()] = {
-                Aliases: value[1].split(';').map(alias => alias.trim()),
-            };
-        }
-    });
+    var netAlias: {
+        [alias: string]: {
+            Aliases: string[];
+        };
+    } = {};
+    networksAndAliases
+        .map(value => value.split('!')) // Cut networkName and aliases
+        .map(value => {
+            if (value[0] !== '' && value[1] !== '') {
+                netAlias[value[0].trim()] = {
+                    Aliases: value[1].split(';').map(alias => alias.trim()),
+                };
+            }
+        });
     return netAlias;
 };
 
@@ -26,7 +30,14 @@ const labelNamespace = 'fr.wdes.sudo.gh-deployer';
 
 export default {
     createAliasesFromString: createAliasesFromString,
-    createDocker: (prId, cloneUrl, ref, sha, compiledPhpMyAdminConfig, randomString) => {
+    createDocker: (
+        prId: number,
+        cloneUrl: string,
+        ref: string,
+        sha: string,
+        compiledPhpMyAdminConfig: string,
+        randomString: string
+    ) => {
         return new Promise((resolve, reject) => {
             try {
                 const containerName = data.replaceTokens(
@@ -35,7 +46,7 @@ export default {
                         ref: ref,
                         sha: sha,
                     },
-                    '' + process.env.DOCKER_CONTAINER_NAME
+                    process.env.DOCKER_CONTAINER_NAME || ''
                 );
                 docker.container
                     .get(containerName)
@@ -63,7 +74,7 @@ export default {
                                 ref: ref,
                                 sha: sha,
                             },
-                            '' + process.env.DOCKER_NETWORK_ALIASES
+                            process.env.DOCKER_NETWORK_ALIASES || ''
                         );
                         const hostName = data.replaceTokens(
                             {
@@ -71,7 +82,7 @@ export default {
                                 ref: ref,
                                 sha: sha,
                             },
-                            '' + process.env.DOCKER_CONTAINER_HOSTNAME
+                            process.env.DOCKER_CONTAINER_HOSTNAME || ''
                         );
                         docker.container
                             .create({
@@ -84,9 +95,9 @@ export default {
                                         ref: ref,
                                         sha: sha,
                                     },
-                                    '' + process.env.DOCKER_DOMAIN_NAME
+                                    process.env.DOCKER_DOMAIN_NAME || ''
                                 ),
-                                Volumes: process.env.DOCKER_VOLUMES.split(',').reduce(
+                                Volumes: (process.env.DOCKER_VOLUMES || '').split(',').reduce(
                                     (accumulator, target) => ({
                                         ...accumulator,
                                         [target]: {},
@@ -95,9 +106,9 @@ export default {
                                 ),
                                 WorkingDir: process.env.DOCKER_WORKDIR,
                                 HostConfig: {
-                                    DnsSearch: process.env.DOCKER_DNS_SEARCH.split(','),
+                                    DnsSearch: (process.env.DOCKER_DNS_SEARCH || '').split(','),
                                     NetworkMode: process.env.DOCKER_NETWORK_MODE,
-                                    Binds: process.env.DOCKER_BINDS.split(','),
+                                    Binds: (process.env.DOCKER_BINDS || '').split(','),
                                     ...optionalHostConfig,
                                 },
                                 Entrypoint: process.env.DOCKER_ENTRYPOINT,

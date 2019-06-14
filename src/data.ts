@@ -2,7 +2,7 @@
 
 import logger from '@src/logger';
 const emoji = require('node-emoji');
-const simpleMailParser = require('mailparser').simpleParser;
+import { simpleParser, ParsedMail, Source } from 'mailparser';
 import { readFileSync } from 'fs';
 
 //const regexBoundary = /Content-Type: [\/a-z;\s]+boundary="(?<boundary>[=\-_a-z0-9]+)"/gm;
@@ -19,15 +19,15 @@ const destinationEmails = ['hooks@mail.hooks.wdes.eu'];
 
 const allowedHostnames = [/^out-[1-9]{1,2}\.smtp\.github\.com$/];
 
-const allowedUsernames = process.env.ALLOWED_USERNAMES.split(',');
+const allowedUsernames = (process.env.ALLOWED_USERNAMES || '').split(',');
 
 logger.info('Allowed users:', allowedUsernames);
 
 /**
  * @see https://gist.github.com/6174/6062387
- * @param {Number} length Number of chars
+ * @param {number} length Number of chars
  */
-const randomString = function(length) {
+const randomString = function(length: number) {
     let radom13chars = function() {
         return Math.random()
             .toString(16)
@@ -42,19 +42,22 @@ const randomString = function(length) {
         .substring(0, length);
 };
 
-const compiledPhpMyAdminConfig = readFileSync(process.env.PMA_CONFIG_FILE, {
+const compiledPhpMyAdminConfig = readFileSync(process.env.PMA_CONFIG_FILE || __filename, {
     encoding: 'base64',
 });
 
 /**
  * Get data from message
- * @param {String} snippetsMsg
- * @return {Object}
  */
-const getDataFromMessage = function(snippetsMsg) {
+const getDataFromMessage = function(
+    snippetsMsg: string
+): {
+    message: string;
+    user: string;
+} | null {
     const regexMessage = /^@(?<user>[a-z0-9_-]+) in #[0-9]+: (?<message>.*?)$/is; // jshint ignore:line
     let message = regexMessage.exec(snippetsMsg);
-    if (message != null) {
+    if (message != null && message.groups !== undefined) {
         return {
             message: message.groups.message,
             user: message.groups.user,
@@ -70,7 +73,7 @@ const getDataFromMessage = function(snippetsMsg) {
 const getDataFromConfig = function(snippetsMsg: string): string | null {
     const regexConfig = /(?:```)(?:php){0,1}(?<config>.*?)(?=```)```/gis; // jshint ignore:line
     let message = regexConfig.exec(snippetsMsg);
-    if (message != null) {
+    if (message != null && message.groups !== undefined) {
         return message.groups.config;
     } else {
         return null;
@@ -82,20 +85,20 @@ const parseReplyToRepoName = function(emailTo: string): string {
     return parts[0];
 };
 
-const parseCommentId = function(emailTextData: string): Number {
+const parseCommentId = function(emailTextData: string): number | null {
     const regexCommentId = /#issuecomment-(?<commentId>[0-9]+)/gm;
     let message = regexCommentId.exec(emailTextData);
-    if (message != null) {
+    if (message != null && message.groups !== undefined) {
         return parseInt(message.groups.commentId);
     } else {
         return null;
     }
 };
 
-const parsePrId = function(emailTextData: string): Number {
+const parsePrId = function(emailTextData: string): number | null {
     const regexPrId = /\/(?<prID>[0-9]+)#issuecomment-[0-9]+$/gm;
     let message = regexPrId.exec(emailTextData);
-    if (message != null) {
+    if (message != null && message.groups !== undefined) {
         return parseInt(message.groups.prID);
     } else {
         return null;
@@ -108,33 +111,39 @@ const parseMessage = function(emailText: string): string {
 };
 
 export interface emailData {
-    commentId: Number;
+    commentId: number | null;
     requestedByUser: string;
     message: string;
-    prId: Number;
+    prId: number | null;
     repoName: string;
 }
 
-const getDataFromParsedEmail = function(parsed, success: (data: emailData) => void, error: (err) => void) {
-    let username = parsed.headers.get('x-github-sender');
+const getDataFromParsedEmail = function(
+    parsed: ParsedMail,
+    success: (data: emailData) => void,
+    error: (err: Error | null) => void
+) {
+    const senderHeader = parsed.headers.get('x-github-sender');
+    let username: string = senderHeader !== undefined ? senderHeader.toString() : '';
     if (allowedUsernames.includes(username)) {
         // message : { user: 'williamdes', prID: '30', message: '@sudo-bot :)' }
+        let replyTo = parsed.replyTo;
         success({
             commentId: parseCommentId(parsed.text),
             requestedByUser: username,
             message: parseMessage(parsed.text),
             prId: parsePrId(parsed.text),
-            repoName: parseReplyToRepoName(parsed.replyTo.text || parsed.to.text),
+            repoName: parseReplyToRepoName(replyTo !== undefined ? replyTo.text : parsed.to.text),
         });
     } else {
         logger.info('Not allowed:', username);
     }
 };
 
-const getMetaDataFromMessage = function(metaData) {
+const getMetaDataFromMessage = function(metaData: string): object | null {
     const regexMetaData = /<!--\nsudobot:(?<metadata>.*)?-->/is; // jshint ignore:line
     let message = regexMetaData.exec(metaData);
-    if (message != null) {
+    if (message != null && message.groups !== undefined) {
         try {
             return JSON.parse(message.groups.metadata.trim());
         } catch (error) {
@@ -158,13 +167,13 @@ export default {
     randomString: randomString,
     regexConfigBlock: regexConfigBlock,
     getDataFromConfig: getDataFromConfig,
-    replaceEmoji: text => {
-        return emoji.replace(text, emojiReplacement => `:${emojiReplacement.key}:`);
+    replaceEmoji: (text: string) => {
+        return emoji.replace(text, (emojiReplacement: { key: string }) => `:${emojiReplacement.key}:`);
     },
-    protectConfig: config => Buffer.from(config).toString('base64'),
-    parseEmail: stream => {
+    protectConfig: (config: string) => Buffer.from(config).toString('base64'),
+    parseEmail: (stream: Source) => {
         return new Promise((resolve: (data: emailData) => void, reject) => {
-            simpleMailParser(stream)
+            simpleParser(stream)
                 .then(parsed => {
                     getDataFromParsedEmail(parsed, resolve, reject);
                 })
@@ -172,10 +181,15 @@ export default {
         });
     },
     getDataFromParsedEmail: getDataFromParsedEmail,
-    replaceTokens: (tokens, stringToReplace) => {
-        Object.keys(tokens).forEach(function(key) {
+    replaceTokens: (
+        tokens: {
+            [key: string]: string | number;
+        },
+        stringToReplace: string
+    ) => {
+        Object.keys(tokens).forEach(function(key: string) {
             var val = tokens[key];
-            stringToReplace = stringToReplace.replace(new RegExp('\\{\\{' + key + '\\}\\}', 'g'), val);
+            stringToReplace = stringToReplace.replace(new RegExp('\\{\\{' + key + '\\}\\}', 'g'), val + '');
         });
         return stringToReplace;
     },

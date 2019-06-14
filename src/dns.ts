@@ -9,8 +9,8 @@ const cf = require('cloudflare')({
 import data from '@src/data';
 
 export default {
-    publishDnsRecord: (containerName, prId, ref, sha) => {
-        return new Promise((resolve, reject) => {
+    publishDnsRecord: (containerName: string, prId: number, ref: string, sha: string) => {
+        return new Promise((resolve: (domainName: string) => void, reject: (err: Error | null) => void) => {
             let domainName = data.replaceTokens(
                 {
                     containerName: containerName,
@@ -18,7 +18,7 @@ export default {
                     ref: ref,
                     sha: sha,
                 },
-                '' + process.env.CLOUDFLARE_RECORD_NAME
+                process.env.CLOUDFLARE_RECORD_NAME || ''
             );
             cf.dnsRecords
                 .add(process.env.CLOUDFLARE_ZONEID, {

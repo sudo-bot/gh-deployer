@@ -1,8 +1,9 @@
 'use strict';
 
 import logger from '@src/logger';
-const SMTPServer = require('smtp-server').SMTPServer;
+import { SMTPServer } from 'smtp-server';
 import data, { emailData } from '@src/data';
+import { Source } from 'mailparser';
 
 export default class {
     constructor(cbData: (data: emailData) => void) {
@@ -14,7 +15,7 @@ export default class {
                 authOptional: true,
                 banner: process.env.SMTP_SERVER_NAME,
                 disableReverseLookup: false,
-                maxClients: process.env.SMTP_MAX_CLIENTS,
+                maxClients: parseInt(process.env.SMTP_MAX_CLIENTS || '100'),
                 /*onAuth: (auth, session, callback) => {
                         logger.info(auth, session);
                         return callback(); // Accept the auth
@@ -30,7 +31,7 @@ export default class {
                         logger.info('onMailFrom', session, address.address);
                         return callback(); // Accept the address
                     },*/
-                onRcptTo: (address, session, callback) => {
+                onRcptTo: (address, session: any, callback) => {
                     //logger.info(address, session);
                     if (data.destinationEmails.includes(address.address) === false) {
                         logger.info(address.address + ' does not exist !');
@@ -38,7 +39,7 @@ export default class {
                     }
                     return callback(); // Accept the address
                 },
-                onData: (stream, session, callbackAccepted) => {
+                onData: (stream: Source, session: any, callbackAccepted: () => void) => {
                     data.parseEmail(stream)
                         .then(emailInfos => {
                             callbackAccepted();
@@ -48,7 +49,7 @@ export default class {
                             logger.error(err);
                         });
                 },
-            }).listen(process.env.SMTP_PORT || 25, '0.0.0.0', () => {
+            }).listen(parseInt(process.env.SMTP_PORT || '25'), '0.0.0.0', () => {
                 logger.info('Listening...');
             });
             return smtpServer;

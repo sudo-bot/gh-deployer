@@ -26,10 +26,8 @@ commands
                                 deploy.deploy(emailInfos, data.compiledPhpMyAdminConfig);
                                 break;
                             case COMMANDS.DEPLOY_WITH_CONFIG:
-                                deploy.deploy(
-                                    emailInfos,
-                                    data.protectConfig(data.getDataFromConfig(commandData.options.configBlock).trim())
-                                );
+                                let configData: string = data.getDataFromConfig(commandData.options.configBlock) || '';
+                                deploy.deploy(emailInfos, data.protectConfig(configData.trim()));
                                 break;
                             case COMMANDS.DO_NOTHING:
                                 // No nothing
@@ -39,11 +37,11 @@ commands
                                 break;
                         }
                     })
-                    .catch(error => logger.error(error));
+                    .catch((error: Error) => logger.error(error));
             }
         });
     })
-    .catch(error => logger.error(error));
+    .catch((error: Error) => logger.error(error));
 
 module.exports = {
     mail: mail,

@@ -2,9 +2,13 @@
     "compilerOptions": {
         "outDir": "./dist",
         "allowJs": false,
-        "strict": false,
+        "resolveJsonModule": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
         "lib": ["es2017"],
         "module": "commonjs",
+        "skipLibCheck": true,
         "target": "es2017",
         "baseUrl": "./",
         "paths": {
