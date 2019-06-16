@@ -2,7 +2,6 @@
 
 require('module-alias/register');
 
-process.env.ALLOWED_USERNAMES = 'test1,test2';
 process.env.PMA_CONFIG_FILE = __filename;
 import data, { emailData } from '@src/data';
 import comments from '@src/comments';
@@ -78,11 +77,6 @@ export default function() {
         });
         test('test destination emails', function(done) {
             expect(data.destinationEmails).to.be.an('array');
-            done();
-        });
-        test('test allowed usernames', function(done) {
-            expect(data.allowedUsernames).to.be.an('array');
-            expect(data.allowedUsernames).to.deep.equal(['test1', 'test2']);
             done();
         });
         test('test random string', function(done) {
