@@ -8,6 +8,7 @@ import data, { emailData } from '@src/data';
 import github, { reactions } from './github';
 import Knex from '@src/knex';
 import User from './modeles/User';
+import Message, { MessagePlatform } from './modeles/Message';
 
 logger.debug('Connect to database');
 Knex.getConnection();
@@ -48,6 +49,15 @@ User.getConfirmedUsernames()
                     if (emailInfos.requestedByUser === process.env.ROBOT_USER) {
                         logger.info('From-me:', emailInfos.message);
                     } else if (allowedUsernames.includes(emailInfos.requestedByUser)) {
+                        if (emailInfos.commentId !== null && emailInfos.prId !== null) {
+                            const msg = new Message(
+                                emailInfos.commentId,
+                                emailInfos.prId,
+                                MessagePlatform.github,
+                                false
+                            );
+                            msg.save();
+                        }
                         commands
                             .getCommand(emailInfos.message)
                             .then(commandData => processCommand(commandData, emailInfos))

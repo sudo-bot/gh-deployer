@@ -6,6 +6,7 @@ import docker from '@src/docker';
 import dns from '@src/dns';
 import comments from '@src/comments';
 import data, { emailData } from '@src/data';
+import Message, { MessagePlatform } from './modeles/Message';
 
 export default {
     deploy: (emailInfos: emailData, configBlock: string) => {
@@ -27,6 +28,16 @@ export default {
                         )
                     )
                     .then(deployComment => {
+                        if (emailInfos.commentId !== null && emailInfos.prId !== null) {
+                            const msg = new Message(
+                                deployComment.data.id,
+                                emailInfos.prId,
+                                MessagePlatform.github,
+                                true,
+                                emailInfos.commentId
+                            );
+                            msg.save();
+                        }
                         docker
                             .createDocker(
                                 emailInfos.prId || 0,
