@@ -6,7 +6,10 @@ import { default as commands, COMMANDS } from '@src/commands';
 import mail from '@src/mail';
 import data from '@src/data';
 import github, { reactions } from './github';
+import knex from '@src/knex';
 
+logger.debug('Connect to database');
+new knex();
 logger.debug('Training...');
 commands
     .train()
