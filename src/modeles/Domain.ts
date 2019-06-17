@@ -60,6 +60,13 @@ export default class Domain {
             });
     }
 
+    public static async deleteWhereFullDomainName(fullDomainName: string) {
+        await knex
+            .getConnection()('domains')
+            .where('full_domain_name', fullDomainName)
+            .delete();
+    }
+
     public async delete() {
         await knex
             .getConnection()('domains')

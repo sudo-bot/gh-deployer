@@ -50,6 +50,7 @@ export default {
                             )
                             .then(docker => {
                                 dns.publishDnsRecord(
+                                    emailInfos.repoName,
                                     docker.containerName,
                                     emailInfos.prId || 0,
                                     prInfos.data.head.ref,

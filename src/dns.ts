@@ -7,6 +7,7 @@ const cf = require('cloudflare')({
 });
 
 import data from '@src/data';
+import Domain from './modeles/Domain';
 
 export interface CFRecord {
     content: string;
@@ -38,7 +39,7 @@ export interface CFRecord {
 }
 
 export default {
-    publishDnsRecord: (containerName: string, prId: number, ref: string, sha: string) => {
+    publishDnsRecord: (repoName: string, containerName: string, prId: number, ref: string, sha: string) => {
         return new Promise((resolve: (domainName: string) => void, reject: (err: Error | null) => void) => {
             let domainName = data.replaceTokens(
                 {
@@ -59,6 +60,8 @@ export default {
             cf.dnsRecords
                 .add(process.env.CLOUDFLARE_ZONEID, record)
                 .then(() => {
+                    let domain = new Domain(domainName, domainName, 'cloudflare', repoName);
+                    domain.save();
                     logger.info('Added:', domainName);
                     resolve(domainName);
                 })
