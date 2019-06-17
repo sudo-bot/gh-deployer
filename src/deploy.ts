@@ -40,6 +40,7 @@ export default {
                         }
                         docker
                             .createDocker(
+                                emailInfos.repoName,
                                 emailInfos.prId || 0,
                                 prInfos.data.head.repo.clone_url,
                                 prInfos.data.head.ref,

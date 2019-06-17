@@ -52,6 +52,13 @@ export default class Container {
             .delete();
     }
 
+    public static async deleteWhereContainerId(containerId: string) {
+        await knex
+            .getConnection()('containers')
+            .where('container_id', containerId)
+            .delete();
+    }
+
     public getContainerId(): string {
         return this.container_id;
     }

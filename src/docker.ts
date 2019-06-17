@@ -5,7 +5,8 @@ import { Docker } from 'node-docker-api';
 
 const docker = new Docker({ socketPath: '/var/run/docker.sock' });
 import data from '@src/data';
-import { Container } from 'node-docker-api/lib/container';
+import { Container as DockerContainer } from 'node-docker-api/lib/container';
+import Container from './modeles/Container';
 
 const createAliasesFromString = (aliasString: string | null | undefined) => {
     aliasString = aliasString || '';
@@ -32,6 +33,7 @@ const labelNamespace = 'fr.wdes.sudo.gh-deployer';
 export default {
     createAliasesFromString: createAliasesFromString,
     createDocker: (
+        repoName: string,
         prId: number,
         cloneUrl: string,
         ref: string,
@@ -40,7 +42,10 @@ export default {
         randomString: string
     ) => {
         return new Promise(
-            (resolve: (data: { status: Container; containerName: string }) => void, reject: (err: Error) => void) => {
+            (
+                resolve: (data: { status: DockerContainer; containerName: string }) => void,
+                reject: (err: Error) => void
+            ) => {
                 try {
                     const containerName = data.replaceTokens(
                         {
@@ -53,8 +58,10 @@ export default {
                     docker.container
                         .get(containerName)
                         .stop()
-                        .then(function(container) {
-                            return container.delete({ force: true });
+                        .then(container => {
+                            return Container.deleteWhereContainerId(container.id).then(() => {
+                                return container.delete({ force: true });
+                            });
                         })
                         .catch(function(err) {
                             if (err.statusCode === 404) {
@@ -64,7 +71,7 @@ export default {
                                 reject(err);
                             }
                         })
-                        .then(function() {
+                        .then(() => {
                             logger.info('Deploying: ', containerName);
                             var optionalHostConfig: {
                                 Memory?: number;
@@ -139,6 +146,8 @@ export default {
                                 })
                                 .then(container => container.start())
                                 .then(container => {
+                                    let c = new Container(container.id, repoName);
+                                    c.save();
                                     container
                                         .status()
                                         .then(status => {
