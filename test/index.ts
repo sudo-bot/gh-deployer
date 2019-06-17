@@ -9,6 +9,8 @@ import messages from '@test/messages';
 import data from '@test/data';
 import docker from '@test/docker';
 import commands from '@test/commands';
+import containers from '@test/containers';
+import domains from '@test/domains';
 
 suite('Sudo Bot', function() {
     data();
@@ -16,6 +18,8 @@ suite('Sudo Bot', function() {
     commands();
     users();
     messages();
+    containers();
+    domains();
 })
     .beforeAll('Load ENV', done => {
         require('dotenv').config({ path: __dirname + '/../.env' });
