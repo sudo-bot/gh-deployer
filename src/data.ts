@@ -17,12 +17,6 @@ const regexConfigBlock = /(?:```)(?:php){0,1}(?<config>.*?)(?=```)```/gis; // js
 
 const destinationEmails = ['hooks@mail.hooks.wdes.eu'];
 
-const allowedHostnames = [/^out-[1-9]{1,2}\.smtp\.github\.com$/];
-
-const allowedUsernames = (process.env.ALLOWED_USERNAMES || '').split(',');
-
-logger.info('Allowed users:', allowedUsernames);
-
 /**
  * @see https://gist.github.com/6174/6062387
  * @param {number} length Number of chars
@@ -152,7 +146,6 @@ const getMetaDataFromMessage = function(metaData: string): object | null {
 export default {
     compiledPhpMyAdminConfig: compiledPhpMyAdminConfig,
     destinationEmails: destinationEmails,
-    allowedUsernames: allowedUsernames,
     parseMessage: parseMessage,
     getDataFromMessage: getDataFromMessage,
     parseReplyToRepoName: parseReplyToRepoName,
