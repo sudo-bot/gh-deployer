@@ -12,7 +12,7 @@ const createAliasesFromString = (aliasString: string | null | undefined) => {
     aliasString = aliasString || '';
     var networksAndAliases = aliasString.split(','); // Cut each part
     var netAlias: {
-        [alias: string]: {
+        [networkName: string]: {
             Aliases: string[];
         };
     } = {};
