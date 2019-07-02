@@ -79,7 +79,6 @@ export default class Message {
                         message.ref_comment_id
                     );
                     newMessage.setId(message.id);
-                    console.log(message.is_sent);
                     if (message.is_sent) {
                         newMessage.setSent();
                     } else {
