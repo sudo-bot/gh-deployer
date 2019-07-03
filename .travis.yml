@@ -25,6 +25,7 @@ jobs:
           - DB_TEST_DB=deployer__test
         before_script:
           - mysql -e 'CREATE DATABASE IF NOT EXISTS deployer__test;'
+          - npm run migrate:test
         script:
           - npm run test
         after_success:
