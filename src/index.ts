@@ -51,6 +51,7 @@ User.getConfirmedUsernames()
                     } else if (allowedUsernames.includes(emailInfos.requestedByUser)) {
                         if (emailInfos.commentId !== null && emailInfos.prId !== null) {
                             const msg = new Message(
+                                emailInfos.requestedByUser,
                                 emailInfos.commentId,
                                 emailInfos.prId,
                                 MessagePlatform.github,
