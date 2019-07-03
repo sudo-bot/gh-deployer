@@ -13,14 +13,17 @@ export default class Message {
     private platform: MessagePlatform;
     private ref_comment_id: number | null;
     private is_sent: boolean;
+    private username: string | null;
 
     constructor(
+        username: string | null,
         commentId: number,
         prId: number,
         platform: MessagePlatform,
         isSent: boolean,
         refCommentId: number | null = null
     ) {
+        this.username = username;
         this.comment_id = commentId;
         this.pr_id = prId;
         this.platform = platform;
@@ -44,6 +47,10 @@ export default class Message {
         this.ref_comment_id = refCommentId;
     }
 
+    private setUsername(username: string): void {
+        this.username = username;
+    }
+
     private setSent(): void {
         this.is_sent = true;
     }
@@ -56,6 +63,7 @@ export default class Message {
         this.id = await knex
             .getConnection()
             .insert({
+                username: this.username,
                 comment_id: this.comment_id,
                 pr_id: this.pr_id,
                 platform: this.platform,
@@ -72,6 +80,7 @@ export default class Message {
             .then(messages => {
                 return messages.map(message => {
                     var newMessage = new Message(
+                        message.username,
                         message.comment_id,
                         message.pr_id,
                         message.platform,
@@ -118,5 +127,9 @@ export default class Message {
 
     public isReceived(): boolean {
         return this.is_sent === false;
+    }
+
+    public getUsername(): string | null {
+        return this.username;
     }
 }
