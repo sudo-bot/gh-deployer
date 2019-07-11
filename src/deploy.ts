@@ -30,6 +30,7 @@ export default {
                     .then(deployComment => {
                         if (emailInfos.commentId !== null && emailInfos.prId !== null) {
                             const msg = new Message(
+                                emailInfos.requestedByUser,
                                 deployComment.data.id,
                                 emailInfos.prId,
                                 MessagePlatform.github,

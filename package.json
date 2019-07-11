@@ -66,16 +66,16 @@
     },
     "license": "MPL-2.0",
     "dependencies": {
-        "@octokit/rest": "^16.28.2",
-        "@sentry/node": "^5.4.3",
+        "@octokit/rest": "^16.28.3",
+        "@sentry/node": "^5.5.0",
         "@types/imap": "^0.8.29",
         "@types/mailparser": "^2.4.0",
         "cloudflare": "^2.4.1",
         "crypto-random-string": "^3.0.1",
         "dotenv": "^8.0.0",
         "imap": "^0.8.19",
-        "knex": "^0.18.1",
-        "log4js": "^4.4.0",
+        "knex": "^0.18.4",
+        "log4js": "^4.5.0",
         "mailparser": "^2.7.1",
         "module-alias": "^2.2.0",
         "mysql2": "^1.6.5",
@@ -85,11 +85,11 @@
         "smtp-server": "^3.5.0"
     },
     "devDependencies": {
-        "@sentry/types": "^5.4.2",
+        "@sentry/types": "^5.5.0",
         "@types/chai": "^4.1.7",
         "@types/knex": "^0.16.1",
         "@types/mocha": "^5.2.7",
-        "@types/node": "^12.0.10",
+        "@types/node": "^12.6.2",
         "@types/smtp-server": "^3.5.1",
         "chai": "^4.2.0",
         "changelog-generator-twig": "^1.2.0",
@@ -99,7 +99,7 @@
         "nyc": "^14.1.1",
         "prettier": "^1.18.2",
         "ts-node": "^8.3.0",
-        "typescript": "^3.5.2"
+        "typescript": "^3.5.3"
     },
     "prettier": {
         "singleQuote": true,

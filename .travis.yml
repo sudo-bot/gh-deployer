@@ -1,37 +1,54 @@
 language: node_js
 node_js:
-  - "stable"
+    - 'stable'
 cache:
-  directories:
-    - node_modules
+    directories:
+        - node_modules
 
 addons:
-  mariadb: '10.3'
-  apt:
-    packages:
-      - git
+    mariadb: '10.3'
+    apt:
+        packages:
+            - git
 
 stages:
-  - name: tests
-  - name: lint
+    - name: lint
+    - name: tests
 
 jobs:
     include:
-      - stage: tests
-        env:
-          - DB_TEST_HOST=127.0.0.1
-          - DB_TEST_USER=root
-          - DB_TEST_PASS=
-          - DB_TEST_DB=deployer__test
-        before_script:
-          - mysql -e 'CREATE DATABASE IF NOT EXISTS deployer__test;'
-          - npm run migrate:test
-        script:
-          - npm run test
-        after_success:
-          - npm run report-coverage
-          - codecov
-      - stage: lint
-        script:
-          - npm run jshint
-
+        - stage: tests
+          name: 'Test migrations up and down'
+          env:
+              - DB_TEST_HOST=127.0.0.1
+              - DB_TEST_USER=root
+              - DB_TEST_PASS=
+              - DB_TEST_DB=deployer__migrateupdown
+          before_script:
+              - mysql -e 'CREATE DATABASE IF NOT EXISTS deployer__migrateupdown;'
+          script:
+              - npm run migrate:test
+              - npm run migrate:rollback:test
+        - stage: tests
+          name: 'Run unit tests'
+          env:
+              - DB_TEST_HOST=127.0.0.1
+              - DB_TEST_USER=root
+              - DB_TEST_PASS=
+              - DB_TEST_DB=deployer__test
+          before_script:
+              - mysql -e 'CREATE DATABASE IF NOT EXISTS deployer__test;'
+              - npm run migrate:test
+          script:
+              - npm run test
+          after_success:
+              - npm run report-coverage
+              - codecov
+        - stage: lint
+          name: 'Run jshint'
+          script:
+              - npm run jshint
+        - stage: lint
+          name: 'Build typescript'
+          script:
+              - npm run build
