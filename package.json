@@ -1,6 +1,6 @@
 {
     "name": "gh-deployer",
-    "version": "1.0.0",
+    "version": "2.0.1",
     "description": "A GitHub deployer robot",
     "main": "index.js",
     "private": false,
