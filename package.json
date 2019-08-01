@@ -74,7 +74,7 @@
         "crypto-random-string": "^3.0.1",
         "dotenv": "^8.0.0",
         "imap": "^0.8.19",
-        "knex": "^0.18.4",
+        "knex": "^0.19.1",
         "log4js": "^4.5.0",
         "mailparser": "^2.7.1",
         "module-alias": "^2.2.0",
