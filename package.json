@@ -66,7 +66,7 @@
     },
     "license": "MPL-2.0",
     "dependencies": {
-        "@octokit/rest": "^16.28.3",
+        "@octokit/rest": "^16.28.7",
         "@sentry/node": "^5.5.0",
         "@types/imap": "^0.8.29",
         "@types/mailparser": "^2.4.0",
