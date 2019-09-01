@@ -89,7 +89,7 @@
         "@types/chai": "^4.2.0",
         "@types/knex": "^0.16.1",
         "@types/mocha": "^5.2.7",
-        "@types/node": "^12.7.2",
+        "@types/node": "^12.7.3",
         "@types/smtp-server": "^3.5.2",
         "chai": "^4.2.0",
         "changelog-generator-twig": "^1.2.0",
