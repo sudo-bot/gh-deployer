@@ -199,6 +199,10 @@ export default {
     DEPLOY_AND_MERGE_COMMANDS: DEPLOY_AND_MERGE_COMMANDS,
     DEPLOY_WITH_CONFIG_COMMANDS: DEPLOY_WITH_CONFIG_COMMANDS,
     getCommand: (text: string) => {
+        text = text.replace('\n\n-- \nYou are receiving this because you were mentioned.', '');
+        text = text.replace('\nReply to this email directly or view it on GitHub:\n', '');
+        text = text.replace('https://github.com/', '');
+        text = text.replace('issuecomment', '');
         return new Promise((resolve: (data: commandData) => void, reject) => {
             manager
                 .process('en', text, {})

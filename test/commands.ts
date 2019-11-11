@@ -234,6 +234,17 @@ export default async function() {
                 done();
             });
         });
+        test('test deploy command', function(done) {
+            let text =
+                '@sudo-bot Deploy PR\n\n-- \nYou are receiving this because you were mentioned.\nReply to this email directly or view it on GitHub:\nhttps://github.com/phpmyadmin/phpmyadmin/pull/15493#issuecomment-552420382';
+            commands
+                .getCommand(text)
+                .then(result => {
+                    expect(result.command, 'Tested-command: "' + text + '"').to.equal(commands.COMMANDS.DEPLOY_PR);
+                    done();
+                })
+                .catch(err => done(err));
+        });
         /*test('test deploy and merge a into b', function(done) {
             let command = commands.getCommand('Deploy and merge QA into master');
             command
