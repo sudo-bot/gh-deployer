@@ -38,7 +38,7 @@ export enum COMMANDS {
     DEPLOY_AND_MERGE = 'deploy_and_merge',
     DEPLOY_AND_MERGE_WITH_CONFIG = 'deploy_and_merge_with_config',
     DEPLOY_WITH_CONFIG = 'deploy_with_config',
-    DEPOY_PR = 'deploy_pr',
+    DEPLOY_PR = 'deploy_pr',
     SEND_CREDS = 'send_creds',
     DO_NOTHING = 'do_nothing',
 }
@@ -133,7 +133,7 @@ manager.addDocument('en', 'Deploy branch and merge into %branch%', COMMANDS.DEPL
 manager.addDocument('en', 'Deploy PR and merge into %branch%', COMMANDS.DEPLOY_AND_MERGE);
 manager.addDocument('en', 'Deploy pull-request and merge into %branch%', COMMANDS.DEPLOY_AND_MERGE);
 DEPLOY_COMMANDS.forEach(command => {
-    manager.addDocument('en', command, COMMANDS.DEPOY_PR);
+    manager.addDocument('en', command, COMMANDS.DEPLOY_PR);
 });
 logger.debug('Learned ' + DEPLOY_COMMANDS.length + ' deploy commands');
 CREDS_COMMANDS.forEach(command => {

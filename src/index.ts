@@ -15,7 +15,7 @@ Knex.getConnection();
 
 const processCommand = (commandData: commandData, emailInfos: emailData) => {
     switch (commandData.command) {
-        case COMMANDS.DEPOY_PR:
+        case COMMANDS.DEPLOY_PR:
         case COMMANDS.DEPLOY_AND_MERGE:
         case COMMANDS.DEPLOY_AND_MERGE_WITH_CONFIG:
             github.addReaction(emailInfos.commentId || 0, emailInfos.repoName, reactions.UPVOTE);

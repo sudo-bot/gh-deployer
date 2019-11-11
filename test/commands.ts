@@ -185,7 +185,7 @@ export default async function() {
                         .then(result => {
                             //console.log(result.debug.classification);
                             expect(result.command, 'Tested-command: "' + text + '"').to.equal(
-                                commands.COMMANDS.DEPOY_PR
+                                commands.COMMANDS.DEPLOY_PR
                             );
                             expect(result.options, 'Tested-command: "' + text + '"').to.deep.equal({});
                             resolve();
