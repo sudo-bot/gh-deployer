@@ -105,6 +105,11 @@ export default class MailListener extends EventEmitter implements MailListenerEv
                 onError,
                 () => {
                     this.emit('server:connected');
+                    const reProcess = () => {
+                        logger.debug(11);
+                        this.parseUnread(this.imap, this.searchFilter, this.markSeen, onEmailProcessed, onError);
+                    };
+                    this.imap.on('mail', reProcess);
                 }
             );
         };
@@ -113,10 +118,6 @@ export default class MailListener extends EventEmitter implements MailListenerEv
             this.emit('server:disconnected');
         });
         this.imap.on('error', onError);
-        const reProcess = () => {
-            this.parseUnread(this.imap, this.searchFilter, this.markSeen, onEmailProcessed, onError);
-        };
-        this.imap.on('mail', reProcess);
     }
     start(): void {
         this.imap.connect();
