@@ -69,7 +69,7 @@
         "@octokit/rest": "^16.34.1",
         "@sentry/node": "^5.7.1",
         "@types/imap": "^0.8.29",
-        "@types/mailparser": "^2.4.0",
+        "@types/mailparser": "^2.7.0",
         "cloudflare": "^2.7.0",
         "crypto-random-string": "^3.0.1",
         "dotenv": "^8.2.0",
