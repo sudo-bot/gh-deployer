@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
     test-node:
-        name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
+        name: Test on node ${{ matrix.node_version }}
         runs-on: ubuntu-latest
         services:
             mysql:
@@ -49,7 +49,7 @@ jobs:
                   token: ${{ secrets.CODECOV_TOKEN }}
 
     test-migrate:
-        name: Test migrations on node ${{ matrix.node_version }} and ${{ matrix.os }}
+        name: Test migrations on node ${{ matrix.node_version }}
         runs-on: ubuntu-latest
         services:
             mysql:
