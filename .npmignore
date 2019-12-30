@@ -4,7 +4,7 @@
 .jshintrc
 .prettierignore
 .editorconfig
-.travis.yml
+/.github
 /.dependabot
 /.jshintignore
 /dist
