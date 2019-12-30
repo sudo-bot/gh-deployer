@@ -13,6 +13,7 @@ export const config: {
             database: process.env.DB_DEV_DB,
             user: process.env.DB_DEV_USER,
             password: process.env.DB_DEV_PASS,
+            port: parseInt(process.env.DB_DEV_PORT || '3306'),
         },
         pool: {
             min: 2,
@@ -30,6 +31,7 @@ export const config: {
             database: process.env.DB_TEST_DB,
             user: process.env.DB_TEST_USER,
             password: process.env.DB_TEST_PASS,
+            port: parseInt(process.env.DB_TEST_PORT || '3306'),
         },
         pool: {
             min: 2,
@@ -47,6 +49,7 @@ export const config: {
             database: process.env.DB_PROD_DB,
             user: process.env.DB_PROD_USER,
             password: process.env.DB_PROD_PASS,
+            port: parseInt(process.env.DB_PROD_PORT || '3306'),
         },
         pool: {
             min: 2,

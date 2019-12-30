@@ -60,6 +60,7 @@ export default function() {
                     subject: '',
                     to: replyAddress,
                     from: replyAddress,
+                    headerLines: [],
                 },
                 (data: emailData) => {
                     expect(data).to.deep.equal({
