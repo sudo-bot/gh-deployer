@@ -5,7 +5,7 @@ on: [push]
 jobs:
     test-node:
         name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
-        runs-on: ${{ matrix.os }}
+        runs-on: ubuntu-latest
         services:
             mysql:
                 image: mysql:5.7
@@ -17,7 +17,6 @@ jobs:
         strategy:
             matrix:
                 node_version: ["10", "12"]
-                os: [ubuntu-latest, macOS-latest]
 
         steps:
             - uses: actions/checkout@v1
@@ -50,7 +49,7 @@ jobs:
 
     test-migrate:
         name: Test migrations on node ${{ matrix.node_version }} and ${{ matrix.os }}
-        runs-on: ${{ matrix.os }}
+        runs-on: ubuntu-latest
         services:
             mysql:
                 image: mysql:5.7
@@ -62,30 +61,28 @@ jobs:
         strategy:
             matrix:
                 node_version: ["10", "12"]
-                os: [ubuntu-latest]
 
         steps:
             - uses: actions/checkout@v1
             - name: Use Node.js ${{ matrix.node_version }}
-                uses: actions/setup-node@v1
-                with:
-                    node-version: ${{ matrix.node_version }}
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node_version }}
             - name: Cache module
-                uses: actions/cache@v1.0.3
-                with:
-                    path: ~/.npm/
-                    key: npm-cache
+              uses: actions/cache@v1.0.3
+              with:
+                  path: ~/.npm/
+                  key: npm-cache
             - name: Install modules
-                run: npm ci
+              run: npm ci
             - name: Run node tests
-                env:
-                    DB_TEST_HOST: "127.0.0.1"
-                    DB_TEST_USER: root
-                    DB_TEST_PASS: testbench
-                    DB_TEST_PORT: ${{ job.services.mysql.ports['3306'] }}
-                    DB_TEST_DB: deployer__migrateupdown
-                run: |
-                    mysql --host ${DB_TEST_HOST} -u${DB_TEST_USER} -p${DB_TEST_PASS} --port ${DB_TEST_PORT} -e "CREATE DATABASE IF NOT EXISTS ${DB_TEST_DB};"
-                    npm run migrate:test
-                    npm run migrate:rollback:test
-
+              env:
+                  DB_TEST_HOST: "127.0.0.1"
+                  DB_TEST_USER: root
+                  DB_TEST_PASS: testbench
+                  DB_TEST_PORT: ${{ job.services.mysql.ports['3306'] }}
+                  DB_TEST_DB: deployer__migrateupdown
+              run: |
+                  mysql --host ${DB_TEST_HOST} -u${DB_TEST_USER} -p${DB_TEST_PASS} --port ${DB_TEST_PORT} -e "CREATE DATABASE IF NOT EXISTS ${DB_TEST_DB};"
+                  npm run migrate:test
+                  npm run migrate:rollback:test
