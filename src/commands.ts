@@ -84,6 +84,7 @@ const DO_NOTHING_COMMANDS: string[] = [
     'deployed instance',
     'Deployed on the server',
     'I love you',
+    '@ghost I added you to the list of allowed deploys usernames',
     '@user123654 Yes, see: sudo-bot/gh-deployer#1',
     comments.getPendingComment(123654987, 'head/refs/pr-123456', '40bd001563085fc35165329ea1ff5c5ecbdbbeef'),
     comments.getDeployedComment(
