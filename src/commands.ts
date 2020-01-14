@@ -53,6 +53,7 @@ const DEPLOY_COMMANDS: string[] = [
     '@sudo-bot /deploy',
     '@sudo-bot deploy',
     '@user please test the PR deployed by @sudo-bot',
+    '@sudo-bot deploy PR\n@ghost I added you to the list of allowed deploys usernames',
     'Deploy this PR',
     'send me my creds',
 ];
