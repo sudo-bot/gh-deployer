@@ -86,7 +86,7 @@
     },
     "devDependencies": {
         "@sentry/types": "^5.11.0",
-        "@types/chai": "^4.2.7",
+        "@types/chai": "^4.2.9",
         "@types/knex": "^0.16.1",
         "@types/mocha": "^5.2.7",
         "@types/node": "^13.1.6",
