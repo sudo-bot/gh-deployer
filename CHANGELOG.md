@@ -10,10 +10,49 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - [00df6cc](https://github.com/sudo/gh-deployer/commit/00df6cc3943cc02f65338b388c4d8cbd65282d9c) added: Save the username that sent a message
 
+### Changed
+
+- [05e03c8](https://github.com/sudo/gh-deployer/commit/05e03c824c9ed34ba6117d466f68e12658201179) updated: dependencies and package-lock.json
+- [a64b744](https://github.com/sudo/gh-deployer/commit/a64b744a4c3766af74a6f0140e933217aec684d2) updated: dependencies and package-lock.json
+- [cd17dd4](https://github.com/sudo/gh-deployer/commit/cd17dd460cbf4d92529dad02d46cc9824c5c1edf) updated: dependencies and package-lock.json
+- [63aefa3](https://github.com/sudo/gh-deployer/commit/63aefa306af40168a5c6d49278bab3735d7b5b29) updated: dependencies and package-lock.json
+
 ### Fixed
 
+- [bbfe91a](https://github.com/sudo/gh-deployer/commit/bbfe91aaf31c7a3fda71889a1157b91cc10206f3) fix: changelog-generator-twig command after upgrade to 1.3.x
+- [bb436e6](https://github.com/sudo/gh-deployer/commit/bb436e640bbeb913c5c1859bbc820c4e09e99acd) fix: test after types upgrade
+- [3937e83](https://github.com/sudo/gh-deployer/commit/3937e834556e00fdd62263532e7f5b3c4878722a) fix: IMAP double processing unread when restarting the server
+- [ec2c451](https://github.com/sudo/gh-deployer/commit/ec2c451926a246a863d30b7ebe1902e8f707c1e2) fix: parsing, remove github footer
+- [769f2e2](https://github.com/sudo/gh-deployer/commit/769f2e22b28c291f834654f94e123e629ec1b3a4) fix: typo
+- [e2a96d3](https://github.com/sudo/gh-deployer/commit/e2a96d3a350639ff9523ee56dfdbd7c0cb3c3bc8) fix: Message due to 00df6cc3943cc02f65338b388c4d8cbd65282d9c
+- [203f29e](https://github.com/sudo/gh-deployer/commit/203f29e4b179885e2b662f50ebd806c6c5d0298e) fix: Identation of Travis CI file
 - [2835a01](https://github.com/sudo/gh-deployer/commit/2835a016a4c364fc57b42b977349e5199d22d688) fix: Add migrate before tests on CI
 - [1e9a201](https://github.com/sudo/gh-deployer/commit/1e9a201f6bf10f394bf1f016d32ebfff80d5709c) fix: Add MariaDB on CI
+
+### Improvements
+
+- [ba8379a](https://github.com/sudo/gh-deployer/commit/ba8379a0c96b9c0f23b511ce18bf0af3ffbc801f) style: prettier
+- [b2509aa](https://github.com/sudo/gh-deployer/commit/b2509aaca8b7735612d2bfc31e39cf3281af18d5) improved: Travis CI file
+
+### Features
+
+- [7b30d3a](https://github.com/sudo/gh-deployer/commit/7b30d3a08f939f261e48e5f7f0b966c8e70fe3d2) feat: move to yarn
+- [08f9e21](https://github.com/sudo/gh-deployer/commit/08f9e21573429955d52819c8d6809df3c16a122f) feat: simplify .gitignore file
+- [8a8f1b7](https://github.com/sudo/gh-deployer/commit/8a8f1b781decddb6546baa2e1645ace314f35305) feat: add a ignore use case
+- [de21fc1](https://github.com/sudo/gh-deployer/commit/de21fc1c5306faa831950ec706a465d06999a3ea) feat: add a use case
+- [7af34e2](https://github.com/sudo/gh-deployer/commit/7af34e25b9a809911d0b92a169d90f1054ba173e) feat: Implement port
+
+### Others
+
+- [80130ca](https://github.com/sudo/gh-deployer/commit/80130ca0da0f415e306a1d6dc21a3c952394b8e0) chore: remove codecov dependency
+- [ff84fc3](https://github.com/sudo/gh-deployer/commit/ff84fc37870c109bd631e83b73551d4adb3ecb04) ci: move to yarn
+- [ab7569c](https://github.com/sudo/gh-deployer/commit/ab7569c640db5eeaa6367f429cf82bcab02e5f9b) chore: update dependencies and package-lock.json
+- [95acd1e](https://github.com/sudo/gh-deployer/commit/95acd1e556dac8e51aba16dec9e4972a2953bc2e) ci: Fix badges and job name
+- [460a1d3](https://github.com/sudo/gh-deployer/commit/460a1d3e749b6f18c7fbe3ebf84fccda37dcbdc3) ci: Migrate before tests and change db name
+- [693bdf3](https://github.com/sudo/gh-deployer/commit/693bdf37e2c350a4806c6deab15af1c3d22accba) ci: fix indentation and remove mac os from matrix
+- [7544d27](https://github.com/sudo/gh-deployer/commit/7544d272e136dcc9773007d5943edcfd9d8fa91f) ci: fix github actions folder
+- [1f418ca](https://github.com/sudo/gh-deployer/commit/1f418cae1799ab49e172519bcaa1e0dc21870f5c) ci: Migrate to github actions
+- [37c83bc](https://github.com/sudo/gh-deployer/commit/37c83bc084a92fb551f08224b2c595b2c682c521) chore: update dependencies and package-lock.json
 
 ## [v2.0.0]
 

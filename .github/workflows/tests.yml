@@ -24,13 +24,18 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node_version }}
-            - name: Cache module
-              uses: actions/cache@v1.0.3
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn cache dir)"
+            - name: yarn cache
+              uses: actions/cache@v1
               with:
-                  path: ~/.npm/
-                  key: npm-cache
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
             - name: Install modules
-              run: npm ci
+              run: yarn install
             - name: Run node tests
               env:
                   DB_TEST_HOST: "127.0.0.1"
@@ -40,9 +45,9 @@ jobs:
                   DB_TEST_DB: deployer__tests
               run: |
                   mysql --host ${DB_TEST_HOST} -u${DB_TEST_USER} -p${DB_TEST_PASS} --port ${DB_TEST_PORT} -e "CREATE DATABASE IF NOT EXISTS ${DB_TEST_DB};"
-                  npm run migrate:test
-                  npm run test
-                  npm run report-coverage
+                  yarn run migrate:test
+                  yarn run test
+                  yarn run report-coverage
             - name: Send coverage
               uses: codecov/codecov-action@v1
               with:
@@ -69,13 +74,18 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node_version }}
-            - name: Cache module
-              uses: actions/cache@v1.0.3
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn cache dir)"
+            - name: yarn cache
+              uses: actions/cache@v1
               with:
-                  path: ~/.npm/
-                  key: npm-cache
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                      ${{ runner.os }}-yarn-
             - name: Install modules
-              run: npm ci
+              run: yarn install
             - name: Run node tests
               env:
                   DB_TEST_HOST: "127.0.0.1"
@@ -85,5 +95,5 @@ jobs:
                   DB_TEST_DB: deployer__migrateupdown
               run: |
                   mysql --host ${DB_TEST_HOST} -u${DB_TEST_USER} -p${DB_TEST_PASS} --port ${DB_TEST_PORT} -e "CREATE DATABASE IF NOT EXISTS ${DB_TEST_DB};"
-                  npm run migrate:test
-                  npm run migrate:rollback:test
+                  yarn run migrate:test
+                  yarn run migrate:rollback:test
