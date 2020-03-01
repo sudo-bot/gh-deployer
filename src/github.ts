@@ -1,6 +1,6 @@
 'use strict';
 
-import * as Octokit from '@octokit/rest';
+import { Octokit } from '@octokit/rest';
 
 const GHclient = new Octokit({
     auth: process.env.GITHUB_TOKEN || '',
