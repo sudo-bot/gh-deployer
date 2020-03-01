@@ -8,3 +8,4 @@
 /.dependabot
 /.jshintignore
 /dist
+/*.log

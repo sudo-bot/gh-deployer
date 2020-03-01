@@ -6,3 +6,4 @@
 /coverage.lcov
 /data
 /dist
+/*.log
