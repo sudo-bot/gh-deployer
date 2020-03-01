@@ -36,7 +36,7 @@
     },
     "scripts": {
         "build": "tsc",
-        "changelog": "changelog-generator-twig --owner sudo --repo gh-deployer --repoDir ./ --baseCommit 5f5552755301e92a762698db33127c44e924fac6",
+        "changelog": "changelog-generator-twig --convention conventional+legacy --owner sudo --repo gh-deployer --repoDir ./ --baseCommit 5f5552755301e92a762698db33127c44e924fac6",
         "changelog-file": "npm run --silent changelog > CHANGELOG.md",
         "jshint": "jshint ./",
         "start": "ts-node index.ts",
