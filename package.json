@@ -71,7 +71,7 @@
         "@types/imap": "^0.8.30",
         "@types/mailparser": "^2.7.0",
         "cloudflare": "^2.7.0",
-        "crypto-random-string": "^3.1.0",
+        "crypto-random-string": "^3.2.0",
         "dotenv": "^8.2.0",
         "imap": "^0.8.19",
         "knex": "^0.20.10",
