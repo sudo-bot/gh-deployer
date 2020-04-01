@@ -875,10 +875,10 @@
   dependencies:
     knex "*"
 
-"@types/mailparser@^2.7.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@types/mailparser/-/mailparser-2.7.0.tgz#ee61ee060313e0ad8b3fd1cf556ade58a5502162"
-  integrity sha512-A4s43xVq9JbUHO3qJGp14XJdFeploZsdcnMcNAQ9lq8u7XyMUD6YGU4gPP47vLMaLsIwzGgfDKOeAdc5ueTTgw==
+"@types/mailparser@^2.7.2":
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/@types/mailparser/-/mailparser-2.7.2.tgz#4c319f8f8ad770d055850d8f7d32d311d893dfa9"
+  integrity sha512-hGXNTyqKy5o6pLxeXKKNPVxDyML0kJcHgjVg/6STrtmVUwKXDYGT40HR/eGhXXZpiPAg9/8pVPCo9c5+IJ8s+A==
   dependencies:
     "@types/node" "*"
 
