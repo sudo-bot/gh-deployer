@@ -81,7 +81,7 @@
         "mysql2": "^2.1.0",
         "node-docker-api": "^1.1.22",
         "node-emoji": "^1.10.0",
-        "node-nlp": "^4.2.1",
+        "node-nlp": "^4.3.0",
         "smtp-server": "^3.5.0"
     },
     "devDependencies": {
