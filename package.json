@@ -85,7 +85,7 @@
         "smtp-server": "^3.5.0"
     },
     "devDependencies": {
-        "@sentry/types": "^5.12.4",
+        "@sentry/types": "^5.15.4",
         "@types/chai": "^4.2.9",
         "@types/knex": "^0.16.1",
         "@types/mocha": "^7.0.1",
