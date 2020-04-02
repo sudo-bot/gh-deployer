@@ -151,8 +151,8 @@ export default class MailListener extends EventEmitter implements MailListenerEv
                 bodies: '',
                 markSeen: markSeen,
             });
-            f.on('message', function(msg, seqno) {
-                msg.on('body', function(stream, info) {
+            f.on('message', function (msg, seqno) {
+                msg.on('body', function (stream, info) {
                     resolve({
                         stream: stream,
                         seqno: seqno,
@@ -160,7 +160,7 @@ export default class MailListener extends EventEmitter implements MailListenerEv
                     });
                 });
             });
-            f.once('error', function(err) {
+            f.once('error', function (err) {
                 reject(err);
             });
         });
@@ -177,12 +177,12 @@ export default class MailListener extends EventEmitter implements MailListenerEv
                 onError(err);
             } else if (results.length > 0) {
                 Promise.all(
-                    results.map(email => {
+                    results.map((email) => {
                         return this.processEmail(imap, email, markSeen).then((processedEmail: processedEmail) => {
                             onEmailProcessed(processedEmail.stream, processedEmail.seqno, processedEmail.info);
                         });
                     })
-                ).catch(err => {
+                ).catch((err) => {
                     onError(err);
                 });
             }

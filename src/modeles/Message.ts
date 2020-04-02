@@ -77,8 +77,8 @@ export default class Message {
             .getConnection()
             .select('*')
             .from('messages')
-            .then(messages => {
-                return messages.map(message => {
+            .then((messages) => {
+                return messages.map((message) => {
                     var newMessage = new Message(
                         message.username,
                         message.comment_id,
@@ -99,10 +99,7 @@ export default class Message {
     }
 
     public async delete() {
-        await knex
-            .getConnection()('users')
-            .where('id', this.id)
-            .delete();
+        await knex.getConnection()('users').where('id', this.id).delete();
     }
 
     public getPlatform(): MessagePlatform {

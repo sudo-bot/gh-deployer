@@ -12,7 +12,7 @@ import commands from '@test/commands';
 import containers from '@test/containers';
 import domains from '@test/domains';
 
-suite('Sudo Bot', function() {
+suite('Sudo Bot', function () {
     data();
     docker();
     commands();
@@ -21,11 +21,11 @@ suite('Sudo Bot', function() {
     containers();
     domains();
 })
-    .beforeAll('Load ENV', done => {
+    .beforeAll('Load ENV', (done) => {
         require('dotenv').config({ path: __dirname + '/../.env' });
         done();
     })
-    .afterAll('Close database', done => {
+    .afterAll('Close database', (done) => {
         Knex.stop();
         done();
     });

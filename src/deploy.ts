@@ -16,7 +16,7 @@ export default {
         }
         github
             .getPrInfos(emailInfos.prId || 0, emailInfos.repoName)
-            .then(prInfos => {
+            .then((prInfos) => {
                 github
                     .createComment(
                         emailInfos.prId || 0,
@@ -27,7 +27,7 @@ export default {
                             prInfos.data.head.sha
                         )
                     )
-                    .then(deployComment => {
+                    .then((deployComment) => {
                         if (emailInfos.commentId !== null && emailInfos.prId !== null) {
                             const msg = new Message(
                                 emailInfos.requestedByUser,
@@ -49,7 +49,7 @@ export default {
                                 configBlock,
                                 data.randomString(80)
                             )
-                            .then(docker => {
+                            .then((docker) => {
                                 dns.publishDnsRecord(
                                     emailInfos.repoName,
                                     docker.containerName,
@@ -57,7 +57,7 @@ export default {
                                     prInfos.data.head.ref,
                                     prInfos.data.head.sha
                                 )
-                                    .then(domain => {
+                                    .then((domain) => {
                                         logger.info('Published-domain:', domain);
                                         github.addReaction(
                                             emailInfos.commentId || 0,
