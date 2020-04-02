@@ -9,3 +9,4 @@
 /.jshintignore
 /dist
 /*.log
+/*.nlp
