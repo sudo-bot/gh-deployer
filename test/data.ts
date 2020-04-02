@@ -61,6 +61,7 @@ export default function () {
                     to: replyAddress,
                     from: replyAddress,
                     headerLines: [],
+                    attachments: [],
                 },
                 (data: emailData) => {
                     expect(data).to.deep.equal({

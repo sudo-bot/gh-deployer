@@ -119,11 +119,11 @@ const getDataFromParsedEmail = function (
     let username: string = senderHeader !== undefined ? senderHeader.toString() : '';
     let replyTo = parsed.replyTo;
     success({
-        commentId: parseCommentId(parsed.text),
+        commentId: parseCommentId(parsed.text || ''),
         requestedByUser: username,
-        message: parseMessage(parsed.text),
-        prId: parsePrId(parsed.text),
-        repoName: parseReplyToRepoName(replyTo !== undefined ? replyTo.text : parsed.to.text),
+        message: parseMessage(parsed.text || ''),
+        prId: parsePrId(parsed.text || ''),
+        repoName: parseReplyToRepoName(replyTo !== undefined ? replyTo.text : (parsed.to || { text: '' }).text),
     });
 };
 
