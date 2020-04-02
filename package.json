@@ -42,7 +42,7 @@
         "start": "ts-node index.ts",
         "test": "NODE_ENV=test nyc mocha --require ts-node/register --require source-map-support/register --ui tdd test/index.ts",
         "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov",
-        "prettier": "prettier --ignore-path ./.prettierignore --write \"*/**/*.js\" \"*.js\" \"*/**/*.ts\" \"*.ts\"",
+        "prettier": "prettier --ignore-path ./.prettierignore --write \"*/**/*.js\" \"*/**/*.ts\" \"*.ts\"",
         "migrate:dev": "knex migrate:latest --env development",
         "migrate:rollback:dev": "knex migrate:rollback --env development --all",
         "migrate:test": "knex migrate:latest --env test",
