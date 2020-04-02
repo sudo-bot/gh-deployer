@@ -13,19 +13,20 @@ const manager = new NlpManager({
     },
 });
 
-const branch = manager.addTrimEntity('branch');
-branch.addAfterFirstCondition('en', 'branch');
+manager.addNamedEntityText('branch', 'trim');
+manager.addAfterFirstCondition('en', 'branch');
 
-const branchSrc = manager.addTrimEntity('branchSrc');
-branchSrc.addBetweenCondition('en', 'merge', 'into');
+manager.addNamedEntityText('branchSrc', 'trim');
+manager.addBetweenCondition('en', 'merge', 'into');
 
-const branchDst = manager.addTrimEntity('branchDst');
-branchDst.addAfterFirstCondition('en', 'into');
-branchDst.addBetweenCondition('en', 'into', 'and');
+manager.addNamedEntityText('branchDst', 'trim');
+manager.addAfterFirstCondition('en', 'into');
+manager.addBetweenCondition('en', 'into', 'and');
 //manager.addRegexEntity('branchDst', 'en', /(?: )\S+(?= )/ig);
 
 manager.addRegexEntity('configBlock', 'en', data.regexConfigBlock);
 
+/*
 manager.slotManager.addSlot('merge', 'branch', false, {});
 
 manager.slotManager.addSlot('merge_from_into', 'branchSrc', false, {});
@@ -33,6 +34,7 @@ manager.slotManager.addSlot('merge_from_into', 'branchSrc', false, {});
 manager.slotManager.addSlot('merge_from_into', 'branchDst', false, {});
 
 manager.slotManager.addSlot('use_config', 'configBlock', false, {});
+*/
 
 export enum COMMANDS {
     DEPLOY_AND_MERGE = 'deploy_and_merge',
