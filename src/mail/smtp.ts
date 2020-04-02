@@ -41,11 +41,11 @@ export default class {
                 },
                 onData: (stream: Source, session, callbackAccepted: () => void) => {
                     data.parseEmail(stream)
-                        .then(emailInfos => {
+                        .then((emailInfos) => {
                             callbackAccepted();
                             cbData(emailInfos);
                         })
-                        .catch(err => {
+                        .catch((err) => {
                             logger.error(err);
                         });
                 },

@@ -21,11 +21,9 @@ const destinationEmails = ['hooks@mail.hooks.wdes.eu'];
  * @see https://gist.github.com/6174/6062387
  * @param {number} length Number of chars
  */
-const randomString = function(length: number) {
-    let radom13chars = function() {
-        return Math.random()
-            .toString(16)
-            .substring(2, 15);
+const randomString = function (length: number) {
+    let radom13chars = function () {
+        return Math.random().toString(16).substring(2, 15);
     };
     let loops = Math.ceil(length / 13);
     return new Array(loops)
@@ -43,7 +41,7 @@ const compiledPhpMyAdminConfig = readFileSync(process.env.PMA_CONFIG_FILE || __f
 /**
  * Get data from message
  */
-const getDataFromMessage = function(
+const getDataFromMessage = function (
     snippetsMsg: string
 ): {
     message: string;
@@ -64,7 +62,7 @@ const getDataFromMessage = function(
 /**
  * Get data from config
  */
-const getDataFromConfig = function(snippetsMsg: string): string | null {
+const getDataFromConfig = function (snippetsMsg: string): string | null {
     const regexConfig = /(?:```)(?:php){0,1}(?<config>.*?)(?=```)```/gis; // jshint ignore:line
     let message = regexConfig.exec(snippetsMsg);
     if (message != null && message.groups !== undefined) {
@@ -74,12 +72,12 @@ const getDataFromConfig = function(snippetsMsg: string): string | null {
     }
 };
 
-const parseReplyToRepoName = function(emailTo: string): string {
+const parseReplyToRepoName = function (emailTo: string): string {
     const parts = emailTo.split(' ');
     return parts[0];
 };
 
-const parseCommentId = function(emailTextData: string): number | null {
+const parseCommentId = function (emailTextData: string): number | null {
     const regexCommentId = /#issuecomment-(?<commentId>[0-9]+)/gm;
     let message = regexCommentId.exec(emailTextData);
     if (message != null && message.groups !== undefined) {
@@ -89,7 +87,7 @@ const parseCommentId = function(emailTextData: string): number | null {
     }
 };
 
-const parsePrId = function(emailTextData: string): number | null {
+const parsePrId = function (emailTextData: string): number | null {
     const regexPrId = /\/(?<prID>[0-9]+)#issuecomment-[0-9]+$/gm;
     let message = regexPrId.exec(emailTextData);
     if (message != null && message.groups !== undefined) {
@@ -99,7 +97,7 @@ const parsePrId = function(emailTextData: string): number | null {
     }
 };
 
-const parseMessage = function(emailText: string): string {
+const parseMessage = function (emailText: string): string {
     const emailParts = emailText.split('--\n        You are receiving');
     return emailParts[0].trim();
 };
@@ -112,7 +110,7 @@ export interface emailData {
     repoName: string;
 }
 
-const getDataFromParsedEmail = function(
+const getDataFromParsedEmail = function (
     parsed: ParsedMail,
     success: (data: emailData) => void,
     error: (err: Error | null) => void
@@ -121,15 +119,15 @@ const getDataFromParsedEmail = function(
     let username: string = senderHeader !== undefined ? senderHeader.toString() : '';
     let replyTo = parsed.replyTo;
     success({
-        commentId: parseCommentId(parsed.text),
+        commentId: parseCommentId(parsed.text || ''),
         requestedByUser: username,
-        message: parseMessage(parsed.text),
-        prId: parsePrId(parsed.text),
-        repoName: parseReplyToRepoName(replyTo !== undefined ? replyTo.text : parsed.to.text),
+        message: parseMessage(parsed.text || ''),
+        prId: parsePrId(parsed.text || ''),
+        repoName: parseReplyToRepoName(replyTo !== undefined ? replyTo.text : (parsed.to || { text: '' }).text),
     });
 };
 
-const getMetaDataFromMessage = function(metaData: string): object | null {
+const getMetaDataFromMessage = function (metaData: string): object | null {
     const regexMetaData = /<!--\nsudobot:(?<metadata>.*)?-->/is; // jshint ignore:line
     let message = regexMetaData.exec(metaData);
     if (message != null && message.groups !== undefined) {
@@ -162,7 +160,7 @@ export default {
     parseEmail: (stream: Source) => {
         return new Promise((resolve: (data: emailData) => void, reject) => {
             simpleParser(stream)
-                .then(parsed => {
+                .then((parsed) => {
                     getDataFromParsedEmail(parsed, resolve, reject);
                 })
                 .catch(reject);
@@ -175,7 +173,7 @@ export default {
         },
         stringToReplace: string
     ) => {
-        Object.keys(tokens).forEach(function(key: string) {
+        Object.keys(tokens).forEach(function (key: string) {
             var val = tokens[key];
             stringToReplace = stringToReplace.replace(new RegExp('\\{\\{' + key + '\\}\\}', 'g'), val + '');
         });

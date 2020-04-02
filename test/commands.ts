@@ -15,28 +15,28 @@ import { expect } from 'chai';
  * @returns {Promise}
  */
 function forEachPromise(items: any[], fn: Function) {
-    return items.reduce(function(promise: Promise<void>, item) {
-        return promise.then(function() {
+    return items.reduce(function (promise: Promise<void>, item) {
+        return promise.then(function () {
             return fn(item);
         });
     }, Promise.resolve());
 }
 
-export default async function() {
+export default async function () {
     await commands.train();
-    suite('commands', function() {
-        test('test DEPLOY_AND_MERGE_COMMANDS commands', function(done) {
+    suite('commands', function () {
+        test('test DEPLOY_AND_MERGE_COMMANDS commands', function (done) {
             const DEPLOY_AND_MERGE_COMMANDS_EXAMPLES: string[] = [];
-            commands.DEPLOY_AND_MERGE_COMMANDS.forEach(command => {
+            commands.DEPLOY_AND_MERGE_COMMANDS.forEach((command) => {
                 DEPLOY_AND_MERGE_COMMANDS_EXAMPLES.push(
                     command.replace('%branchSrc%', 'QA').replace('%branchDst%', 'master')
                 );
             });
             forEachPromise(DEPLOY_AND_MERGE_COMMANDS_EXAMPLES, (text: string) => {
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                     commands
                         .getCommand(text)
-                        .then(result => {
+                        .then((result) => {
                             //console.log(result.debug.classification);
                             expect(result.command, 'Tested-command: "' + text + '"').to.equal(
                                 commands.COMMANDS.DEPLOY_AND_MERGE
@@ -47,13 +47,13 @@ export default async function() {
                             });
                             resolve();
                         })
-                        .catch(err => done(err));
+                        .catch((err) => done(err));
                 });
             }).then(() => {
                 done();
             });
         });
-        test('test DEPLOY_WITH_CONFIG_COMMANDS commands', function(done) {
+        test('test DEPLOY_WITH_CONFIG_COMMANDS commands', function (done) {
             const DEPLOY_WITH_CONFIG_COMMANDS_EXAMPLES: string[] = [];
             const configBlockBase1 = `\`\`\`php
             <?php
@@ -84,14 +84,14 @@ export default async function() {
                 `
             Hello world
             `;
-            commands.DEPLOY_WITH_CONFIG_COMMANDS.forEach(command => {
+            commands.DEPLOY_WITH_CONFIG_COMMANDS.forEach((command) => {
                 DEPLOY_WITH_CONFIG_COMMANDS_EXAMPLES.push(command.replace('%configBlock%', configBlock1));
             });
             forEachPromise(DEPLOY_WITH_CONFIG_COMMANDS_EXAMPLES, (text: string) => {
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                     commands
                         .getCommand(text)
-                        .then(result => {
+                        .then((result) => {
                             //console.log(result.debug.classification);
                             expect(result.command, 'Tested-command: "' + text + '"').to.equal(
                                 commands.COMMANDS.DEPLOY_WITH_CONFIG
@@ -101,13 +101,13 @@ export default async function() {
                             });
                             resolve();
                         })
-                        .catch(err => done(err));
+                        .catch((err) => done(err));
                 });
             }).then(() => {
                 done();
             });
         });
-        test('test DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS commands', function(done) {
+        test('test DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS commands', function (done) {
             const DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS_EXAMPLES: string[] = [];
             const configBlockBase1 = `\`\`\`php
             <?php
@@ -147,7 +147,7 @@ export default async function() {
                 `
             Hello world
             `;
-            commands.DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS.forEach(command => {
+            commands.DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS.forEach((command) => {
                 DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS_EXAMPLES.push(
                     command
                         .replace('%branchSrc%', 'QA')
@@ -156,10 +156,10 @@ export default async function() {
                 );
             });
             forEachPromise(DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS_EXAMPLES, (text: string) => {
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                     commands
                         .getCommand(text)
-                        .then(result => {
+                        .then((result) => {
                             //console.log(result.debug.classification);
                             expect(result.command, 'Tested-command: "' + text + '"').to.equal(
                                 commands.COMMANDS.DEPLOY_AND_MERGE_WITH_CONFIG
@@ -171,18 +171,18 @@ export default async function() {
                             });
                             resolve();
                         })
-                        .catch(err => done(err));
+                        .catch((err) => done(err));
                 });
             }).then(() => {
                 done();
             });
         });
-        test('test DEPLOY_COMMANDS commands', function(done) {
+        test('test DEPLOY_COMMANDS commands', function (done) {
             forEachPromise(commands.DEPLOY_COMMANDS, (text: string) => {
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                     commands
                         .getCommand(text)
-                        .then(result => {
+                        .then((result) => {
                             //console.log(result.debug.classification);
                             expect(result.command, 'Tested-command: "' + text + '"').to.equal(
                                 commands.COMMANDS.DEPLOY_PR
@@ -190,18 +190,18 @@ export default async function() {
                             expect(result.options, 'Tested-command: "' + text + '"').to.deep.equal({});
                             resolve();
                         })
-                        .catch(err => done(err));
+                        .catch((err) => done(err));
                 });
             }).then(() => {
                 done();
             });
         });
-        test('test DO_NOTHING_COMMANDS commands', function(done) {
+        test('test DO_NOTHING_COMMANDS commands', function (done) {
             forEachPromise(commands.DO_NOTHING_COMMANDS, (text: string) => {
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                     commands
                         .getCommand(text)
-                        .then(result => {
+                        .then((result) => {
                             //console.log(result.debug.classification);
                             expect(result.command, 'Tested-command: "' + text + '"').to.equal(
                                 commands.COMMANDS.DO_NOTHING
@@ -209,18 +209,18 @@ export default async function() {
                             //expect(result.options, 'Tested-command: "' + text + '"').to.deep.equal({});
                             resolve();
                         })
-                        .catch(err => done(err));
+                        .catch((err) => done(err));
                 });
             }).then(() => {
                 done();
             });
         });
-        test('test CREDS_COMMANDS commands', function(done) {
+        test('test CREDS_COMMANDS commands', function (done) {
             forEachPromise(commands.CREDS_COMMANDS, (text: string) => {
-                return new Promise(resolve => {
+                return new Promise((resolve) => {
                     commands
                         .getCommand(text)
-                        .then(result => {
+                        .then((result) => {
                             //console.log(result.debug.classification);
                             expect(result.command, 'Tested-command: "' + text + '"').to.equal(
                                 commands.COMMANDS.SEND_CREDS
@@ -228,22 +228,22 @@ export default async function() {
                             //expect(result.options, 'Tested-command: "' + text + '"').to.deep.equal({});
                             resolve();
                         })
-                        .catch(err => done(err));
+                        .catch((err) => done(err));
                 });
             }).then(() => {
                 done();
             });
         });
-        test('test deploy command', function(done) {
+        test('test deploy command', function (done) {
             let text =
                 '@sudo-bot Deploy PR\n\n-- \nYou are receiving this because you were mentioned.\nReply to this email directly or view it on GitHub:\nhttps://github.com/phpmyadmin/phpmyadmin/pull/15493#issuecomment-552420382';
             commands
                 .getCommand(text)
-                .then(result => {
+                .then((result) => {
                     expect(result.command, 'Tested-command: "' + text + '"').to.equal(commands.COMMANDS.DEPLOY_PR);
                     done();
                 })
-                .catch(err => done(err));
+                .catch((err) => done(err));
         });
         /*test('test deploy and merge a into b', function(done) {
             let command = commands.getCommand('Deploy and merge QA into master');

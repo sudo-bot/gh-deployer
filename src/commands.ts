@@ -3,9 +3,9 @@
 import comments from '@src/comments';
 import data from '@src/data';
 import logger from '@src/logger';
-const nodenpl = require('node-nlp');
+const { NlpManager } = require('node-nlp');
 
-const manager = new nodenpl.NlpManager({
+const manager = new NlpManager({
     languages: ['en'],
     ner: {
         builtins: [],
@@ -13,19 +13,20 @@ const manager = new nodenpl.NlpManager({
     },
 });
 
-const branch = manager.addTrimEntity('branch');
-branch.addAfterFirstCondition('en', 'branch');
+manager.addNamedEntityText('branch', 'trim');
+manager.addAfterFirstCondition('en', 'branch');
 
-const branchSrc = manager.addTrimEntity('branchSrc');
-branchSrc.addBetweenCondition('en', 'merge', 'into');
+manager.addNamedEntityText('branchSrc', 'trim');
+manager.addBetweenCondition('en', 'merge', 'into');
 
-const branchDst = manager.addTrimEntity('branchDst');
-branchDst.addAfterFirstCondition('en', 'into');
-branchDst.addBetweenCondition('en', 'into', 'and');
+manager.addNamedEntityText('branchDst', 'trim');
+manager.addAfterFirstCondition('en', 'into');
+manager.addBetweenCondition('en', 'into', 'and');
 //manager.addRegexEntity('branchDst', 'en', /(?: )\S+(?= )/ig);
 
 manager.addRegexEntity('configBlock', 'en', data.regexConfigBlock);
 
+/*
 manager.slotManager.addSlot('merge', 'branch', false, {});
 
 manager.slotManager.addSlot('merge_from_into', 'branchSrc', false, {});
@@ -33,6 +34,7 @@ manager.slotManager.addSlot('merge_from_into', 'branchSrc', false, {});
 manager.slotManager.addSlot('merge_from_into', 'branchDst', false, {});
 
 manager.slotManager.addSlot('use_config', 'configBlock', false, {});
+*/
 
 export enum COMMANDS {
     DEPLOY_AND_MERGE = 'deploy_and_merge',
@@ -134,15 +136,15 @@ logger.info('Start to learn');
 manager.addDocument('en', 'Deploy branch and merge into %branch%', COMMANDS.DEPLOY_AND_MERGE);
 manager.addDocument('en', 'Deploy PR and merge into %branch%', COMMANDS.DEPLOY_AND_MERGE);
 manager.addDocument('en', 'Deploy pull-request and merge into %branch%', COMMANDS.DEPLOY_AND_MERGE);
-DEPLOY_COMMANDS.forEach(command => {
+DEPLOY_COMMANDS.forEach((command) => {
     manager.addDocument('en', command, COMMANDS.DEPLOY_PR);
 });
 logger.debug('Learned ' + DEPLOY_COMMANDS.length + ' deploy commands');
-CREDS_COMMANDS.forEach(command => {
+CREDS_COMMANDS.forEach((command) => {
     manager.addDocument('en', command, COMMANDS.SEND_CREDS);
 });
 logger.debug('Learned ' + DEPLOY_COMMANDS.length + ' creds commands');
-DO_NOTHING_COMMANDS.forEach(command => {
+DO_NOTHING_COMMANDS.forEach((command) => {
     manager.addDocument('en', command, COMMANDS.DO_NOTHING);
 });
 logger.debug('Learned ' + DO_NOTHING_COMMANDS.length + ' do nothing commands');
@@ -156,17 +158,17 @@ logger.info('Learn harder');
 // manager.addDocument('en', 'use config %configBlock%', 'use_config');
 //manager.addDocument('en', 'Merge %branchSrc% into %branchDst%', 'merge_from_into');
 
-DEPLOY_AND_MERGE_COMMANDS.forEach(command => {
+DEPLOY_AND_MERGE_COMMANDS.forEach((command) => {
     manager.addDocument('en', command, COMMANDS.DEPLOY_AND_MERGE);
 });
 logger.debug('Learned ' + DEPLOY_AND_MERGE_COMMANDS.length + ' deploy and merge with config commands');
 
-DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS.forEach(command => {
+DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS.forEach((command) => {
     manager.addDocument('en', command, COMMANDS.DEPLOY_AND_MERGE_WITH_CONFIG);
 });
 logger.debug('Learned ' + DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS.length + ' deploy and merge with config commands');
 
-DEPLOY_WITH_CONFIG_COMMANDS.forEach(command => {
+DEPLOY_WITH_CONFIG_COMMANDS.forEach((command) => {
     manager.addDocument('en', command, COMMANDS.DEPLOY_WITH_CONFIG);
 });
 logger.debug('Learned ' + DEPLOY_WITH_CONFIG_COMMANDS.length + ' deploy and merge with config commands');

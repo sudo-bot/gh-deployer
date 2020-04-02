@@ -6,3 +6,5 @@
 /coverage.lcov
 /data
 /dist
+/*.log
+/*.nlp

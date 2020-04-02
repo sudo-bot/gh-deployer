@@ -19,10 +19,10 @@ init({
  * @return {Function} The log function
  */
 function sentryAppender(level: string): (logEvent: LoggingEvent) => void {
-    return logEvent => {
+    return (logEvent) => {
         let msg = logEvent.data[0];
         const contexts: string[] = [];
-        logEvent.data.slice(1).forEach(arg => {
+        logEvent.data.slice(1).forEach((arg) => {
             if (arg instanceof Error) {
                 contexts.push(arg.toString());
             } else {
@@ -31,7 +31,7 @@ function sentryAppender(level: string): (logEvent: LoggingEvent) => void {
         });
         // Check if the log level is enabled
         if (!level || logEvent.level.isGreaterThanOrEqualTo(level)) {
-            withScope(scope => {
+            withScope((scope) => {
                 let level = logEvent.level.toString().toLowerCase();
                 level = level.replace('warn', Severity.Warning);
                 scope.setLevel(Severity.fromString(level));

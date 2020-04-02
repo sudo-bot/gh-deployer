@@ -17,11 +17,11 @@ const createAliasesFromString = (aliasString: string | null | undefined) => {
         };
     } = {};
     networksAndAliases
-        .map(value => value.split('!')) // Cut networkName and aliases
-        .map(value => {
+        .map((value) => value.split('!')) // Cut networkName and aliases
+        .map((value) => {
             if (value[0] !== '' && value[1] !== '') {
                 netAlias[value[0].trim()] = {
-                    Aliases: value[1].split(';').map(alias => alias.trim()),
+                    Aliases: value[1].split(';').map((alias) => alias.trim()),
                 };
             }
         });
@@ -58,12 +58,12 @@ export default {
                     docker.container
                         .get(containerName)
                         .stop()
-                        .then(container => {
+                        .then((container) => {
                             return Container.deleteWhereContainerId(container.id).then(() => {
                                 return container.delete({ force: true });
                             });
                         })
-                        .catch(function(err) {
+                        .catch(function (err) {
                             if (err.statusCode === 404) {
                                 logger.info('Container ' + containerName + ' not found.');
                             } else {
@@ -144,24 +144,24 @@ export default {
                                         [labelNamespace + '.public-dns-hostname']: hostName,
                                     },
                                 })
-                                .then(container => container.start())
-                                .then(container => {
+                                .then((container) => container.start())
+                                .then((container) => {
                                     let c = new Container(container.id, repoName);
                                     c.save();
                                     container
                                         .status()
-                                        .then(status => {
+                                        .then((status) => {
                                             resolve({
                                                 status: status,
                                                 containerName: containerName,
                                             });
                                         })
-                                        .catch(error => reject(error));
+                                        .catch((error) => reject(error));
                                 })
                                 /*.then(container => container.stop())
                         .then(container => container.restart())
                         .then(container => container.delete({ force: true }))*/
-                                .catch(error => reject(error));
+                                .catch((error) => reject(error));
                         });
                 } catch (error) {
                     reject(error);

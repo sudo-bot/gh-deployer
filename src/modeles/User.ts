@@ -64,8 +64,8 @@ export default class User {
             .getConnection()
             .select('*')
             .from('users')
-            .then(users => {
-                return users.map(user => {
+            .then((users) => {
+                return users.map((user) => {
                     var newUser = new User(user.first_name, user.last_name, user.email, user.username, user.password);
                     newUser.setId(user.id);
                     newUser.setPassword(user.password);
@@ -81,13 +81,10 @@ export default class User {
             .select('username')
             .from('users')
             .where('status', AccountStatus.confirmed)
-            .then(users => users.map(user => user.username));
+            .then((users) => users.map((user) => user.username));
     }
     public async delete() {
-        await knex
-            .getConnection()('users')
-            .where('id', this.id)
-            .delete();
+        await knex.getConnection()('users').where('id', this.id).delete();
     }
     public getEmail(): string {
         return this.email;

@@ -36,8 +36,8 @@ export default class Container {
             .getConnection()
             .select('*')
             .from('containers')
-            .then(containers => {
-                return containers.map(message => {
+            .then((containers) => {
+                return containers.map((message) => {
                     var newContainer = new Container(message.container_id, message.project_slug);
                     newContainer.setId(message.id);
                     return newContainer;
@@ -46,17 +46,11 @@ export default class Container {
     }
 
     public async delete() {
-        await knex
-            .getConnection()('containers')
-            .where('id', this.id)
-            .delete();
+        await knex.getConnection()('containers').where('id', this.id).delete();
     }
 
     public static async deleteWhereContainerId(containerId: string) {
-        await knex
-            .getConnection()('containers')
-            .where('container_id', containerId)
-            .delete();
+        await knex.getConnection()('containers').where('container_id', containerId).delete();
     }
 
     public getContainerId(): string {

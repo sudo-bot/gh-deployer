@@ -46,8 +46,8 @@ export default class Domain {
             .getConnection()
             .select('*')
             .from('domains')
-            .then(domains => {
-                return domains.map(message => {
+            .then((domains) => {
+                return domains.map((message) => {
                     var newDomain = new Domain(
                         message.full_domain_name,
                         message.short_domain_name,
@@ -61,17 +61,11 @@ export default class Domain {
     }
 
     public static async deleteWhereFullDomainName(fullDomainName: string) {
-        await knex
-            .getConnection()('domains')
-            .where('full_domain_name', fullDomainName)
-            .delete();
+        await knex.getConnection()('domains').where('full_domain_name', fullDomainName).delete();
     }
 
     public async delete() {
-        await knex
-            .getConnection()('domains')
-            .where('id', this.id)
-            .delete();
+        await knex.getConnection()('domains').where('id', this.id).delete();
     }
 
     public getFullDomainName(): string {

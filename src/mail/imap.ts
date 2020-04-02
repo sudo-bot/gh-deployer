@@ -47,11 +47,11 @@ export default class {
             });
             mailListener.on('mail', (stream: Source) => {
                 data.parseEmail(stream)
-                    .then(emailInfos => {
+                    .then((emailInfos) => {
                         logger.info('emailParsed', emailInfos);
                         cbData(emailInfos);
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         logger.error(err);
                     });
             });

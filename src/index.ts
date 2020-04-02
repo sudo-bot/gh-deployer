@@ -37,14 +37,14 @@ const processCommand = (commandData: commandData, emailInfos: emailData) => {
 };
 
 User.getConfirmedUsernames()
-    .then(allowedUsernames => {
+    .then((allowedUsernames) => {
         logger.info('Allowed usernames: ', allowedUsernames);
         logger.debug('Training...');
         commands
             .train()
             .then(() => {
                 logger.debug('End of training');
-                new mail(emailInfos => {
+                new mail((emailInfos) => {
                     logger.debug('New email', emailInfos);
                     if (emailInfos.requestedByUser === process.env.ROBOT_USER) {
                         logger.info('From-me:', emailInfos.message);
@@ -61,7 +61,7 @@ User.getConfirmedUsernames()
                         }
                         commands
                             .getCommand(emailInfos.message)
-                            .then(commandData => processCommand(commandData, emailInfos))
+                            .then((commandData) => processCommand(commandData, emailInfos))
                             .catch((error: Error) => logger.error(error));
                     } else {
                         logger.info('Not allowed:', emailInfos.requestedByUser);
