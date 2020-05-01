@@ -67,7 +67,7 @@
     "license": "MPL-2.0",
     "dependencies": {
         "@octokit/rest": "^17.1.4",
-        "@sentry/node": "^5.15.4",
+        "@sentry/node": "^5.15.5",
         "@types/imap": "^0.8.30",
         "@types/mailparser": "^2.7.2",
         "cloudflare": "^2.7.0",
