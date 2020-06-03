@@ -65,7 +65,8 @@ export default class Domain {
     }
 
     public async delete() {
-        await knex.getConnection()('domains').where('id', this.id).delete();
+        const id: number = this.id || -1;
+        await knex.getConnection()('domains').where('id', id).delete();
     }
 
     public getFullDomainName(): string {

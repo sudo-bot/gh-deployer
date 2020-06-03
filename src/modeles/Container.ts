@@ -46,7 +46,8 @@ export default class Container {
     }
 
     public async delete() {
-        await knex.getConnection()('containers').where('id', this.id).delete();
+        const id: number = this.id || -1;
+        await knex.getConnection()('containers').where('id', id).delete();
     }
 
     public static async deleteWhereContainerId(containerId: string) {

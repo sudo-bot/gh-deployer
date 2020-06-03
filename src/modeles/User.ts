@@ -84,7 +84,8 @@ export default class User {
             .then((users) => users.map((user) => user.username));
     }
     public async delete() {
-        await knex.getConnection()('users').where('id', this.id).delete();
+        const id: number = this.id || -1;
+        await knex.getConnection()('users').where('id', id).delete();
     }
     public getEmail(): string {
         return this.email;

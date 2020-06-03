@@ -99,7 +99,8 @@ export default class Message {
     }
 
     public async delete() {
-        await knex.getConnection()('users').where('id', this.id).delete();
+        const id: number = this.id || -1;
+        await knex.getConnection()('users').where('id', id).delete();
     }
 
     public getPlatform(): MessagePlatform {
