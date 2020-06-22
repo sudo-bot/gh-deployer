@@ -14,7 +14,7 @@ export default function () {
         const testEmail = `
         @user2 Seems like the command has an issue, let me try
 
-        @sudo-bot deploy PR
+        @sudo-robot deploy PR
 
         --
         You are receiving this because you were mentioned.
@@ -35,7 +35,7 @@ export default function () {
         });
         test('test parse message from email text', function (done) {
             expect(data.parseMessage(testEmail)).to.equal(
-                '@user2 Seems like the command has an issue, let me try\n\n        @sudo-bot deploy PR'
+                '@user2 Seems like the command has an issue, let me try\n\n        @sudo-robot deploy PR'
             );
             done();
         });
@@ -67,7 +67,7 @@ export default function () {
                     expect(data).to.deep.equal({
                         commentId: 489170904,
                         message:
-                            '@user2 Seems like the command has an issue, let me try\n\n        @sudo-bot deploy PR',
+                            '@user2 Seems like the command has an issue, let me try\n\n        @sudo-robot deploy PR',
                         prId: 14970,
                         repoName: 'phpmyadmin/phpmyadmin',
                         requestedByUser: 'test1',
@@ -145,16 +145,16 @@ export default function () {
             done();
         });
         test('test get data from message dataset-1', function (done) {
-            expect(data.getDataFromMessage('@williamdes in #30: Hey hello @sudo-bot !')).to.deep.equal({
-                message: 'Hey hello @sudo-bot !',
+            expect(data.getDataFromMessage('@williamdes in #30: Hey hello @sudo-robot !')).to.deep.equal({
+                message: 'Hey hello @sudo-robot !',
                 user: 'williamdes',
             });
             done();
         });
         test('test get data from message dataset-2', function (done) {
-            expect(data.getDataFromMessage('@sudo-bot in #25566: :)')).to.deep.equal({
+            expect(data.getDataFromMessage('@sudo-robot in #25566: :)')).to.deep.equal({
                 message: ':)',
-                user: 'sudo-bot',
+                user: 'sudo-robot',
             });
             done();
         });
@@ -195,27 +195,27 @@ export default function () {
             done();
         });
         test('test get data from message dataset-9 (multiline)', function (done) {
-            expect(data.getDataFromMessage('@sudo-bot in #132654987: Hey\nHello!\nBye.')).to.deep.equal({
+            expect(data.getDataFromMessage('@sudo-robot in #132654987: Hey\nHello!\nBye.')).to.deep.equal({
                 message: 'Hey\nHello!\nBye.',
-                user: 'sudo-bot',
+                user: 'sudo-robot',
             });
             done();
         });
         test('test get data from message dataset-10 (multiline+meta)', function (done) {
             expect(
                 data.getDataFromMessage(
-                    '@sudo-bot in #132654987: <!--\n sudobot:{"commentId":"467644871","ref":"stable-unstable","sha":"c4309612dd34419318d3ba23e74f363512613ca4"}\n -->\nDeploying: `stable-unstable` commit: `c4309612dd34419318d3ba23e74f363512613ca4`\n\n---\n_This message will be updated with the progress of the deploy_\n'
+                    '@sudo-robot in #132654987: <!--\n sudobot:{"commentId":"467644871","ref":"stable-unstable","sha":"c4309612dd34419318d3ba23e74f363512613ca4"}\n -->\nDeploying: `stable-unstable` commit: `c4309612dd34419318d3ba23e74f363512613ca4`\n\n---\n_This message will be updated with the progress of the deploy_\n'
                 )
             ).to.deep.equal({
                 message:
                     '<!--\n sudobot:{"commentId":"467644871","ref":"stable-unstable","sha":"c4309612dd34419318d3ba23e74f363512613ca4"}\n -->\nDeploying: `stable-unstable` commit: `c4309612dd34419318d3ba23e74f363512613ca4`\n\n---\n_This message will be updated with the progress of the deploy_\n',
-                user: 'sudo-bot',
+                user: 'sudo-robot',
             });
             done();
         });
         test('test get data from message dataset-11', function (done) {
-            expect(data.getDataFromMessage('@ano-nymous in #25566: @sudo-bot Deploy this PR')).to.deep.equal({
-                message: '@sudo-bot Deploy this PR',
+            expect(data.getDataFromMessage('@ano-nymous in #25566: @sudo-robot Deploy this PR')).to.deep.equal({
+                message: '@sudo-robot Deploy this PR',
                 user: 'ano-nymous',
             });
             done();

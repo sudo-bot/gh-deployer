@@ -236,7 +236,7 @@ export default async function () {
         });
         test('test deploy command', function (done) {
             let text =
-                '@sudo-bot Deploy PR\n\n-- \nYou are receiving this because you were mentioned.\nReply to this email directly or view it on GitHub:\nhttps://github.com/phpmyadmin/phpmyadmin/pull/15493#issuecomment-552420382';
+                '@bot Deploy PR\n\n-- \nYou are receiving this because you were mentioned.\nReply to this email directly or view it on GitHub:\nhttps://github.com/phpmyadmin/phpmyadmin/pull/15493#issuecomment-552420382';
             commands
                 .getCommand(text)
                 .then((result) => {
