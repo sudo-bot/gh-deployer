@@ -45,17 +45,19 @@ export enum COMMANDS {
     DO_NOTHING = 'do_nothing',
 }
 
+const robotUsername: string = process.env.ROBOT_USER || '';
+
 const DEPLOY_COMMANDS: string[] = [
     '/deploy PR',
     '/deploy pull request',
     '/deploy pull-request',
     'Deploy my pull request please',
     'Deploy',
-    '@sudo-bot deploy',
-    '@sudo-bot /deploy',
-    '@sudo-bot deploy',
-    '@user please test the PR deployed by @sudo-bot',
-    '@sudo-bot deploy PR\n@ghost I added you to the list of allowed deploys usernames',
+    '@' + robotUsername + ' deploy',
+    '@' + robotUsername + ' /deploy',
+    '@' + robotUsername + ' deploy',
+    '@user please test the PR deployed by @' + robotUsername + '',
+    '@' + robotUsername + ' deploy PR\n@ghost I added you to the list of allowed deploys usernames',
     'Deploy this PR',
     'send me my creds',
 ];
@@ -87,7 +89,7 @@ const DO_NOTHING_COMMANDS: string[] = [
     'Deployed on the server',
     'I love you',
     '@ghost I added you to the list of allowed deploys usernames',
-    '@user123654 Yes, see: sudo-bot/gh-deployer#1',
+    '@user123654 Yes, see: ' + robotUsername + '/gh-deployer#1',
     comments.getPendingComment(123654987, 'head/refs/pr-123456', '40bd001563085fc35165329ea1ff5c5ecbdbbeef'),
     comments.getDeployedComment(
         123654987,
@@ -96,7 +98,7 @@ const DO_NOTHING_COMMANDS: string[] = [
         'test-pr-123654',
         'example.com'
     ),
-    '@sudo-bot :)',
+    '@' + robotUsername + ' :)',
 ];
 
 const DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS: string[] = [
