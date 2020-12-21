@@ -33,7 +33,7 @@ export default async function () {
                 );
             });
             forEachPromise(DEPLOY_AND_MERGE_COMMANDS_EXAMPLES, (text: string) => {
-                return new Promise((resolve) => {
+                return new Promise<void>((resolve) => {
                     commands
                         .getCommand(text)
                         .then((result) => {
@@ -88,7 +88,7 @@ export default async function () {
                 DEPLOY_WITH_CONFIG_COMMANDS_EXAMPLES.push(command.replace('%configBlock%', configBlock1));
             });
             forEachPromise(DEPLOY_WITH_CONFIG_COMMANDS_EXAMPLES, (text: string) => {
-                return new Promise((resolve) => {
+                return new Promise<void>((resolve) => {
                     commands
                         .getCommand(text)
                         .then((result) => {
@@ -156,7 +156,7 @@ export default async function () {
                 );
             });
             forEachPromise(DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS_EXAMPLES, (text: string) => {
-                return new Promise((resolve) => {
+                return new Promise<void>((resolve) => {
                     commands
                         .getCommand(text)
                         .then((result) => {
@@ -179,7 +179,7 @@ export default async function () {
         });
         test('test DEPLOY_COMMANDS commands', function (done) {
             forEachPromise(commands.DEPLOY_COMMANDS, (text: string) => {
-                return new Promise((resolve) => {
+                return new Promise<void>((resolve) => {
                     commands
                         .getCommand(text)
                         .then((result) => {
@@ -198,7 +198,7 @@ export default async function () {
         });
         test('test DO_NOTHING_COMMANDS commands', function (done) {
             forEachPromise(commands.DO_NOTHING_COMMANDS, (text: string) => {
-                return new Promise((resolve) => {
+                return new Promise<void>((resolve) => {
                     commands
                         .getCommand(text)
                         .then((result) => {
@@ -217,7 +217,7 @@ export default async function () {
         });
         test('test CREDS_COMMANDS commands', function (done) {
             forEachPromise(commands.CREDS_COMMANDS, (text: string) => {
-                return new Promise((resolve) => {
+                return new Promise<void>((resolve) => {
                     commands
                         .getCommand(text)
                         .then((result) => {
