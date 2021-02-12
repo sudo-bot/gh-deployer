@@ -34,6 +34,9 @@
     "engines": {
         "node": ">=10"
     },
+    "publishConfig": {
+        "registry":"https://npm.pkg.github.com"
+    },
     "scripts": {
         "build": "tsc",
         "changelog": "changelog-generator-twig --convention conventional+legacy --owner sudo --repo gh-deployer --repoDir ./ --baseCommit 5f5552755301e92a762698db33127c44e924fac6",
