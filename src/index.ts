@@ -15,6 +15,7 @@ logger.debug('Connect to database');
 Knex.getConnection();
 
 const processCommand = (commandData: commandData, emailInfos: emailData) => {
+    logger.debug('Processing command:', commandData.command);
     switch (commandData.command) {
         case COMMANDS.DEPLOY_PR:
         case COMMANDS.DEPLOY_AND_MERGE:
@@ -28,6 +29,7 @@ const processCommand = (commandData: commandData, emailInfos: emailData) => {
             deploy.deploy(emailInfos, data.protectConfig(configData.trim()));
             break;
         case COMMANDS.DO_NOTHING:
+            github.addReaction(emailInfos.commentId || 0, emailInfos.repoName, reactions.EYES);
             // No nothing
             break;
         default:
