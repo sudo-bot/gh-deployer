@@ -7,9 +7,8 @@
 /.github
 /.dependabot
 /.jshintignore
-/dist
+/src
 /*.log
 /*.nlp
-/migrations/README.md
-/CHANGELOG.md
+/migrations
 /tsconfig.json
