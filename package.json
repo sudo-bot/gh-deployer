@@ -1,6 +1,6 @@
 {
     "name": "@sudo-bot/gh-deployer",
-    "version": "2.2.1",
+    "version": "2.2.2",
     "description": "A GitHub deployer robot",
     "main": "index.js",
     "private": false,
@@ -115,7 +115,6 @@
         "bracketSpacing": true,
         "printWidth": 120
     },
-    "bin": {},
     "_moduleAliases": {
         "@src": "src",
         "@root": "./",
