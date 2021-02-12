@@ -1,3 +1,9 @@
 #!/usr/bin/env node
-require('module-alias/register');
-require(__dirname + '/../dist/index');
+const moduleAlias = require('module-alias');
+moduleAlias.addAliases({
+    '@src': __dirname + '/../dist',
+});
+
+moduleAlias();
+
+require('@sudo-bot/gh-deployer');
