@@ -1,11 +1,12 @@
 'use strict';
 
 import { configure, getLogger } from 'log4js';
+import * as sentryAppender from '@src/sentryAppender';
 
 configure({
     appenders: {
         sentry: {
-            type: '@src/sentryAppender',
+            type: sentryAppender,
             level: 'warn',
         },
         out: { type: 'stdout' },
