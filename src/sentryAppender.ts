@@ -1,7 +1,7 @@
 'use strict';
 
 import { init, withScope, captureEvent, Severity } from '@sentry/node';
-import { LoggingEvent } from 'log4js';
+import { LoggingEvent, AppenderModule } from 'log4js';
 import * as packageJson from '@root/package.json';
 
 init({
@@ -58,10 +58,8 @@ function configure(config: { level: string }): (logEvent: LoggingEvent) => void 
     return sentryAppender(config.level);
 }
 
-exports.appender = sentryAppender;
-exports.configure = configure;
-
-export default {
-    appender: sentryAppender,
+const module: AppenderModule = {
     configure: configure,
 };
+
+export default module;
