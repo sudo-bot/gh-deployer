@@ -205,14 +205,18 @@ export default {
     DEPLOY_AND_MERGE_COMMANDS: DEPLOY_AND_MERGE_COMMANDS,
     DEPLOY_WITH_CONFIG_COMMANDS: DEPLOY_WITH_CONFIG_COMMANDS,
     getCommand: (text: string) => {
+        logger.debug('Start getCommand:', text);
         text = text.replace('\n\n-- \nYou are receiving this because you were mentioned.', '');
         text = text.replace('\nReply to this email directly or view it on GitHub:\n', '');
         text = text.replace('https://github.com/', '');
         text = text.replace('issuecomment', '');
+        logger.debug('Start getCommand:', text);
         return new Promise((resolve: (data: commandData) => void, reject) => {
+            logger.debug('Manager process text:', text);
             manager
                 .process('en', text, {})
                 .then((responseManager: responseManager) => {
+                    logger.debug('Manager process ended', responseManager);
                     resolve({
                         command: responseManager.intent === 'None' ? COMMANDS.DO_NOTHING : responseManager.intent,
                         options: responseManager.entities.reduce(
