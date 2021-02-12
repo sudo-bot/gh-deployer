@@ -7,4 +7,7 @@ moduleAlias.addAliases({
 });
 
 moduleAlias();
+
+require('dotenv').config({ path: process.env.ENV_FILE || process.cwd() + '/.env' });
+
 require('@sudo-bot/gh-deployer');
