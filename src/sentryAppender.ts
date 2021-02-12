@@ -58,8 +58,8 @@ function configure(config: { level: string }): (logEvent: LoggingEvent) => void 
     return sentryAppender(config.level);
 }
 
-const module: AppenderModule = {
+const moduleToExport: AppenderModule = {
     configure: configure,
 };
 
-export default module;
+export default moduleToExport;
