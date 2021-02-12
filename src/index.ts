@@ -9,6 +9,7 @@ import github, { reactions } from './github';
 import Knex from '@src/knex';
 import User from './modeles/User';
 import Message, { MessagePlatform } from './modeles/Message';
+import * as express from 'express';
 
 logger.debug('Connect to database');
 Knex.getConnection();
@@ -72,6 +73,7 @@ User.getConfirmedUsernames()
     })
     .catch((error: Error) => logger.error(error));
 
+const app = express();
 const port = process.env.HTTP_PORT || 3000;
 
 app.get('/', (req, res) => {
