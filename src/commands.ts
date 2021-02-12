@@ -193,6 +193,19 @@ interface responseManager {
     ];
 }
 
+const cleanCommand = (text: string) => {
+    const posSeparator = text.lastIndexOf('\n-- \n');
+    if (typeof posSeparator === 'number' && posSeparator > 0) {
+        return text.substring(0, posSeparator);
+    }
+    // Alternative, replace known content
+    return text
+        .replace('\n-- \nYou are receiving this because you were mentioned.', '')
+        .replace('\nReply to this email directly or view it on GitHub:\n', '')
+        .replace('https://github.com/', 'ref:')
+        .replace('issuecomment', '');
+};
+
 export default {
     train: () => {
         return manager.train();
@@ -204,12 +217,10 @@ export default {
     DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS: DEPLOY_AND_MERGE_WITH_CONFIG_COMMANDS,
     DEPLOY_AND_MERGE_COMMANDS: DEPLOY_AND_MERGE_COMMANDS,
     DEPLOY_WITH_CONFIG_COMMANDS: DEPLOY_WITH_CONFIG_COMMANDS,
+    cleanCommand: cleanCommand,
     getCommand: (text: string) => {
         logger.debug('Start getCommand:', text);
-        text = text.replace('\n\n-- \nYou are receiving this because you were mentioned.', '');
-        text = text.replace('\nReply to this email directly or view it on GitHub:\n', '');
-        text = text.replace('https://github.com/', '');
-        text = text.replace('issuecomment', '');
+        text = cleanCommand(text);
         logger.debug('Start getCommand:', text);
         return new Promise((resolve: (data: commandData) => void, reject) => {
             logger.debug('Manager process text:', text);

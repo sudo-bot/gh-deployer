@@ -245,6 +245,18 @@ export default async function () {
                 })
                 .catch((err) => done(err));
         });
+        test('test cleanCommand', function () {
+            let text =
+                '@bot Deploy PR\n\n-- \nYou are receiving this because you were mentioned.\nReply to this email directly or view it on GitHub:\nhttps://github.com/phpmyadmin/phpmyadmin/pull/15493#issuecomment-552420382';
+            expect(commands.cleanCommand(text)).to.equal('@bot Deploy PR\n');
+        });
+        test('test cleanCommand no sep', function () {
+            let text =
+                '@bot Deploy PR\n\nYou are receiving this because you were mentioned.\nReply to this email directly or view it on GitHub:\nhttps://github.com/phpmyadmin/phpmyadmin/pull/15493#issuecomment-552420382';
+            expect(commands.cleanCommand(text)).to.equal(
+                '@bot Deploy PR\n\nYou are receiving this because you were mentioned.ref:phpmyadmin/phpmyadmin/pull/15493#-552420382'
+            );
+        });
         /*test('test deploy and merge a into b', function(done) {
             let command = commands.getCommand('Deploy and merge QA into master');
             command
