@@ -1,6 +1,6 @@
 {
     "name": "@sudo-bot/gh-deployer",
-    "version": "2.3.1",
+    "version": "2.3.2",
     "description": "A GitHub deployer robot",
     "main": "dist/index.js",
     "private": false,
