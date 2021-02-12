@@ -12,3 +12,4 @@
 /*.nlp
 /migrations
 /tsconfig.json
+/*.ts
