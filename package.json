@@ -1,5 +1,5 @@
 {
-    "name": "gh-deployer",
+    "name": "@sudo-bot/gh-deployer",
     "version": "2.2.0",
     "description": "A GitHub deployer robot",
     "main": "index.js",
