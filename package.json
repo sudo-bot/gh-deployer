@@ -2,7 +2,7 @@
     "name": "@sudo-bot/gh-deployer",
     "version": "2.2.2",
     "description": "A GitHub deployer robot",
-    "main": "index.js",
+    "main": "dist/index.js",
     "private": false,
     "nyc": {
         "extension": [
@@ -48,7 +48,7 @@
         "start": "ts-node index.ts",
         "test": "NODE_ENV=test nyc mocha --require ts-node/register --require source-map-support/register --ui tdd test/index.ts",
         "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov",
-        "prettier": "prettier --ignore-path ./.prettierignore --write \"*/**/*.ts\" \"*.ts\"",
+        "prettier": "prettier --ignore-path ./.prettierignore --write \"*/**/*.ts\" \"*.ts\" \"bin/*.js\" ",
         "migrate:dev": "knex migrate:latest --env development",
         "migrate:rollback:dev": "knex migrate:rollback --env development --all",
         "migrate:test": "knex migrate:latest --env test",
