@@ -10,3 +10,6 @@
 /dist
 /*.log
 /*.nlp
+/migrations/README.md
+/CHANGELOG.md
+/tsconfig.json

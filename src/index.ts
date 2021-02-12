@@ -71,3 +71,17 @@ User.getConfirmedUsernames()
             .catch((error: Error) => logger.error(error));
     })
     .catch((error: Error) => logger.error(error));
+
+const port = process.env.HTTP_PORT || 3000;
+
+app.get('/', (req, res) => {
+    res.send('It works!');
+});
+
+app.get('/ping', (req, res) => {
+    res.send('pong');
+});
+
+app.listen(port, () => {
+    console.log(`Listening at http://localhost:${port}`);
+});
