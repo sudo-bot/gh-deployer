@@ -126,7 +126,7 @@ export default {
                                     Env: [
                                         'REF_DIRECTORY=/refs',
                                         'GIT_URL=' + cloneUrl,
-                                        'GIT_BRANCH=origin/' + ref,
+                                        'GIT_BRANCH=' + ref,
                                         'GIT_SHA=' + sha,
                                         'RANDOM_STRING=' + randomString,
                                         'PMA_CONFIG=' + compiledPhpMyAdminConfig,

@@ -121,7 +121,7 @@ const findMessageAndProceed = (
             .catch((error: RequestError) => {
                 if (error.status && error.status === 404) {
                     logger.debug('Deleting the comment from the database.');
-                    Message.delete(lastMessage.getId()).then(() => {
+                    lastMessage.delete().then(() => {
                         logger.debug('Searching for a new comment.');
                         findMessageAndProceed(prId, emailInfos, prInfos, configBlock);
                     });
