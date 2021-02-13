@@ -99,7 +99,7 @@ const findMessageAndProceed = (
                     afterComment(configBlock, emailInfos, deployComment.data.id, {
                         sha: prInfos.sha,
                         ref: prInfos.ref,
-                        cloneUrl: prInfos.repoSlug,
+                        cloneUrl: prInfos.cloneUrl,
                         repoSlug: prInfos.repoSlug,
                     })
                 )
@@ -114,7 +114,7 @@ const findMessageAndProceed = (
                 afterComment(configBlock, emailInfos, commentData.data.id, {
                     sha: prInfos.sha,
                     ref: prInfos.ref,
-                    cloneUrl: prInfos.repoSlug,
+                    cloneUrl: prInfos.cloneUrl,
                     repoSlug: prInfos.repoSlug,
                 });
             })
