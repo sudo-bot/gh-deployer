@@ -72,29 +72,45 @@ export default class Message {
             })
             .into('messages');
     }
+
+    public static buildMessage(message: any): Message {
+        var newMessage = new Message(
+            message.username,
+            message.comment_id,
+            message.pr_id,
+            message.platform,
+            message.is_sent,
+            message.ref_comment_id
+        );
+        newMessage.setId(message.id);
+        if (message.is_sent) {
+            newMessage.setSent();
+        } else {
+            newMessage.setReceived();
+        }
+        return newMessage;
+    }
+
+    public static forPr(prId: number, projectSlug: string): Promise<Message[]> {
+        return knex
+            .getConnection()
+            .select('*')
+            .from('messages')
+            .orderBy('id', 'desc')
+            .where('pr_id', prId)
+            .where('is_sent', 1)
+            .then((messages) => {
+                return messages.map((message) => Message.buildMessage(message));
+            });
+    }
+
     public static all(): Promise<Message[]> {
         return knex
             .getConnection()
             .select('*')
             .from('messages')
             .then((messages) => {
-                return messages.map((message) => {
-                    var newMessage = new Message(
-                        message.username,
-                        message.comment_id,
-                        message.pr_id,
-                        message.platform,
-                        message.is_sent,
-                        message.ref_comment_id
-                    );
-                    newMessage.setId(message.id);
-                    if (message.is_sent) {
-                        newMessage.setSent();
-                    } else {
-                        newMessage.setReceived();
-                    }
-                    return newMessage;
-                });
+                return messages.map((message) => Message.buildMessage(message));
             });
     }
 

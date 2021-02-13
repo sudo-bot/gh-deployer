@@ -18,6 +18,14 @@ export enum reactions {
 }
 
 export default {
+    getComment: (commentId: number, repoName: string) => {
+        const repoParts = repoName.split('/');
+        return GHclient.issues.getComment({
+            owner: repoParts[0],
+            repo: repoParts[1],
+            comment_id: commentId,
+        });
+    },
     createComment: (prId: number, repoName: string, commentBody: string) => {
         const repoParts = repoName.split('/');
         return GHclient.issues.createComment({

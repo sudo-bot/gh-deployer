@@ -7,6 +7,73 @@ import dns from '@src/dns';
 import comments from '@src/comments';
 import data, { emailData } from '@src/data';
 import Message, { MessagePlatform } from './modeles/Message';
+import messages from '@root/test/messages';
+
+const afterComment = (
+    configBlock: string,
+    emailInfos: emailData,
+    deployCommentId: number,
+    prInfos: {
+        repoSlug: string;
+        cloneUrl: string;
+        ref: string;
+        sha: string;
+    }
+) => {
+    if (emailInfos.commentId !== null && emailInfos.prId !== null) {
+        const msg = new Message(
+            emailInfos.requestedByUser,
+            deployCommentId,
+            emailInfos.prId,
+            MessagePlatform.github,
+            true,
+            emailInfos.commentId
+        );
+        msg.save();
+    }
+    docker
+        .createDocker(
+            emailInfos.repoName,
+            emailInfos.prId || 0,
+            prInfos.cloneUrl,
+            prInfos.ref,
+            prInfos.sha,
+            configBlock,
+            data.randomString(80)
+        )
+        .then((docker) => {
+            dns.publishDnsRecord(
+                emailInfos.repoName,
+                docker.containerName,
+                emailInfos.prId || 0,
+                prInfos.ref,
+                prInfos.sha
+            )
+                .then((domain) => {
+                    logger.info('Published-domain:', domain);
+                    github.addReaction(emailInfos.commentId || 0, emailInfos.repoName, reactions.ROCKET);
+                    github
+                        .updateComment(
+                            emailInfos.prId || 0,
+                            prInfos.repoSlug,
+                            deployCommentId,
+                            comments.getDeployedComment(
+                                emailInfos.commentId || 0,
+                                prInfos.ref,
+                                prInfos.sha,
+                                docker.containerName,
+                                domain
+                            )
+                        )
+                        .then(() => {
+                            logger.info('Updated comment:#' + deployCommentId);
+                        })
+                        .catch((error: Error) => logger.error(error));
+                })
+                .catch((error: Error) => logger.error(error, emailInfos));
+        })
+        .catch((error: Error) => logger.error(error, prInfos, emailInfos));
+};
 
 export default {
     deploy: (emailInfos: emailData, configBlock: string) => {
@@ -14,79 +81,43 @@ export default {
             logger.error('Missing data !', emailInfos);
             return;
         }
+        const prId = emailInfos.prId || 0;
         github
             .getPrInfos(emailInfos.prId || 0, emailInfos.repoName)
             .then((prInfos) => {
-                github
-                    .createComment(
-                        emailInfos.prId || 0,
-                        prInfos.data.base.repo.full_name,
-                        comments.getPendingComment(
-                            emailInfos.commentId || 0,
-                            prInfos.data.head.ref,
-                            prInfos.data.head.sha
-                        )
-                    )
-                    .then((deployComment) => {
-                        if (emailInfos.commentId !== null && emailInfos.prId !== null) {
-                            const msg = new Message(
-                                emailInfos.requestedByUser,
-                                deployComment.data.id,
-                                emailInfos.prId,
-                                MessagePlatform.github,
-                                true,
-                                emailInfos.commentId
-                            );
-                            msg.save();
-                        }
-                        docker
-                            .createDocker(
-                                emailInfos.repoName,
+                Message.forPr(prId, emailInfos.repoName).then((messages) => {
+                    if (messages.length === 0) {
+                        logger.debug('No comment found, posting one.');
+                        github
+                            .createComment(
                                 emailInfos.prId || 0,
-                                prInfos.data.head.repo.clone_url,
-                                prInfos.data.head.ref,
-                                prInfos.data.head.sha,
-                                configBlock,
-                                data.randomString(80)
-                            )
-                            .then((docker) => {
-                                dns.publishDnsRecord(
-                                    emailInfos.repoName,
-                                    docker.containerName,
-                                    emailInfos.prId || 0,
+                                prInfos.data.base.repo.full_name,
+                                comments.getPendingComment(
+                                    emailInfos.commentId || 0,
                                     prInfos.data.head.ref,
                                     prInfos.data.head.sha
                                 )
-                                    .then((domain) => {
-                                        logger.info('Published-domain:', domain);
-                                        github.addReaction(
-                                            emailInfos.commentId || 0,
-                                            emailInfos.repoName,
-                                            reactions.ROCKET
-                                        );
-                                        github
-                                            .updateComment(
-                                                emailInfos.prId || 0,
-                                                prInfos.data.base.repo.full_name,
-                                                deployComment.data.id,
-                                                comments.getDeployedComment(
-                                                    emailInfos.commentId || 0,
-                                                    prInfos.data.head.ref,
-                                                    prInfos.data.head.sha,
-                                                    docker.containerName,
-                                                    domain
-                                                )
-                                            )
-                                            .then(() => {
-                                                logger.info('Updated comment:#' + deployComment.data.id);
-                                            })
-                                            .catch((error: Error) => logger.error(error));
-                                    })
-                                    .catch((error: Error) => logger.error(error, emailInfos));
-                            })
+                            )
+                            .then((deployComment) =>
+                                afterComment(configBlock, emailInfos, deployComment.data.id, {
+                                    sha: prInfos.data.head.sha,
+                                    ref: prInfos.data.head.ref,
+                                    cloneUrl: prInfos.data.head.repo.clone_url,
+                                    repoSlug: prInfos.data.base.repo.full_name,
+                                })
+                            )
                             .catch((error: Error) => logger.error(error, prInfos, emailInfos));
-                    })
-                    .catch((error: Error) => logger.error(error, prInfos, emailInfos));
+                        return;
+                    }
+                    logger.debug('Comment found, using it.');
+                    const lastMessage = messages[messages.length - 1];
+                    afterComment(configBlock, emailInfos, lastMessage.getCommentId(), {
+                        sha: prInfos.data.head.sha,
+                        ref: prInfos.data.head.ref,
+                        cloneUrl: prInfos.data.head.repo.clone_url,
+                        repoSlug: prInfos.data.base.repo.full_name,
+                    });
+                });
             })
             .catch((error: Error) => logger.error(error, emailInfos));
     },
