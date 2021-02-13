@@ -104,6 +104,10 @@ export default class Message {
             });
     }
 
+    public static delete(id: number): Promise<void> {
+        return knex.getConnection().from('messages').where('id', id).delete();
+    }
+
     public static all(): Promise<Message[]> {
         return knex
             .getConnection()
@@ -121,6 +125,10 @@ export default class Message {
 
     public getPlatform(): MessagePlatform {
         return this.platform;
+    }
+
+    public getId(): number {
+        return this.id as number;
     }
 
     public getCommentId(): number {

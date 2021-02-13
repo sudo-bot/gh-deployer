@@ -72,6 +72,7 @@
     },
     "license": "MPL-2.0",
     "dependencies": {
+        "@octokit/request-error": "^2.0.5",
         "@octokit/rest": "^18.1.0",
         "@sentry/node": "^6.1.0",
         "@types/imap": "^0.8.33",
