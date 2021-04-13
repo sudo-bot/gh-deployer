@@ -6,6 +6,135 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Features
+
+- [ce71948](https://github.com/sudo/gh-deployer/commit/ce7194834ba1d480347ae8a6d9fb53bb4e3acb9a) feat: update deploy message template
+
+### Others
+
+- [5c204a6](https://github.com/sudo/gh-deployer/commit/5c204a60c2963d0268685abfae97fc19bfc912fb) chore: update .npmignore
+
+## [v2.5.2]
+
+### Fixed
+
+- [8f93158](https://github.com/sudo/gh-deployer/commit/8f931583b959bbf1c7848e9d9e9a452f97e64e69) fix: delete Message and remove 'origin' from clone
+
+### Others
+
+- [3807508](https://github.com/sudo/gh-deployer/commit/3807508fa6d53b6bcb9d4313f26f0e16a848cd6e) chore: release 2.5.2
+
+## [v2.5.1]
+
+### Fixed
+
+- [57ccbc9](https://github.com/sudo/gh-deployer/commit/57ccbc927820010065f717f7e9ede98b7313fbe3) fix: cloneUrl param
+
+### Others
+
+- [6afc9e8](https://github.com/sudo/gh-deployer/commit/6afc9e834fa4297521dcdd9a049744c33fef00db) chore: release 2.5.1
+
+## [v2.5.0]
+
+### Features
+
+- [ba2d8e4](https://github.com/sudo/gh-deployer/commit/ba2d8e427f3b7d9cf378e39cf4203b268b2b624c) feat: delete comment from database and search for another one
+
+### Others
+
+- [75f0a8b](https://github.com/sudo/gh-deployer/commit/75f0a8b5e660affbc9557f8aef2df18c10de0442) chore: release 2.5.0
+
+## [v2.4.0]
+
+### Features
+
+- [a817615](https://github.com/sudo/gh-deployer/commit/a8176153484986ff512ae59a0392b13062f6b317) feat: use the last posted comment
+
+### Others
+
+- [b958ade](https://github.com/sudo/gh-deployer/commit/b958adebe7a3a4158763f27d4b9c73e1fd0a8fe8) chore: release 2.4.0
+
+## [v2.3.2]
+
+### Features
+
+- [c4414c9](https://github.com/sudo/gh-deployer/commit/c4414c9759adffbe13d3d8692c0f7f09f8d4f20e) feat: better command parsing
+
+### Others
+
+- [8d144cc](https://github.com/sudo/gh-deployer/commit/8d144cc2cfe4445741cbc41f78898c086b2328ad) chore: release 2.3.2
+
+## [v2.3.1]
+
+### Others
+
+- [9124217](https://github.com/sudo/gh-deployer/commit/91242173106fa365d20445a78984507064602bdb) chore: release 2.3.1
+
+## [v2.3.0]
+
+### Features
+
+- [5c0c85b](https://github.com/sudo/gh-deployer/commit/5c0c85b39a0fc5cd9e208b0e6de136317b46cea0) feat: support ENV_FILE ENV
+
+### Others
+
+- [60d6c04](https://github.com/sudo/gh-deployer/commit/60d6c042d0e0d4f777f563af332e39b758c4fade) chore: release 2.3.0
+
+## [v2.2.5]
+
+### Fixed
+
+- [7b9d83a](https://github.com/sudo/gh-deployer/commit/7b9d83a475958505a11b7ee10e7a328e5d971d6a) fix: module is a reserved keyword
+- [21400ce](https://github.com/sudo/gh-deployer/commit/21400ce574f366c2e27d966c2f77eca5d95322a6) fix: the sentry appender
+
+### Others
+
+- [7d25f45](https://github.com/sudo/gh-deployer/commit/7d25f45ddb2adab64f90e98054182d7a16869619) chore: release 2.2.5
+- [bdfe64a](https://github.com/sudo/gh-deployer/commit/bdfe64a4d49718c58cf877efe6e56f6755488313) ci: Add a build workflow
+
+## [v2.2.4]
+
+### Fixed
+
+- [ce54b1a](https://github.com/sudo/gh-deployer/commit/ce54b1a9c1f4929eaca0e5eee5db46b2b21b8c1b) fix: sentry appender and module loading
+
+### Others
+
+- [b8f1d4a](https://github.com/sudo/gh-deployer/commit/b8f1d4ad26ad4088c0c52093e090b94ffdc46541) chore: release 2.2.4
+
+## [v2.2.3]
+
+### Others
+
+- [40d4944](https://github.com/sudo/gh-deployer/commit/40d4944b9a6036eae75c0db70b14c160426bda99) chore: release 2.2.3
+- [55770fa](https://github.com/sudo/gh-deployer/commit/55770fa9b7f0daa4bf613452f8adb6c31bd83029) chore: fix module alias register
+
+## [v2.2.2]
+
+### Fixed
+
+- [cdebdfa](https://github.com/sudo/gh-deployer/commit/cdebdfa97e65b8ac947d8b6aed28b74add42b0d9) fix: load module alias on bin entrypoint and bin
+
+### Others
+
+- [b4107e9](https://github.com/sudo/gh-deployer/commit/b4107e96b7030bd3003aca4f03724e1c24369f1d) chore: release 2.2.2
+
+## [v2.2.1]
+
+### Fixed
+
+- [4cc7180](https://github.com/sudo/gh-deployer/commit/4cc718045f76021365e8527fe84eeed57a940753) fix: build and add a binary target
+
+### Features
+
+- [dc80e2d](https://github.com/sudo/gh-deployer/commit/dc80e2d8653516fcd7695726e795efd414bd591e) feat: publish migrations in dist package
+
+### Others
+
+- [863756e](https://github.com/sudo/gh-deployer/commit/863756ed525201c9529c1beb5d6b9e2253dda297) chore: release 2.2.1
+
+## [v2.2.0]
+
 ### Added
 
 - [00df6cc](https://github.com/sudo/gh-deployer/commit/00df6cc3943cc02f65338b388c4d8cbd65282d9c) added: Save the username that sent a message
@@ -19,6 +148,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 
+- [7b6f1c5](https://github.com/sudo/gh-deployer/commit/7b6f1c5c06100b9208d2dfa3b214b10dcfee442c) fix: use sudo-bot org name in the package
+- [7454c1e](https://github.com/sudo/gh-deployer/commit/7454c1e895d5a5be57527de1dc6d442c2bd88f20) fix: tell TS that the Id will not be undefined
+- [4f48053](https://github.com/sudo/gh-deployer/commit/4f4805337393291bd0492341ec20f8100d2177b1) fix: fixes for node-npl v4
+- [cb43eda](https://github.com/sudo/gh-deployer/commit/cb43edaaedd204f9bf3e3cb845ad18aea0715a50) fix: email parsing
+- [4947c63](https://github.com/sudo/gh-deployer/commit/4947c63742de6934f1207f2653aea913216d3146) fix: octokit constructor after upgrade
 - [bbfe91a](https://github.com/sudo/gh-deployer/commit/bbfe91aaf31c7a3fda71889a1157b91cc10206f3) fix: changelog-generator-twig command after upgrade to 1.3.x
 - [bb436e6](https://github.com/sudo/gh-deployer/commit/bb436e640bbeb913c5c1859bbc820c4e09e99acd) fix: test after types upgrade
 - [3937e83](https://github.com/sudo/gh-deployer/commit/3937e834556e00fdd62263532e7f5b3c4878722a) fix: IMAP double processing unread when restarting the server
@@ -36,6 +170,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Features
 
+- [8e3f2b7](https://github.com/sudo/gh-deployer/commit/8e3f2b7117576c3045af7628057857a27a1b43d8) feat: Rename .env.example to .env.dist and update .npmignore
+- [d5f4f2b](https://github.com/sudo/gh-deployer/commit/d5f4f2b4a31e944db6fc87c510d0d1db42689b0a) feat: add node ping route
 - [7b30d3a](https://github.com/sudo/gh-deployer/commit/7b30d3a08f939f261e48e5f7f0b966c8e70fe3d2) feat: move to yarn
 - [08f9e21](https://github.com/sudo/gh-deployer/commit/08f9e21573429955d52819c8d6809df3c16a122f) feat: simplify .gitignore file
 - [8a8f1b7](https://github.com/sudo/gh-deployer/commit/8a8f1b781decddb6546baa2e1645ace314f35305) feat: add a ignore use case
@@ -44,6 +180,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Others
 
+- [306ff06](https://github.com/sudo/gh-deployer/commit/306ff06007b2fc84263b2dad783f20e0da43fb09) chore: release 2.2.0
+- [b0a4312](https://github.com/sudo/gh-deployer/commit/b0a43125fcaa31a0035a58cf9f097d9f523b3c35) chore: upgrade dependencies
+- [c3923a3](https://github.com/sudo/gh-deployer/commit/c3923a3b4a60a5e2d1b967b2c07a19b2a9c5e06e) chore: publish to GitHub registry
+- [e425b6b](https://github.com/sudo/gh-deployer/commit/e425b6b82e0d6dd248acab8739536007e60a5771) chore: update dependencies and yarn.lock
+- [aa65a67](https://github.com/sudo/gh-deployer/commit/aa65a67f61b390e6e9952114f16ff86ec4b50ade) chore: update dependencies and yarn.lock
+- [cf32c17](https://github.com/sudo/gh-deployer/commit/cf32c179b4eeb53c5bd70b6d2cc5edb216a01092) chore: remove unused import
+- [b3846ee](https://github.com/sudo/gh-deployer/commit/b3846ee6e53dd6850166324fe99b9b991d762ee9) chore: update dependencies and yarn.lock
+- [379132a](https://github.com/sudo/gh-deployer/commit/379132a45caa4374872cfa48bdb23d41269cee9e) chore: update dependencies and yarn.lock
+- [9f8843a](https://github.com/sudo/gh-deployer/commit/9f8843a0a0f9b0ce2f815af546f6db42f9c45f64) ci: Upgrade sudo-bot/action-pull-request-merge to 1.1.1
+- [2ab1a9a](https://github.com/sudo/gh-deployer/commit/2ab1a9a7f361a42fec6b98690bafce2f50e332d7) chore: ignore .nlp files
+- [2180383](https://github.com/sudo/gh-deployer/commit/2180383e22d7a24733b73a12e433fdfe7bb995db) chore: bump node engines to >=10
+- [6273357](https://github.com/sudo/gh-deployer/commit/6273357a47101b380b16b814c6aa684ec1a61fb7) chore: update dependencies and yarn.lock
+- [40fffff](https://github.com/sudo/gh-deployer/commit/40fffffe78cf3663c67edc4a58503c15c788615a) chore: add /*.log to ignore files
 - [80130ca](https://github.com/sudo/gh-deployer/commit/80130ca0da0f415e306a1d6dc21a3c952394b8e0) chore: remove codecov dependency
 - [ff84fc3](https://github.com/sudo/gh-deployer/commit/ff84fc37870c109bd631e83b73551d4adb3ecb04) ci: move to yarn
 - [ab7569c](https://github.com/sudo/gh-deployer/commit/ab7569c640db5eeaa6367f429cf82bcab02e5f9b) chore: update dependencies and package-lock.json
@@ -226,7 +375,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [9ab3652](https://github.com/sudo/gh-deployer/commit/9ab3652a0a1f640b2856c50283ff6a991c8e6b3e) style: prettier.printWidth=120
 
 
-[Unreleased]: https://github.com/sudo/gh-deployer/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/sudo/gh-deployer/compare/v2.5.2...HEAD
+[v2.5.2]: https://github.com/sudo/gh-deployer/compare/v2.5.1...v2.5.2
+[v2.5.1]: https://github.com/sudo/gh-deployer/compare/v2.5.0...v2.5.1
+[v2.5.0]: https://github.com/sudo/gh-deployer/compare/v2.4.0...v2.5.0
+[v2.4.0]: https://github.com/sudo/gh-deployer/compare/v2.3.2...v2.4.0
+[v2.3.2]: https://github.com/sudo/gh-deployer/compare/v2.3.1...v2.3.2
+[v2.3.1]: https://github.com/sudo/gh-deployer/compare/v2.3.0...v2.3.1
+[v2.3.0]: https://github.com/sudo/gh-deployer/compare/v2.2.5...v2.3.0
+[v2.2.5]: https://github.com/sudo/gh-deployer/compare/v2.2.4...v2.2.5
+[v2.2.4]: https://github.com/sudo/gh-deployer/compare/v2.2.3...v2.2.4
+[v2.2.3]: https://github.com/sudo/gh-deployer/compare/v2.2.2...v2.2.3
+[v2.2.2]: https://github.com/sudo/gh-deployer/compare/v2.2.1...v2.2.2
+[v2.2.1]: https://github.com/sudo/gh-deployer/compare/v2.2.0...v2.2.1
+[v2.2.0]: https://github.com/sudo/gh-deployer/compare/v2.0.0...v2.2.0
 [v2.0.0]: https://github.com/sudo/gh-deployer/compare/v1.1.0...v2.0.0
 [v1.1.0]: https://github.com/sudo/gh-deployer/compare/v1.0.0...v1.1.0
 [v1.0.0]: https://github.com/sudo/gh-deployer/compare/5f5552755301e92a762698db33127c44e924fac6...v1.0.0
