@@ -37,9 +37,11 @@ export default {
             '`\n\n' +
             'url: https://' +
             domain +
-            '\nuser: public\nuser: public\n' +
+            '\nuser: public\npassword: public\n' +
+            '\nor\n' +
+            '\nuser: root\npassword: public\n' +
             '\n---\n' +
-            '_Deploy finished_\n'
+            '_Deploy in progress or finished_\n'
         );
     },
 };
