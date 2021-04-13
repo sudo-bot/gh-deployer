@@ -1,6 +1,8 @@
 /test
 .nyc_output
 .env
+.env.*
+!.env.dist
 .jshintrc
 .prettierignore
 .editorconfig
@@ -13,3 +15,7 @@
 /migrations
 /tsconfig.json
 /*.ts
+/coverage.lcov
+/data
+/*.log
+/*.nlp
