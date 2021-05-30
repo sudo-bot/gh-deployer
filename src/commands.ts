@@ -207,7 +207,7 @@ const cleanCommand = (text: string) => {
 };
 
 export default {
-    train: () => {
+    train: (): Promise<void> => {
         return manager.train();
     },
     COMMANDS: COMMANDS,

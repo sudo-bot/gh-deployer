@@ -8,7 +8,10 @@ import User from './modeles/User';
 export default class Knex {
     public static knex: KnexType = knex(config[process.env.NODE_ENV || 'development']);
     constructor() {}
-    public static stop(): void {
-        Knex.knex.destroy();
+    public static start(): void {
+        Knex.knex.initialize(config[process.env.NODE_ENV || 'development']);
+    }
+    public static stop(cbDone: () => void = () => {}): void {
+        Knex.knex.destroy(cbDone);
     }
 }
