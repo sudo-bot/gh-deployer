@@ -6,12 +6,34 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- [f66a1fd](https://github.com/sudo/gh-deployer/commit/f66a1fd95d520becc4f3278b57ef2b51a1baea55) fix: tests after upgrades and move to randomstring instead of crypto-random-string
+- [8fd7cc0](https://github.com/sudo/gh-deployer/commit/8fd7cc085dbefa263862eace9165a387506e2006) fix: code after upgrades
+
+### Features
+
+- [dcdff57](https://github.com/sudo/gh-deployer/commit/dcdff57cd6b1bf9f2ecff163b66fa39da2827060) feat: make PMA_CONFIG_FILE env optional
+
+### Others
+
+- [a749238](https://github.com/sudo/gh-deployer/commit/a7492383171d6adc04336131386b6db99a19bd8c) chore: upgrade node version to min:12 and fix CIs and tsconfig.json
+- [69eb69f](https://github.com/sudo/gh-deployer/commit/69eb69ff2afc5a8ac78730cf79061caa3421f0ce) chore: update lock file
+- [c87f750](https://github.com/sudo/gh-deployer/commit/c87f75049f76bff3ea2676391a4a51d238bd4a83) chore: upgrade dependencies
+
+## [v2.5.3]
+
 ### Features
 
 - [ce71948](https://github.com/sudo/gh-deployer/commit/ce7194834ba1d480347ae8a6d9fb53bb4e3acb9a) feat: update deploy message template
 
+### Documentation
+
+- [a7d6cf3](https://github.com/sudo/gh-deployer/commit/a7d6cf3747a7a6bdc7b2c93214bed5fe30f7bc24) docs: update CHANGELOG.md
+
 ### Others
 
+- [6392696](https://github.com/sudo/gh-deployer/commit/6392696e92d5b03438fb0a8fded193b2391950ba) chore: release 2.5.3
 - [5c204a6](https://github.com/sudo/gh-deployer/commit/5c204a60c2963d0268685abfae97fc19bfc912fb) chore: update .npmignore
 
 ## [v2.5.2]
@@ -375,7 +397,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [9ab3652](https://github.com/sudo/gh-deployer/commit/9ab3652a0a1f640b2856c50283ff6a991c8e6b3e) style: prettier.printWidth=120
 
 
-[Unreleased]: https://github.com/sudo/gh-deployer/compare/v2.5.2...HEAD
+[Unreleased]: https://github.com/sudo/gh-deployer/compare/v2.5.3...HEAD
+[v2.5.3]: https://github.com/sudo/gh-deployer/compare/v2.5.2...v2.5.3
 [v2.5.2]: https://github.com/sudo/gh-deployer/compare/v2.5.1...v2.5.2
 [v2.5.1]: https://github.com/sudo/gh-deployer/compare/v2.5.0...v2.5.1
 [v2.5.0]: https://github.com/sudo/gh-deployer/compare/v2.4.0...v2.5.0
