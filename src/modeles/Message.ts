@@ -7,13 +7,13 @@ export enum MessagePlatform {
 }
 
 export default class Message {
-    private id?: number;
-    private comment_id: number;
-    private pr_id: number;
-    private platform: MessagePlatform;
-    private ref_comment_id: number | null;
-    private is_sent: boolean;
-    private username: string | null;
+    id?: number;
+    comment_id: number;
+    pr_id: number;
+    platform: MessagePlatform;
+    ref_comment_id: number | null;
+    is_sent: boolean;
+    username: string | null;
 
     constructor(
         username: string | null,
@@ -61,7 +61,7 @@ export default class Message {
 
     public async save() {
         this.id = await knex
-            .getConnection()
+            .knex<Message>('messages')
             .insert({
                 username: this.username,
                 comment_id: this.comment_id,
@@ -93,30 +93,28 @@ export default class Message {
 
     public static forPr(prId: number, projectSlug: string): Promise<Message[]> {
         return knex
-            .getConnection()
+            .knex<Message>('messages')
             .select('*')
-            .from('messages')
             .orderBy('id', 'desc')
             .where('pr_id', prId)
             .where('is_sent', 1)
-            .then((messages) => {
+            .then((messages: Message[]) => {
                 return messages.map((message) => Message.buildMessage(message));
             });
     }
 
     public static all(): Promise<Message[]> {
         return knex
-            .getConnection()
+            .knex<Message>('messages')
             .select('*')
-            .from('messages')
-            .then((messages) => {
+            .then((messages: Message[]) => {
                 return messages.map((message) => Message.buildMessage(message));
             });
     }
 
     public async delete() {
         const id: number = this.id || -1;
-        await knex.getConnection()('users').where('id', id).delete();
+        await knex.knex<Message>('messages').where('id', id).delete();
     }
 
     public getPlatform(): MessagePlatform {

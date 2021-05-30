@@ -1,7 +1,7 @@
-import * as Knex from 'knex';
+import { Knex } from 'knex/types';
 
 exports.up = function (knex: Knex, Promise: Promise<void>) {
-    return knex.schema.createTable('containers', (table) => {
+    return knex.schema.createTable('containers', (table: any) => {
         table.comment('Deployed containers');
         table.increments('id').unsigned().notNullable().comment('Unique Id');
         table.string('container_id', 64).notNullable().comment('Unique docker sha256');

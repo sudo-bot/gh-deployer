@@ -1,9 +1,9 @@
 import knex from '@src/knex';
 
 export default class Container {
-    private id?: number;
-    private container_id: string;
-    private project_slug: string;
+    id?: number;
+    container_id: string;
+    project_slug: string;
 
     constructor(containerId: string, projectSlug: string) {
         this.container_id = containerId;
@@ -24,7 +24,7 @@ export default class Container {
 
     public async save() {
         this.id = await knex
-            .getConnection()
+            .knex<Container>('containers')
             .insert({
                 container_id: this.container_id,
                 project_slug: this.project_slug,
@@ -33,11 +33,10 @@ export default class Container {
     }
     public static all(): Promise<Container[]> {
         return knex
-            .getConnection()
+            .knex<Container>('containers')
             .select('*')
-            .from('containers')
-            .then((containers) => {
-                return containers.map((message) => {
+            .then((containers: any) => {
+                return containers.map((message: any) => {
                     var newContainer = new Container(message.container_id, message.project_slug);
                     newContainer.setId(message.id);
                     return newContainer;
@@ -47,11 +46,11 @@ export default class Container {
 
     public async delete() {
         const id: number = this.id || -1;
-        await knex.getConnection()('containers').where('id', id).delete();
+        await knex.knex('containers').where('id', id).delete();
     }
 
     public static async deleteWhereContainerId(containerId: string) {
-        await knex.getConnection()('containers').where('container_id', containerId).delete();
+        await knex.knex('containers').where('container_id', containerId).delete();
     }
 
     public getContainerId(): string {

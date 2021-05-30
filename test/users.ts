@@ -2,7 +2,7 @@
 
 require('module-alias/register');
 
-import * as cryptoRandomString from 'crypto-random-string';
+import cryptoRandomString from 'crypto-random-string';
 import User from '@src/modeles/User';
 import { expect } from 'chai';
 

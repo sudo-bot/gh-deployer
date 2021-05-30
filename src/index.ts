@@ -12,7 +12,7 @@ import Message, { MessagePlatform } from './modeles/Message';
 import * as express from 'express';
 
 logger.debug('Connect to database');
-Knex.getConnection();
+Knex.knex();
 
 const processCommand = (commandData: commandData, emailInfos: emailData) => {
     logger.debug('Processing command:', commandData.command);

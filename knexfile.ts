@@ -1,11 +1,7 @@
-import { Config } from 'knex';
-
 // Update with your config settings.
 require('dotenv').config({ path: __dirname + '/.env' });
 
-export const config: {
-    [key: string]: Config;
-} = {
+export const config = {
     development: {
         client: 'mysql2',
         connection: {

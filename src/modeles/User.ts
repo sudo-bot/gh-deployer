@@ -1,4 +1,4 @@
-import * as cryptoRandomString from 'crypto-random-string';
+import cryptoRandomString from 'crypto-random-string';
 import * as crypto from 'crypto';
 import knex from '@src/knex';
 
@@ -9,14 +9,14 @@ export enum AccountStatus {
 }
 
 export default class User {
-    private id?: number;
-    private first_name: string;
-    private last_name: string;
-    private email: string;
-    private username: string;
-    private password: string;
-    private password_salt: string;
-    private status: string;
+    id?: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+    username: string;
+    password: string;
+    password_salt: string;
+    status: string;
     constructor(firstName: string, lastName: string, email: string, username: string, password: string) {
         this.first_name = firstName;
         this.last_name = lastName;
@@ -48,7 +48,7 @@ export default class User {
 
     public async save() {
         this.id = await knex
-            .getConnection()
+            .knex<User>('users')
             .insert({
                 first_name: this.first_name,
                 last_name: this.last_name,
@@ -61,11 +61,10 @@ export default class User {
     }
     public static all(): Promise<User[]> {
         return knex
-            .getConnection()
+            .knex<User>('users')
             .select('*')
-            .from('users')
-            .then((users) => {
-                return users.map((user) => {
+            .then((users: any) => {
+                return users.map((user: any) => {
                     var newUser = new User(user.first_name, user.last_name, user.email, user.username, user.password);
                     newUser.setId(user.id);
                     newUser.setPassword(user.password);
@@ -77,15 +76,15 @@ export default class User {
     }
     public static getConfirmedUsernames(): Promise<string[]> {
         return knex
-            .getConnection()
+            .knex<User>('users')
             .select('username')
             .from('users')
             .where('status', AccountStatus.confirmed)
-            .then((users) => users.map((user) => user.username));
+            .then((users: User[]) => users.map((user) => user.username));
     }
     public async delete() {
         const id: number = this.id || -1;
-        await knex.getConnection()('users').where('id', id).delete();
+        await knex.knex<User>('users').where('id', id).delete();
     }
     public getEmail(): string {
         return this.email;

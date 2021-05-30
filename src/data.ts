@@ -1,7 +1,7 @@
 'use strict';
 
 const emoji = require('node-emoji');
-import { simpleParser, ParsedMail, Source } from 'mailparser';
+import { simpleParser, ParsedMail, Source, AddressObject } from 'mailparser';
 import { readFileSync } from 'fs';
 
 //const regexBoundary = /Content-Type: [\/a-z;\s]+boundary="(?<boundary>[=\-_a-z0-9]+)"/gm;
@@ -43,9 +43,7 @@ const compiledPhpMyAdminConfig: string | null =
 /**
  * Get data from message
  */
-const getDataFromMessage = function (
-    snippetsMsg: string
-): {
+const getDataFromMessage = function (snippetsMsg: string): {
     message: string;
     user: string;
 } | null {
@@ -125,7 +123,9 @@ const getDataFromParsedEmail = function (
         requestedByUser: username,
         message: parseMessage(parsed.text || ''),
         prId: parsePrId(parsed.text || ''),
-        repoName: parseReplyToRepoName(replyTo !== undefined ? replyTo.text : (parsed.to || { text: '' }).text),
+        repoName: parseReplyToRepoName(
+            replyTo !== undefined ? replyTo.text : ((parsed.to as AddressObject) || { text: '' }).text
+        ),
     });
 };
 

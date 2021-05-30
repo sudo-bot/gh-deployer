@@ -1,7 +1,7 @@
-import * as Knex from 'knex';
+import { Knex } from 'knex/types';
 
 exports.up = function (knex: Knex, Promise: Promise<void>) {
-    return knex.schema.createTable('users', (table) => {
+    return knex.schema.createTable('users', (table: any) => {
         table.comment('The users');
         table.increments('id').unsigned().notNullable().comment('Unique user Id');
         table.string('first_name', 255).notNullable().comment('First name');

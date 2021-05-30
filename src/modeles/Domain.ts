@@ -1,11 +1,11 @@
 import knex from '@src/knex';
 
 export default class Domain {
-    private id?: number;
-    private full_domain_name: string;
-    private short_domain_name: string;
-    private provider: string;
-    private project_slug: string;
+    id?: number;
+    full_domain_name: string;
+    short_domain_name: string;
+    provider: string;
+    project_slug: string;
 
     constructor(fullDomainName: string, shortDomainName: string, provider: string, projectSlug: string) {
         this.full_domain_name = fullDomainName;
@@ -32,7 +32,7 @@ export default class Domain {
 
     public async save() {
         this.id = await knex
-            .getConnection()
+            .knex<Domain>('domains')
             .insert({
                 full_domain_name: this.full_domain_name,
                 short_domain_name: this.short_domain_name,
@@ -43,11 +43,10 @@ export default class Domain {
     }
     public static all(): Promise<Domain[]> {
         return knex
-            .getConnection()
+            .knex<Domain>('domains')
             .select('*')
-            .from('domains')
-            .then((domains) => {
-                return domains.map((message) => {
+            .then((domains: any) => {
+                return domains.map((message: any) => {
                     var newDomain = new Domain(
                         message.full_domain_name,
                         message.short_domain_name,
@@ -61,12 +60,12 @@ export default class Domain {
     }
 
     public static async deleteWhereFullDomainName(fullDomainName: string) {
-        await knex.getConnection()('domains').where('full_domain_name', fullDomainName).delete();
+        await knex.knex<Domain>('domains').where('full_domain_name', fullDomainName).delete();
     }
 
     public async delete() {
         const id: number = this.id || -1;
-        await knex.getConnection()('domains').where('id', id).delete();
+        await knex.knex<Domain>('domains').where('id', id).delete();
     }
 
     public getFullDomainName(): string {

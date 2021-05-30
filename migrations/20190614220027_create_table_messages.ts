@@ -1,7 +1,7 @@
-import * as Knex from 'knex';
+import { Knex } from 'knex/types';
 
 exports.up = function (knex: Knex, Promise: Promise<void>) {
-    return knex.schema.createTable('messages', (table) => {
+    return knex.schema.createTable('messages', (table: any) => {
         table.comment('The messages sent and received');
         table.increments('id').unsigned().notNullable().comment('Unique message Id');
         table.integer('comment_id').unsigned().notNullable().comment('The comment Id');

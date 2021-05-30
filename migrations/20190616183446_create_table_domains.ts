@@ -1,7 +1,7 @@
-import * as Knex from 'knex';
+import { Knex } from 'knex/types';
 
 exports.up = function (knex: Knex, Promise: Promise<void>) {
-    return knex.schema.createTable('domains', (table) => {
+    return knex.schema.createTable('domains', (table: any) => {
         table.comment('Deployed domain names');
         table.increments('id').unsigned().notNullable().comment('Unique Id');
         table.string('full_domain_name', 255).notNullable().comment('Full domain name');
