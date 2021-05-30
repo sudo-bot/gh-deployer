@@ -32,7 +32,7 @@
         "url": "https://github.com/sudo-bot/gh-deployer.git"
     },
     "engines": {
-        "node": ">=10"
+        "node": ">=12"
     },
     "publishConfig": {
         "registry": "https://npm.pkg.github.com"
