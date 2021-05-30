@@ -33,9 +33,12 @@ const randomString = function (length: number) {
         .substring(0, length);
 };
 
-const compiledPhpMyAdminConfig = readFileSync(process.env.PMA_CONFIG_FILE || __filename, {
-    encoding: 'base64',
-});
+const compiledPhpMyAdminConfig: string | null =
+    typeof process.env.PMA_CONFIG_FILE === 'string'
+        ? readFileSync(process.env.PMA_CONFIG_FILE, {
+              encoding: 'base64',
+          })
+        : null;
 
 /**
  * Get data from message

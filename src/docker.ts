@@ -38,7 +38,7 @@ export default {
         cloneUrl: string,
         ref: string,
         sha: string,
-        compiledPhpMyAdminConfig: string,
+        compiledPhpMyAdminConfig: string | null,
         randomString: string
     ) => {
         return new Promise(
@@ -129,7 +129,9 @@ export default {
                                         'GIT_BRANCH=' + ref,
                                         'GIT_SHA=' + sha,
                                         'RANDOM_STRING=' + randomString,
-                                        'PMA_CONFIG=' + compiledPhpMyAdminConfig,
+                                        compiledPhpMyAdminConfig === null
+                                            ? ''
+                                            : 'PMA_CONFIG=' + compiledPhpMyAdminConfig,
                                     ],
                                     NetworkingConfig: {
                                         EndpointsConfig: createAliasesFromString(networkAliases),

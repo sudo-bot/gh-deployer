@@ -10,7 +10,7 @@ import Message, { MessagePlatform } from './modeles/Message';
 import { RequestError } from '@octokit/request-error';
 
 const afterComment = (
-    configBlock: string,
+    configBlock: string | null,
     emailInfos: emailData,
     deployCommentId: number,
     prInfos: {
@@ -84,7 +84,7 @@ const findMessageAndProceed = (
         cloneUrl: string;
         repoSlug: string;
     },
-    configBlock: string
+    configBlock: string | null
 ) => {
     Message.forPr(prId, emailInfos.repoName).then((messages) => {
         if (messages.length === 0) {
@@ -133,7 +133,7 @@ const findMessageAndProceed = (
 };
 
 export default {
-    deploy: (emailInfos: emailData, configBlock: string) => {
+    deploy: (emailInfos: emailData, configBlock: string | null) => {
         if (emailInfos.prId === null || emailInfos.commentId === null) {
             logger.error('Missing data !', emailInfos);
             return;
