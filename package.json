@@ -77,8 +77,8 @@
         "@sentry/node": "^6.6.0",
         "@types/imap": "^0.8.34",
         "@types/mailparser": "^3.0.2",
-        "@types/randomstring": "^1.1.6",
         "cloudflare": "^2.7.0",
+        "crypto-random-string": "^4.0.0",
         "dotenv": "^10.0.0",
         "express": "^4.17.1",
         "imap": "^0.8.19",
@@ -90,7 +90,6 @@
         "node-docker-api": "^1.1.22",
         "node-emoji": "^1.10.0",
         "node-nlp": "^4.22.1",
-        "randomstring": "^1.2.1",
         "smtp-server": "^3.9.0"
     },
     "devDependencies": {

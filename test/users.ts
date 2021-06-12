@@ -1,14 +1,14 @@
 'use strict';
 
 require('module-alias/register');
-import { generate } from 'randomstring';
+import cryptoRandomString from 'crypto-random-string';
 import User from '@src/modeles/User';
 import { expect } from 'chai';
 import Knex from '@src/knex';
 
 suite('Users', () => {
     test('test create and save', (done) => {
-        const pass = generate({ length: 150 });
+        const pass = cryptoRandomString({ length: 150 });
         const user = new User('Jean', 'Dupont', 'jean.dupont@dupont.familly', 'jdp', pass);
         user.save()
             .then(() => {
@@ -35,7 +35,7 @@ suite('Users', () => {
             });
     });
     test('test getConfirmedUsers', (done) => {
-        const pass = generate({ length: 150 });
+        const pass = cryptoRandomString({ length: 150 });
         const user = new User('Jean', 'Dupont', 'jean.dupont@dupont.familly', 'jdp', pass);
         user.save()
             .then(() => {
