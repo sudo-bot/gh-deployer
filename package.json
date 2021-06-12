@@ -4,6 +4,7 @@
     "description": "A GitHub deployer robot",
     "main": "dist/index.js",
     "private": false,
+    "type": "module",
     "nyc": {
         "extension": [
             ".ts",
