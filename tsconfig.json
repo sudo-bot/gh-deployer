@@ -1,18 +1,14 @@
 {
+    "extends": "@tsconfig/node12/tsconfig.json",
     "compilerOptions": {
         "outDir": "./dist",
-        "allowJs": false,
         "resolveJsonModule": true,
         "strict": true,
         "removeComments": true,
         "preserveConstEnums": true,
         "noImplicitAny": true,
         "strictNullChecks": true,
-        "lib": ["es2017"],
-        "module": "es2020",
-        "moduleResolution": "node",
         "skipLibCheck": true,
-        "target": "es2017",
         "baseUrl": "./",
         "paths": {
             "@src/*": ["./src/*"],

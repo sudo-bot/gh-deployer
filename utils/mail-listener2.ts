@@ -26,7 +26,7 @@ import { Stream } from 'stream';
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import * as Imap from 'imap';
+import Imap = require('imap');
 import { EventEmitter } from 'events';
 
 export interface processedEmail {

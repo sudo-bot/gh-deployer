@@ -9,7 +9,7 @@ import github, { reactions } from './github';
 import Knex from '@src/knex';
 import User from './modeles/User';
 import Message, { MessagePlatform } from './modeles/Message';
-import * as express from 'express';
+import express = require('express');
 
 logger.debug('Connect to database');
 Knex.knex();
