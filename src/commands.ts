@@ -5,6 +5,7 @@ import data from '@src/data';
 import logger from '@src/logger';
 const { NlpManager } = require('node-nlp');
 
+logger.info('Loading manager');
 const manager = new NlpManager({
     languages: ['en'],
     ner: {
