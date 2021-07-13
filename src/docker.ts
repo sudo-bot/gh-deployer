@@ -87,65 +87,69 @@ export default {
                                 },
                                 process.env.DOCKER_NETWORK_ALIASES || ''
                             );
-                            const hostName = data.replaceTokens(
-                                {
-                                    prId: prId,
-                                    ref: ref,
-                                    sha: sha,
+                            const containerData: any = {
+                                Image: process.env.DOCKER_IMAGE,
+                                name: containerName,
+                                Volumes: (process.env.DOCKER_VOLUMES || '').split(',').reduce(
+                                    (accumulator, target) => ({
+                                        ...accumulator,
+                                        [target]: {},
+                                    }),
+                                    {}
+                                ),
+                                WorkingDir: process.env.DOCKER_WORKDIR,
+                                HostConfig: {
+                                    DnsSearch: (process.env.DOCKER_DNS_SEARCH || '').split(','),
+                                    NetworkMode: process.env.DOCKER_NETWORK_MODE,
+                                    Binds: (process.env.DOCKER_BINDS || '').split(','),
+                                    ...optionalHostConfig,
                                 },
-                                process.env.DOCKER_CONTAINER_HOSTNAME || ''
-                            );
+                                Entrypoint: process.env.DOCKER_ENTRYPOINT,
+                                Env: [
+                                    'REF_DIRECTORY=/refs',
+                                    'GIT_URL=' + cloneUrl,
+                                    'GIT_BRANCH=' + ref,
+                                    'GIT_SHA=' + sha,
+                                    'RANDOM_STRING=' + randomString,
+                                    compiledPhpMyAdminConfig === null ? '' : 'PMA_CONFIG=' + compiledPhpMyAdminConfig,
+                                ],
+                                NetworkingConfig: {
+                                    EndpointsConfig: createAliasesFromString(networkAliases),
+                                },
+                                Labels: {
+                                    [labelNamespace]: 'true',
+                                    [labelNamespace + '.git-url']: cloneUrl,
+                                    [labelNamespace + '.git-ref']: ref,
+                                    [labelNamespace + '.git-sha']: sha,
+                                    [labelNamespace + '.github-type']: 'pull-request',
+                                    [labelNamespace + '.github-pr-id']: '' + prId,
+                                },
+                            };
+                            const domainName = process.env.DOCKER_DOMAIN_NAME || '';
+                            if (domainName.length > 0) {
+                                containerData.Domainname = data.replaceTokens(
+                                    {
+                                        prId: prId,
+                                        ref: ref,
+                                        sha: sha,
+                                    },
+                                    domainName
+                                );
+                            }
+                            const hostName = process.env.DOCKER_CONTAINER_HOSTNAME || '';
+                            if (hostName.length > 0) {
+                                containerData.Hostname = data.replaceTokens(
+                                    {
+                                        prId: prId,
+                                        ref: ref,
+                                        sha: sha,
+                                    },
+                                    hostName
+                                );
+                                containerData.Labels[labelNamespace + '.public-dns-hostname'] = hostName;
+                            }
                             docker.container
-                                .create({
-                                    Image: process.env.DOCKER_IMAGE,
-                                    name: containerName,
-                                    Hostname: hostName,
-                                    Domainname: data.replaceTokens(
-                                        {
-                                            prId: prId,
-                                            ref: ref,
-                                            sha: sha,
-                                        },
-                                        process.env.DOCKER_DOMAIN_NAME || ''
-                                    ),
-                                    Volumes: (process.env.DOCKER_VOLUMES || '').split(',').reduce(
-                                        (accumulator, target) => ({
-                                            ...accumulator,
-                                            [target]: {},
-                                        }),
-                                        {}
-                                    ),
-                                    WorkingDir: process.env.DOCKER_WORKDIR,
-                                    HostConfig: {
-                                        DnsSearch: (process.env.DOCKER_DNS_SEARCH || '').split(','),
-                                        NetworkMode: process.env.DOCKER_NETWORK_MODE,
-                                        Binds: (process.env.DOCKER_BINDS || '').split(','),
-                                        ...optionalHostConfig,
-                                    },
-                                    Entrypoint: process.env.DOCKER_ENTRYPOINT,
-                                    Env: [
-                                        'REF_DIRECTORY=/refs',
-                                        'GIT_URL=' + cloneUrl,
-                                        'GIT_BRANCH=' + ref,
-                                        'GIT_SHA=' + sha,
-                                        'RANDOM_STRING=' + randomString,
-                                        compiledPhpMyAdminConfig === null
-                                            ? ''
-                                            : 'PMA_CONFIG=' + compiledPhpMyAdminConfig,
-                                    ],
-                                    NetworkingConfig: {
-                                        EndpointsConfig: createAliasesFromString(networkAliases),
-                                    },
-                                    Labels: {
-                                        [labelNamespace]: 'true',
-                                        [labelNamespace + '.git-url']: cloneUrl,
-                                        [labelNamespace + '.git-ref']: ref,
-                                        [labelNamespace + '.git-sha']: sha,
-                                        [labelNamespace + '.github-type']: 'pull-request',
-                                        [labelNamespace + '.github-pr-id']: '' + prId,
-                                        [labelNamespace + '.public-dns-hostname']: hostName,
-                                    },
-                                })
+                                .create(containerData)
                                 .then((container) => container.start())
                                 .then((container) => {
                                     let c = new Container(container.id, repoName);
