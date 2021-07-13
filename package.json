@@ -4,7 +4,7 @@
     "description": "A GitHub deployer robot",
     "main": "dist/index.js",
     "private": false,
-    "type": "commonjs",
+    "type": "module",
     "nyc": {
         "extension": [
             ".ts",
@@ -50,13 +50,13 @@
         "test": "NODE_ENV=test nyc mocha --require ts-node/register --require source-map-support/register --ui tdd --recursive './test/**/*.ts'",
         "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov",
         "prettier": "prettier --ignore-path ./.prettierignore --write \"*/**/*.ts\" \"*.ts\" \"bin/*.js\" ",
-        "migrate:dev": "knex migrate:latest --env development",
-        "migrate:rollback:dev": "knex migrate:rollback --env development --all",
-        "migrate:test": "knex migrate:latest --env test",
-        "migrate:rollback:test": "knex migrate:rollback --env test --all",
-        "migrate:prod": "knex migrate:latest --env production",
+        "migrate:dev": "knex migrate:latest --env development --knexfile knexfile.cjs",
+        "migrate:rollback:dev": "knex migrate:rollback --env development --all --knexfile knexfile.cjs",
+        "migrate:test": "knex migrate:latest --env test --knexfile knexfile.cjs",
+        "migrate:rollback:test": "knex migrate:rollback --env test --all --knexfile knexfile.cjs",
+        "migrate:prod": "knex migrate:latest --env production --knexfile knexfile.cjs",
         "migrate:rollback:prod": "echo 'Nope, crazy human !';",
-        "migration:make": "knex migrate:make --env production"
+        "migration:make": "knex migrate:make --env production --knexfile knexfile.cjs"
     },
     "keywords": [
         "github"

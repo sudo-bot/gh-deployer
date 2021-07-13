@@ -1,7 +1,7 @@
 // Update with your config settings.
 require('dotenv').config({ path: __dirname + '/.env' });
 
-export const config = {
+const config = {
     development: {
         client: 'mysql2',
         connection: {
@@ -58,4 +58,3 @@ export const config = {
 };
 
 module.exports = config;
-export default config;
