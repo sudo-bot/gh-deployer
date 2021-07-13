@@ -36,8 +36,14 @@ jobs:
                       ${{ runner.os }}-yarn-
             - name: Install modules
               run: yarn install
-            - name: Build
-              run: yarn build
+            - name: Create database
+              env:
+                  DB_TEST_HOST: "127.0.0.1"
+                  DB_TEST_USER: root
+                  DB_TEST_PASS: testbench
+                  DB_TEST_PORT: ${{ job.services.mysql.ports['3306'] }}
+                  DB_TEST_DB: deployer__tests
+              run: mysql --host ${DB_TEST_HOST} -u${DB_TEST_USER} -p${DB_TEST_PASS} --port ${DB_TEST_PORT} -e "CREATE DATABASE IF NOT EXISTS ${DB_TEST_DB};"
             - name: Run migrations
               env:
                   DB_TEST_HOST: "127.0.0.1"
@@ -45,9 +51,7 @@ jobs:
                   DB_TEST_PASS: testbench
                   DB_TEST_PORT: ${{ job.services.mysql.ports['3306'] }}
                   DB_TEST_DB: deployer__tests
-              run: |
-                  mysql --host ${DB_TEST_HOST} -u${DB_TEST_USER} -p${DB_TEST_PASS} --port ${DB_TEST_PORT} -e "CREATE DATABASE IF NOT EXISTS ${DB_TEST_DB};"
-                  yarn run migrate:test
+              run: yarn run migrate:test
             - name: Run node tests
               env:
                   DB_TEST_HOST: "127.0.0.1"
@@ -97,8 +101,14 @@ jobs:
                       ${{ runner.os }}-yarn-
             - name: Install modules
               run: yarn install
-            - name: Build
-              run: yarn build
+            - name: Create database
+              env:
+                  DB_TEST_HOST: "127.0.0.1"
+                  DB_TEST_USER: root
+                  DB_TEST_PASS: testbench
+                  DB_TEST_PORT: ${{ job.services.mysql.ports['3306'] }}
+                  DB_TEST_DB: deployer__migrateupdown
+              run: mysql --host ${DB_TEST_HOST} -u${DB_TEST_USER} -p${DB_TEST_PASS} --port ${DB_TEST_PORT} -e "CREATE DATABASE IF NOT EXISTS ${DB_TEST_DB};"
             - name: Run migration and rollback them
               env:
                   DB_TEST_HOST: "127.0.0.1"
@@ -107,6 +117,5 @@ jobs:
                   DB_TEST_PORT: ${{ job.services.mysql.ports['3306'] }}
                   DB_TEST_DB: deployer__migrateupdown
               run: |
-                  mysql --host ${DB_TEST_HOST} -u${DB_TEST_USER} -p${DB_TEST_PASS} --port ${DB_TEST_PORT} -e "CREATE DATABASE IF NOT EXISTS ${DB_TEST_DB};"
                   yarn run migrate:test
                   yarn run migrate:rollback:test
