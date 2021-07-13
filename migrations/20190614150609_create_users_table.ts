@@ -1,7 +1,5 @@
-import { Knex } from 'knex/types';
-
-exports.up = function (knex: Knex, Promise: Promise<void>) {
-    return knex.schema.createTable('users', (table: any) => {
+exports.up = function (knex) {
+    return knex.schema.createTable('users', (table) => {
         table.comment('The users');
         table.increments('id').unsigned().notNullable().comment('Unique user Id');
         table.string('first_name', 255).notNullable().comment('First name');
@@ -14,6 +12,6 @@ exports.up = function (knex: Knex, Promise: Promise<void>) {
     });
 };
 
-exports.down = function (knex: Knex, Promise: Promise<void>) {
+exports.down = function (knex) {
     return knex.schema.dropTable('users');
 };

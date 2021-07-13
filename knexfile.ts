@@ -1,7 +1,7 @@
 // Update with your config settings.
 require('dotenv').config({ path: __dirname + '/.env' });
 
-export const config = {
+const config = {
     development: {
         client: 'mysql2',
         connection: {
@@ -17,6 +17,8 @@ export const config = {
         },
         migrations: {
             tableName: 'migrations',
+            loadExtensions: ['.ts'],
+            extension: 'ts',
         },
     },
 
@@ -35,6 +37,8 @@ export const config = {
         },
         migrations: {
             tableName: 'migrations',
+            loadExtensions: ['.ts'],
+            extension: 'ts',
         },
     },
 
@@ -53,6 +57,8 @@ export const config = {
         },
         migrations: {
             tableName: 'migrations',
+            loadExtensions: ['.ts'],
+            extension: 'ts',
         },
     },
 };

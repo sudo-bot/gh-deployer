@@ -1,7 +1,5 @@
-import { Knex } from 'knex/types';
-
-exports.up = function (knex: Knex, Promise: Promise<void>) {
-    return knex.schema.createTable('domains', (table: any) => {
+exports.up = function (knex) {
+    return knex.schema.createTable('domains', (table) => {
         table.comment('Deployed domain names');
         table.increments('id').unsigned().notNullable().comment('Unique Id');
         table.string('full_domain_name', 255).notNullable().comment('Full domain name');
@@ -11,6 +9,6 @@ exports.up = function (knex: Knex, Promise: Promise<void>) {
     });
 };
 
-exports.down = function (knex: Knex, Promise: Promise<void>) {
+exports.down = function (knex) {
     return knex.schema.dropTable('domains');
 };
