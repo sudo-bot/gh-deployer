@@ -1,4 +1,4 @@
-import cryptoRandomString from 'crypto-random-string';
+import { generate } from 'randomstring';
 import { createHash } from 'crypto';
 import knex from '@src/knex';
 
@@ -20,7 +20,7 @@ export default class User {
     constructor(firstName: string, lastName: string, email: string, username: string, password: string) {
         this.first_name = firstName;
         this.last_name = lastName;
-        this.password_salt = cryptoRandomString({ length: 30 });
+        this.password_salt = generate({ length: 30 });
         this.password = createHash('sha256')
             .update(password + this.password_salt)
             .digest('hex');

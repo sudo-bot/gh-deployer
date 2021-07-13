@@ -64,4 +64,4 @@ const config = {
 };
 
 export default config;
-module.exports = config;// DO NOT remove this or it will break dist version
+module.exports = config; // DO NOT remove this or it will break dist version
