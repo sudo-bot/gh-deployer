@@ -10,6 +10,6 @@ jobs:
             - name: lock pull request
               uses: sudo-bot/action-pull-request-lock@v1.0.5
               with:
-                  github-token: ${{ secrets.WDES_BOT_TOKEN }}
+                  github-token: ${{ secrets.SUDO_BOT_TOKEN }}
                   number: ${{ github.event.pull_request.number }}
                   lock-reason: resolved
