@@ -86,6 +86,11 @@ app.get('/ping', (req, res) => {
     res.send('pong');
 });
 
+app.post('/hook/catch', (req, res) => {
+    logger.debug('Got hook payload', req.body);
+    res.send('OK');
+});
+
 app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);
 });
