@@ -136,9 +136,9 @@ export default {
                                     domainName
                                 );
                             }
-                            const hostName = process.env.DOCKER_CONTAINER_HOSTNAME || '';
+                            let hostName = process.env.DOCKER_CONTAINER_HOSTNAME || '';
                             if (hostName.length > 0) {
-                                containerData.Hostname = data.replaceTokens(
+                                hostName = data.replaceTokens(
                                     {
                                         prId: prId,
                                         ref: ref,
@@ -146,6 +146,7 @@ export default {
                                     },
                                     hostName
                                 );
+                                containerData.Hostname = hostName;
                                 containerData.Labels[labelNamespace + '.public-dns-hostname'] = hostName;
                             }
                             docker.container
